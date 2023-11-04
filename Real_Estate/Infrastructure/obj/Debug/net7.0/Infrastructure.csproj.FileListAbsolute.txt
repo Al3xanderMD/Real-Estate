@@ -1,0 +1,11 @@
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+D:\UAIC\Proiect Net\Real-Estate\Real_Estate\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
