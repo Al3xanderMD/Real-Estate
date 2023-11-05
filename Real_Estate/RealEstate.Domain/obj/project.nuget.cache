@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "j/i0HlJ+UmvpVWfdrTPqVBroqjzMBbA/xaL2sFPAOECStYu0+ylp8ie3OuvOHQStQ+9buzyEs2LCG4SUE1xVgw==",
+  "dgSpecHash": "y0uC5DZ6GDJLxJONhVhq9yT/i9sijf5AInsZxIOsvj6nCYx3VXbyn4pGLaF441RSeJ8uPwC2KVyK1gddY+T8tA==",
   "success": true,
-  "projectFilePath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
+  "projectFilePath": "D:\\Uni\\An3\\ASP.Net\\Project\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Al3xander\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
-    "C:\\Users\\Al3xander\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.8.0\\fluentvalidation.dependencyinjectionextensions.11.8.0.nupkg.sha512",
-    "C:\\Users\\Al3xander\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
-    "C:\\Users\\Al3xander\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
-    "C:\\Users\\Al3xander\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+    "C:\\Users\\habas\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
+    "C:\\Users\\habas\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.8.0\\fluentvalidation.dependencyinjectionextensions.11.8.0.nupkg.sha512",
+    "C:\\Users\\habas\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\habas\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\habas\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

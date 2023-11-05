@@ -8,24 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Al3xander\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\habas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\Tests\\Tests.csproj",
+      "projectUniqueName": "D:\\Uni\\An3\\ASP.Net\\Project\\Real-Estate\\Real_Estate\\Tests\\Tests.csproj",
       "projectName": "Tests",
-      "projectPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\Tests\\Tests.csproj",
-      "packagesPath": "C:\\Users\\Al3xander\\.nuget\\packages\\",
-      "outputPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\Tests\\obj\\",
+      "projectPath": "D:\\Uni\\An3\\ASP.Net\\Project\\Real-Estate\\Real_Estate\\Tests\\Tests.csproj",
+      "packagesPath": "C:\\Users\\habas\\.nuget\\packages\\",
+      "outputPath": "D:\\Uni\\An3\\ASP.Net\\Project\\Real-Estate\\Real_Estate\\Tests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Al3xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\habas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -66,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
