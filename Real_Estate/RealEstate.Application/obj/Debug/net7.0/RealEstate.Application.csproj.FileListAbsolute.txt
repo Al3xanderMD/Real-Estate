@@ -13,3 +13,18 @@ D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\refint\RealEstate.Application.dll
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.pdb
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\ref\RealEstate.Application.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\bin\Debug\net7.0\RealEstate.Application.deps.json
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\bin\Debug\net7.0\RealEstate.Application.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\bin\Debug\net7.0\RealEstate.Application.pdb
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\bin\Debug\net7.0\RealEstate.Domain.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\bin\Debug\net7.0\RealEstate.Domain.pdb
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.csproj.AssemblyReference.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.AssemblyInfoInputs.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.AssemblyInfo.cs
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.csproj.CopyComplete
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\refint\RealEstate.Application.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\RealEstate.Application.pdb
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Application\obj\Debug\net7.0\ref\RealEstate.Application.dll

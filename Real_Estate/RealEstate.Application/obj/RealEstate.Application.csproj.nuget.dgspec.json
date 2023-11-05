@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj": {}
+    "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj": {}
   },
   "projects": {
-    "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj": {
+    "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj",
         "projectName": "RealEstate.Application",
-        "projectPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj",
-        "packagesPath": "C:\\Users\\Al3xander\\.nuget\\packages\\",
-        "outputPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\obj\\",
+        "projectPath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj",
+        "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Al3xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj": {
-                "projectPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj"
+              "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj": {
+                "projectPath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj"
               }
             }
           }
@@ -63,25 +59,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj": {
+    "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
         "projectName": "RealEstate.Domain",
-        "projectPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
-        "packagesPath": "C:\\Users\\Al3xander\\.nuget\\packages\\",
-        "outputPath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\RealEstate.Domain.csproj",
+        "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect\\Real-Estate\\Real_Estate\\RealEstate.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Al3xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -136,7 +128,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

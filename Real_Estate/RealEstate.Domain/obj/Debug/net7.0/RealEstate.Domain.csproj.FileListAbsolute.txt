@@ -10,3 +10,15 @@ D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\R
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\refint\RealEstate.Domain.dll
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.pdb
 D:\UAIC\Proiect Net\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\ref\RealEstate.Domain.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.csproj.AssemblyReference.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.AssemblyInfoInputs.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.AssemblyInfo.cs
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\refint\RealEstate.Domain.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\RealEstate.Domain.pdb
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\bin\Debug\net7.0\RealEstate.Domain.deps.json
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\bin\Debug\net7.0\RealEstate.Domain.dll
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\bin\Debug\net7.0\RealEstate.Domain.pdb
+C:\Users\Daniel\Desktop\NET\Proiect\Real-Estate\Real_Estate\RealEstate.Domain\obj\Debug\net7.0\ref\RealEstate.Domain.dll
