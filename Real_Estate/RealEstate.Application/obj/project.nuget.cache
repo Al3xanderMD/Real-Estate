@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "8CN9KWY23l2He90PzHCoOTYjXPgH7YKJ/rqUyYOY7be4djbpZ49D1kGtPT6+jslX+ztNMHvTB+gYftX8pRPmMQ==",
+  "dgSpecHash": "0k1AtL1kjoYLUyg+OibktrN51Q+FpepLtwg+jLk8ZtCaQ2QMmcH3z+k07E3gZ8lh3Y3XaV9fc4RECJ2pvvfH+g==",
   "success": true,
   "projectFilePath": "D:\\UAIC\\Proiect Net\\Real-Estate\\Real_Estate\\RealEstate.Application\\RealEstate.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Al3xander\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
+    "C:\\Users\\Al3xander\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.8.0\\fluentvalidation.dependencyinjectionextensions.11.8.0.nupkg.sha512",
+    "C:\\Users\\Al3xander\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\Al3xander\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\Al3xander\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
