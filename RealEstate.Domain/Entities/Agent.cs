@@ -7,7 +7,7 @@ namespace RealEstate.Domain.Entities
         public string AgentName { get; private set; }
         public string? Logolink { get; private set; }
         public string Phone { get; private set; }
-        public Address IdAddress { get; private set; }
+        public Address AddressId { get; private set; }
         public string? Url { get; private set; }
         public RegAuth RegAuth { get; private set; }
 
@@ -19,7 +19,7 @@ namespace RealEstate.Domain.Entities
                 Password = password,
                 Role = "Agent"
             };
-            IdAddress = new Address
+            AddressId = new Address
             {
                 Url = urlAddress,
                 AddressName = addressName

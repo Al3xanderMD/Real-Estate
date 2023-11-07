@@ -4,12 +4,12 @@ namespace RealEstate.Domain.Entities
 {
     public class Partitioning
     {
-        public Guid IdPartitioning { get; private set; }
+        public Guid Id { get; private set; }
         public string Type { get; private set; }
 
         public Partitioning(string type)
         {
-            IdPartitioning = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Type = type;
         }
 

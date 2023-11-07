@@ -4,12 +4,12 @@ namespace RealEstate.Domain.Entities
 {
     public class LotClassification
     {
-        public Guid IdLotClassification { get; private set; }
+        public Guid Id { get; private set; }
         public string Type { get; private set; }
 
         public LotClassification(string type)
         {
-            IdLotClassification = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Type = type;
         }
 

@@ -4,12 +4,12 @@ namespace RealEstate.Domain.Entities
 {
     public class CommercialCategory
     {
-        public Guid IdCategory { get; private set; }
+        public Guid CategoryId { get; private set; }
         public string CategoryName { get; private set; }
     
         public CommercialCategory(string categoryName)
         {
-            IdCategory = Guid.NewGuid();
+            CategoryId = Guid.NewGuid();
             CategoryName = categoryName;
         }
 

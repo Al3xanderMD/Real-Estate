@@ -12,21 +12,21 @@ namespace RealEstate.Domain.Entities
                 AddressName = addressName
             };
 
-            IdPost = new BasePost
+            PostId = new BasePost
             {
-                IdUser = regAuth.IdUser,
+                UserId = regAuth.Id,
                 TitlePost = titlePost,
                 OfferType = offerType,
                 Image = image,
                 Price = price,
                 Descripion = description,
-                IdAddress = Address
+                AddressId = Address
             };
             LotArea = lotArea;
         }
 
-        public BasePost IdPost { get; private set; } //attach
-        public LotClassification IdLotClassification { get; private set; }
+        public BasePost PostId { get; private set; } //attach
+        public LotClassification LotClassificationId { get; private set; }
         public double LotArea { get; private set; }
 
 

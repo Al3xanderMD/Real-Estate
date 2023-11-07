@@ -9,11 +9,11 @@ namespace RealEstate.Domain.Entities
         public string LastName { get; private set; }
         public string? Phone { get; private set; }
         public string? Region { get; private set; }
-        public RegAuth RegAuth { get; private set; }
+        public RegAuth RegAuthId { get; private set; }
 
         private Client(string email, string password, string firstName, string lastName)
         {
-            RegAuth = new RegAuth
+            RegAuthId = new RegAuth
             {
                 Email = email,
                 Password = password

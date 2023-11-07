@@ -13,15 +13,15 @@ namespace RealEstate.Domain.Entities
                 AddressName = addressName
             };
 
-            IdPost = new BasePost
+            PostId = new BasePost
             {
-                IdUser = regAuth.IdUser,
+                UserId = regAuth.Id,
                 TitlePost = titlePost,
                 OfferType = offerType,
                 Image = image,
                 Price = price,
                 Descripion = description,
-                IdAddress = Address
+                AddressId = Address
             };
 
             RoomCount = roomCount;
@@ -29,7 +29,7 @@ namespace RealEstate.Domain.Entities
             UsefulSurface = usefulSurface;
         }
 
-        public BasePost IdPost { get; private set; } //attach
+        public BasePost PostId { get; private set; } //attach
         public double UsefulSurface { get; private set; }
         public double RoomSurface { get; private set; }
         public int RoomCount { get; private set; }

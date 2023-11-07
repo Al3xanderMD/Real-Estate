@@ -4,12 +4,12 @@ namespace RealEstate.Domain.Entities
 {
     public class HouseType
     {
-        public Guid IdHouseType { get; private set; }
+        public Guid Id { get; private set; }
         public string Type { get; private set; }
 
         public HouseType(string type)
         {
-            IdHouseType = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Type = type;
         }
 

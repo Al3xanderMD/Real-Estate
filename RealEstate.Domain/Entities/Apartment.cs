@@ -12,15 +12,15 @@ namespace RealEstate.Domain.Entities
                 AddressName = addressName
             };
 
-            IdPost = new BasePost
+            PostId = new BasePost
             {
-                IdUser = regAuth.IdUser,
+                UserId = regAuth.Id,
                 TitlePost = titlePost,
                 OfferType = offerType,
                 Image = image,
                 Price = price,
                 Descripion = description,
-                IdAddress = Address
+                AddressId = Address
             };
 
             RoomCount = roomCount;
@@ -30,9 +30,9 @@ namespace RealEstate.Domain.Entities
             BuildYear = buildYear;
         }
 
-        public BasePost IdPost { get; private set; } //attach
+        public BasePost PostId { get; private set; } //attach
         public int RoomCount { get; private set; }
-        public Partitioning IdPartitioning { get; private set; }
+        public Partitioning PartitioningId { get; private set; }
         public int Comfort { get; private set; }
         public int Floor { get; private set; }
         public double UsefulSurface { get; private set; }

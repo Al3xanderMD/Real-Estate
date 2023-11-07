@@ -4,23 +4,23 @@ namespace RealEstate.Domain.Entities
 {
     public class CommercialSpecific
     {
-        public Guid IdCommercialSpecific { get; private set; }
+        public Guid CommercialSpecificId { get; private set; }
         public string SpecificName { get; private set; }
-        public CommercialCategory IdCommercialCategory { get; private set; }
+        public CommercialCategory CommercialCategoryId { get; private set; }
 
-        public CommercialSpecific(string specificName, CommercialCategory idCommercialCategory)
+        public CommercialSpecific(string specificName, CommercialCategory commercialCategoryId)
         {
-            IdCommercialSpecific = Guid.NewGuid();
+            CommercialSpecificId = Guid.NewGuid();
             SpecificName = specificName;
-            IdCommercialCategory = idCommercialCategory;
+            CommercialCategoryId = commercialCategoryId;
         }
 
-        public static Result<CommercialSpecific> CreateCommercialSpecific(string specificName, CommercialCategory idCommercialCategory)
+        public static Result<CommercialSpecific> CreateCommercialSpecific(string specificName, CommercialCategory commercialCategoryId)
         {
             if (string.IsNullOrWhiteSpace(specificName))
                 return Result<CommercialSpecific>.Failure("Specific name is required");
 
-            return Result<CommercialSpecific>.Success(new CommercialSpecific(specificName, idCommercialCategory));
+            return Result<CommercialSpecific>.Success(new CommercialSpecific(specificName, commercialCategoryId));
         }
 
         
