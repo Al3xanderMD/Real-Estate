@@ -1,4 +1,4 @@
-﻿namespace RealEstate.Domain.Entities
+namespace RealEstate.Domain.Entities
 {
     public class Address
     {
