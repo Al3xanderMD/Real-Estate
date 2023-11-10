@@ -12,13 +12,11 @@
     <Folder Include="Features\Categories\Commands\CreateClient\" />
     <Folder Include="Features\Categories\Commands\CreateAgent\" />
     <Folder Include="Features\Categories\Commands\CreateAddress\" />
-    <Folder Include="Features\Categories\Commands\CreateApartament\" />
     <Folder Include="Features\Categories\Commands\CreateHouse\" />
     <Folder Include="Features\Categories\Commands\CreateLot\" />
     <Folder Include="Features\Categories\Commands\CreateHotelPension\" />
     <Folder Include="Features\Categories\Commands\CreateCommercial\" />
     <Folder Include="Features\Categories\Queries\" />
-    <Folder Include="Responses\" />
   </ItemGroup>
 
   <ItemGroup>

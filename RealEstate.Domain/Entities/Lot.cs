@@ -87,4 +87,3 @@ namespace RealEstate.Domain.Entities
         }
     }
 }
-}
