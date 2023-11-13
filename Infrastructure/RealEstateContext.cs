@@ -18,11 +18,11 @@ namespace Infrastructure
         public DbSet<HouseType> HouseTypes { get; set; }
         public DbSet<Lot> Lots { get; set; }
         public DbSet<Partitioning> Partitionings { get; set; }
-        public DbSet<RegAuth> RegAuths { get; set; }
+        //public DbSet<RegAuth> RegAuths { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=RealEstate;User Id=postgres;Password=root;");
+            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=RealEstateDB;User Id=postgres;Password=root;");
         }
     }
 }

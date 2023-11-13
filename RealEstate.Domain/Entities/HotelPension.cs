@@ -5,52 +5,29 @@ namespace RealEstate.Domain.Entities
 {
     public class HotelPension : AuditableEntity
     {
-        private HotelPension(RegAuth regAuth, string addressUrl, string addressName, string titlePost, bool offerType, List<string> image, double price, string description, double usefulSurface, double roomSurface, int roomCount)
+        private HotelPension(double usefulSurface, double roomSurface, int roomCount , Guid basePostId)
         {
-            Address Address = new Address
-            {
-                Url = addressUrl,
-                AddressName = addressName
-            };
-
-            PostId = new BasePost
-            {
-                UserId = regAuth.Id,
-                TitlePost = titlePost,
-                OfferType = offerType,
-                Image = image,
-                Price = price,
-                Descripion = description,
-                AddressId = Address
-            };
-
+            Id = Guid.NewGuid();
+            BasePostId = basePostId;
             RoomCount = roomCount;
             RoomSurface = roomSurface;
             UsefulSurface = usefulSurface;
         }
 
-        public BasePost PostId { get; private set; } //attach
+        private HotelPension(BasePost basePost, double usefulSurface, double roomSurface, int roomCount, Guid basePostId) : this(usefulSurface, roomSurface, roomCount, basePostId)
+        {
+            BasePost = basePost;
+        }
+
+        public Guid Id { get; private set; }
+        public Guid BasePostId { get; private set; } //attach
+        public BasePost BasePost { get; private set; } = null!;
         public double UsefulSurface { get; private set; }
         public double RoomSurface { get; private set; }
         public int RoomCount { get; private set; }
 
-        public Result<HotelPension> Create(RegAuth regAuth, string addressUrl, string addressName, string titlePost, bool offerType, List<string> image, double price, string description, double usefulSurface, double roomSurface, int roomCount)
+        public Result<HotelPension> Create(Guid basePostId, double usefulSurface, double roomSurface, int roomCount)
         {
-            if (string.IsNullOrWhiteSpace(titlePost))
-            {
-                return Result<HotelPension>.Failure("A Title for the Post is required.");
-            }
-
-            if (image.Count() > 16)
-            {
-                return Result<HotelPension>.Failure("Please add less than 16 images");
-            }
-
-            if (price <= 0)
-            {
-                return Result<HotelPension>.Failure("Price must be larger than 0.");
-            }
-
             if (usefulSurface <= 0)
             {
                 return Result<HotelPension>.Failure("Useful area must be larger than 0.");
@@ -66,18 +43,8 @@ namespace RealEstate.Domain.Entities
                 return Result<HotelPension>.Failure("Room count must be larger than 0.");
             }
 
-            if (string.IsNullOrEmpty(addressUrl))
-            {
-                return Result<HotelPension>.Failure("Address URL is required.");
-            }
 
-            if (string.IsNullOrEmpty(addressName))
-            {
-                return Result<HotelPension>.Failure("Address is required.");
-            }
-
-
-            return Result<HotelPension>.Success(new HotelPension(regAuth, addressUrl, addressName, titlePost, offerType, image, price, description, usefulSurface, roomSurface, roomCount));
+            return Result<HotelPension>.Success(new HotelPension(usefulSurface, roomSurface, roomCount, basePostId));
         }
 
         public Result<BasePost> Delete()

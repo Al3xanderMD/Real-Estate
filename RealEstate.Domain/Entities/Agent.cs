@@ -2,50 +2,33 @@
 
 namespace RealEstate.Domain.Entities
 {
-    public class Agent
+    public class Agent : AuditableEntity
     {
+        public Guid AgentId { get; private set; }
         public string AgentName { get; private set; }
         public string? Logolink { get; private set; }
         public string Phone { get; private set; }
-        public Address AddressId { get; private set; }
+        public Guid AddressId { get; private set; }
+        public Address Address { get; private set; } = null!;
         public string? Url { get; private set; }
-        public RegAuth RegAuth { get; private set; }
 
-        private Agent(string email, string password, string urlAddress, string addressName, string agentName, string phone)
+
+        private Agent(Guid addressId, string agentName, string phone)
         {
-            RegAuth = new RegAuth
-            {
-                Email = email,
-                Password = password,
-                Role = "Agent"
-            };
-            AddressId = new Address
-            {
-                Url = urlAddress,
-                AddressName = addressName
-            };
+            AgentId = Guid.NewGuid();
+            AddressId = addressId;
             AgentName = agentName;
             Phone = phone;
         }
 
-        static public Result<Agent> Create(string email, string password, string urlAdress, string adressName, string agentName, string phone)
+        private Agent(Guid addressId, Address address, string agentName, string phone) : this(addressId, agentName, phone)
         {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return Result<Agent>.Failure("Email is required");
-            }
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                return Result<Agent>.Failure("Password is required");
-            }
-            if (string.IsNullOrWhiteSpace(urlAdress))
-            {
-                return Result<Agent>.Failure("Url adress is required");
-            }
-            if (string.IsNullOrWhiteSpace(adressName))
-            {
-                return Result<Agent>.Failure("Adress name is required");
-            }
+            Address = address;
+        }
+
+
+        static public Result<Agent> Create(Guid addressId, string agentName, string phone)
+        {
             if (string.IsNullOrWhiteSpace(agentName))
             {
                 return Result<Agent>.Failure("Agent name is required");
@@ -55,7 +38,7 @@ namespace RealEstate.Domain.Entities
                 return Result<Agent>.Failure("Phone is required");
             }
 
-            var agent = new Agent(email, password, urlAdress, adressName, agentName, phone);
+            var agent = new Agent(addressId, agentName, phone);
 
             return Result<Agent>.Success(agent);
         }
@@ -66,11 +49,11 @@ namespace RealEstate.Domain.Entities
                 Logolink = logolink;
             }
         }
-        public void AttachPhone(string phone)
+        public void AttachUrl(string url)
         {
-            if(phone.Length == 10)
+            if (!string.IsNullOrWhiteSpace(url))
             {
-                Phone = phone;
+                Url = url;
             }
         }
 
