@@ -2,18 +2,18 @@
 
 namespace RealEstate.Domain.Entities
 {
-    public class CommercialCategory
+    public class CommercialCategory : AuditableEntity
     {
-        public Guid CategoryId { get; private set; }
+        public Guid Id { get; private set; }
         public string CategoryName { get; private set; }
     
         public CommercialCategory(string categoryName)
         {
-            CategoryId = Guid.NewGuid();
+            Id = Guid.NewGuid();
             CategoryName = categoryName;
         }
 
-        public Result<CommercialCategory> CreateCommercialCategory(string categoryName)
+        public Result<CommercialCategory> Create(string categoryName)
         {
             if (string.IsNullOrWhiteSpace(categoryName))
                 return Result<CommercialCategory>.Failure("Category name is required");
