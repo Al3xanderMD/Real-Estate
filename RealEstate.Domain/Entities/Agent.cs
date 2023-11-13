@@ -12,7 +12,6 @@ namespace RealEstate.Domain.Entities
         public Address Address { get; private set; } = null!;
         public string? Url { get; private set; }
 
-
         private Agent(Guid addressId, string agentName, string phone)
         {
             AgentId = Guid.NewGuid();
@@ -56,6 +55,5 @@ namespace RealEstate.Domain.Entities
                 Url = url;
             }
         }
-
     }
 }

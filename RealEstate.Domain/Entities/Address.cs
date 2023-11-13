@@ -15,7 +15,7 @@ namespace RealEstate.Domain.Entities
             AddressName = addressName;
         }
 
-        public Result<Address> CreateAddress(string url, string addressName)
+        public static Result<Address> Create(string url, string addressName)
         {
             if (string.IsNullOrWhiteSpace(url))
                 return Result<Address>.Failure("Url is required");

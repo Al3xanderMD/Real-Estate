@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
 {
-    public class CreateCategoryCommandValidator
+    public class CreateAddressCommandValidator : AbstractValidator<CreateAddressCommand>
     {
+        public CreateAddressCommandValidator()
+        {
+            RuleFor(p => p.AddressName)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotNull()
+                .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+            RuleFor(p => p.Url)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotNull()
+                .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+        }
     }
 }

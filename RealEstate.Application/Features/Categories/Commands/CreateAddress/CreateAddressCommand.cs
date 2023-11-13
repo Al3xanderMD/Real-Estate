@@ -9,7 +9,7 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
 {
     public class CreateAddressCommand : IRequest<CreateAddressCommandResponse>
     {
-        public string Url { get; set; } = default;
-        public string AddressName { get; set; } = default;
+        public string Url { get; set; } = default!;
+        public string AddressName { get; set; } = default!;
     }
 }

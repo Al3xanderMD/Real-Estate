@@ -5,6 +5,11 @@ namespace Infrastructure
 {
     public class RealEstateContext : DbContext
     {
+        public RealEstateContext(DbContextOptions<RealEstateContext> options) : 
+            base(options)
+        {
+        }
+
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Apartment> Apartments { get; set; }
@@ -20,9 +25,9 @@ namespace Infrastructure
         public DbSet<Partitioning> Partitionings { get; set; }
         //public DbSet<RegAuth> RegAuths { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=RealEstateDB;User Id=postgres;Password=root;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=RealEstateDB;User Id=postgres;Password=root;");
+        //}
     }
 }
