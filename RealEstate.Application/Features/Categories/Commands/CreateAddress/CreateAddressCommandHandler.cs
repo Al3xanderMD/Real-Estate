@@ -5,39 +5,52 @@ using RealEstate.Domain.Entities;
 namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
 {
     public class CreateAddressCommandHandler
-    /*: IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>
+    : IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>
     {
-        private readonly IAddressRepository respository;
+        private readonly IAddressRepository repository;
 
-        public CreateAddressCommandHandler(IAddressRepository respository)
+        public CreateAddressCommandHandler(IAddressRepository repository)
         {
-            this.respository = respository;
+            this.repository = repository;
         }
 
         public async Task<CreateAddressCommandResponse> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
         {
-            var response = new CreateAddressCommandResponse();
             var validator = new CreateAddressCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (validatorResult.Errors.Count > 0)
+            if(!validatorResult.IsValid)
             {
-                response.Success = false;
-                response.ValidationsErrors = new List<string>();
-                foreach (var error in validatorResult.Errors)
+                return new CreateAddressCommandResponse
                 {
-                    response.ValidationsErrors.Add(error.ErrorMessage);
-                }
-            }
-            if (response.Success) //Trebuie Oare? Este o clasa auxiliara
-            {
+                    Success = false,
+                    ValidationErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
+                };
                 
             }
-            return response;
 
+            var address = Address.Create(request.Url, request.AddressName);
+            if(!address.IsSuccess)
+            {
+                return new CreateAddressCommandResponse
+                {
+                    Success = false,
+                    ValidationErrors = new List<string>() { address.Error }
+                };
+            }
+
+            await repository.AddAsync(address.Value);
+
+            return new CreateAddressCommandResponse
+            {
+                Success = true,
+                Address = new CreateAddressDto
+                {
+                    Id = address.Value.Id,
+                    Url = address.Value.Url,
+                    AddressName = address.Value.AddressName
+                }
+            };
         }
-    }*/
-    {
-
     }
 }

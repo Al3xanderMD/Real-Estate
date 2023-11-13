@@ -12,7 +12,6 @@ namespace RealEstate.Domain.Entities
         public double Price { get; set; }
         public Guid AddressId { get; set; }
         public Address Address { get; set; } = null!;
-
         public string? Descripion { get; set; } = null;
 
         public BasePost(Guid userId, string titlePost, double price, Guid addressId, bool offerType)
