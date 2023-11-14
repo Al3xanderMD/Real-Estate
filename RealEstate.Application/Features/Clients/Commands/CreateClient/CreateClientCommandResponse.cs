@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using RealEstate.Application.Responses;
+﻿using RealEstate.Application.Responses;
 
 namespace RealEstate.Application.Features.Categories.Commands.CreateClient
 {

@@ -1,5 +1,4 @@
 ﻿using RealEstate.Domain.Common;
-using System.Net.Sockets;
 
 namespace RealEstate.Domain.Entities
 {

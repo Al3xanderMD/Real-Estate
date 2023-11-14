@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Features.Agents.Commands.CreateAgent;
+using RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning;
 
 namespace RealEstate.API.Controllers
 {
-    public class AgentsController : ApiControllerBase
+    public class PartitioningController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Create(CreateAgentCommand command)
+        public async Task<IActionResult> Create(CreatePartitioningCommand command)
         {
             var result = await Mediator.Send(command);
-            if(!result.Success)
+            if (!result.Success)
             {
                 return BadRequest(result);
             }

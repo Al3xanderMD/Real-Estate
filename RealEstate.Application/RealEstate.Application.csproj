@@ -18,11 +18,8 @@
     <Folder Include="Features\CommercialCategories\" />
     <Folder Include="Features\CommercialSpecifics\" />
     <Folder Include="Features\HotelPensions\" />
-    <Folder Include="Features\Houses\" />
     <Folder Include="Features\Lots\" />
-    <Folder Include="Features\HouseTypes\" />
     <Folder Include="Features\LotClassifications\" />
-    <Folder Include="Features\Partitionings\" />
   </ItemGroup>
 
   <ItemGroup>
