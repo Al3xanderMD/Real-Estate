@@ -27,6 +27,9 @@ namespace Infrastructure
                 typeof(BaseRepository<>));
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAgentRepository, AgentRepository>();
+            services.AddScoped<IApartmentRepository, ApartmentRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IBasePostRepository, BasePostRepository>();
             return services;
         }
     }

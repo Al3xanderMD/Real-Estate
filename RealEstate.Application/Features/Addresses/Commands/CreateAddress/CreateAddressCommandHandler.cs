@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using RealEstate.Application.Features.Categories.Commands.CreateAddress;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
 
-namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
+namespace RealEstate.Application.Features.Addresses.Commands.CreateAddress
 {
     public class CreateAddressCommandHandler
     : IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>
@@ -19,18 +20,18 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
             var validator = new CreateAddressCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if(!validatorResult.IsValid)
+            if (!validatorResult.IsValid)
             {
                 return new CreateAddressCommandResponse
                 {
                     Success = false,
                     ValidationErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
-                
+
             }
 
             var address = Address.Create(request.Url, request.AddressName);
-            if(!address.IsSuccess)
+            if (!address.IsSuccess)
             {
                 return new CreateAddressCommandResponse
                 {
