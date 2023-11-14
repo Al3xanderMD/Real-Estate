@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Addresses.Commands.CreateAddress;
 using RealEstate.Application.Features.Addresses.Queries.GetAll;
 using RealEstate.Application.Features.Addresses.Queries.GetById;
@@ -35,5 +36,7 @@ namespace RealEstate.API.Controllers
             var result = await Mediator.Send(new GetByIdAddressQuery(id));
             return Ok(result);
         }
+
+
     }
 }
