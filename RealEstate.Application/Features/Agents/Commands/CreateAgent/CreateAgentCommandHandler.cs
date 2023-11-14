@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using RealEstate.Application.Features.Categories.Commands.CreateAgent;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
 
