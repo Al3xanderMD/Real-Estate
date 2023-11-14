@@ -1,6 +1,4 @@
-﻿using RealEstate.Domain.Entities;
-
-namespace RealEstate.Application.Features.Agents.Commands.CreateAgent
+﻿namespace RealEstate.Application.Features.Agents.Commands.CreateAgent
 {
     public class CreateAgentDto
     {
