@@ -1,6 +1,6 @@
 ﻿using RealEstate.Application.Responses;
 
-namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
+namespace RealEstate.Application.Features.Addresses.Commands.CreateAddress
 {
     public class CreateAddressCommandResponse : BaseResponse
     {

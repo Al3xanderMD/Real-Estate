@@ -1,6 +1,6 @@
 ﻿using RealEstate.Application.Responses;
 
-namespace RealEstate.Application.Features.Categories.Commands.CreateAgent
+namespace RealEstate.Application.Features.Agents.Commands.CreateAgent
 {
     public class CreateAgentCommandResponse : BaseResponse
     {

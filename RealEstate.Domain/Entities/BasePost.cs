@@ -6,6 +6,7 @@ namespace RealEstate.Domain.Entities
     {
         public Guid BasePostId { get; set; }
         public Guid UserId { get; set;}
+        public Client User { get; set; } = null!;
         public string TitlePost { get; set; }
         public List<string> Images { get; set; } = new List<string>();
         public bool OfferType { get; set; } = false;
@@ -24,19 +25,20 @@ namespace RealEstate.Domain.Entities
             OfferType = offerType;
         }
 
-        private BasePost(Guid userId, string titlePost, double price, Guid addressId, Address address, bool offerType) : this(userId, titlePost, price, addressId, offerType)
+        private BasePost(Guid userId, string titlePost, double price, Guid addressId, Address address,Client user, bool offerType) : this(userId, titlePost, price, addressId, offerType)
         {
             Address = address;
+            User = user;
         }
 
-        public Result<BasePost> CreateBasePost(Guid userId, string titlePost, double price, Guid address, bool offerType)
+        public static Result<BasePost> Create(Guid userId, string titlePost, double price, Guid addressId, bool offerType)
         {
             if (string.IsNullOrWhiteSpace(titlePost))
                 return Result<BasePost>.Failure("'TitlePost' must not be empty");
             if (price <= 0)
                 return Result<BasePost>.Failure("'Price' must be greater than 0");
 
-            return Result<BasePost>.Success(new BasePost(userId, titlePost, price, address, offerType));
+            return Result<BasePost>.Success(new BasePost(userId, titlePost, price, addressId, offerType));
         }
 
         public void AttachDescription(string description)

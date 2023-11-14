@@ -1,4 +1,4 @@
-﻿namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
+﻿namespace RealEstate.Application.Features.Addresses.Commands.CreateAddress
 {
     public class CreateAddressDto
     {

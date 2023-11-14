@@ -23,7 +23,7 @@ namespace RealEstate.Domain.Entities
         }
 
         public Guid Id { get; private set; }
-        public Guid BasePostId { get; private set; } //attach
+        public Guid BasePostId { get; private set; } 
         public BasePost BasePost { get; private set; } = null!;
         public int RoomCount { get; private set; }
         public Guid PartitioningId { get; private set; }
@@ -34,7 +34,7 @@ namespace RealEstate.Domain.Entities
         public int BuildYear { get; private set; }
 
 
-        public Result<Apartment> Create( int roomCount, int comfort, int floor, double usefulSurface, int buildYear, Guid basepostId, Guid partitioningId)
+        public static Result<Apartment> Create( int roomCount, int comfort, int floor, double usefulSurface, int buildYear, Guid basepostId, Guid partitioningId)
         {
 
             if (roomCount <= 0)

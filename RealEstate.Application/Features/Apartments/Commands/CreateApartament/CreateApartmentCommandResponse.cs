@@ -1,6 +1,6 @@
 ﻿using RealEstate.Application.Responses;
 
-namespace RealEstate.Application.Features.Categories.Commands.CreateApartament
+namespace RealEstate.Application.Features.Apartments.Commands.CreateApartament
 {
     public class CreateApartmentCommandResponse : BaseResponse
     {

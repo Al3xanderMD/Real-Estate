@@ -1,16 +1,17 @@
 ﻿using FluentValidation;
 
-namespace RealEstate.Application.Features.Categories.Commands.CreateAddress
+namespace RealEstate.Application.Features.Categories.Commands.CreateClient
 {
-    public class CreateAddressCommandValidator : AbstractValidator<CreateAddressCommand>
+    public class CreateClientCommandValidator : AbstractValidator<CreateClientCommand>
     {
-        public CreateAddressCommandValidator()
+        public CreateClientCommandValidator()
         {
-            RuleFor(p => p.AddressName)
+            RuleFor(p => p.FirstName)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
-            RuleFor(p => p.Url)
+
+            RuleFor(p => p.LastName)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");

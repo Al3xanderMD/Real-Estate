@@ -17,7 +17,7 @@ namespace RealEstate.Domain.Entities
             LastName = lastName;
         }
 
-        public static Result<Client> Create(string firstName, string lastName, string phone, string region)
+        public static Result<Client> Create(string firstName, string lastName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
@@ -26,14 +26,6 @@ namespace RealEstate.Domain.Entities
             if (string.IsNullOrWhiteSpace(lastName))
             {
                 return Result<Client>.Failure("Last name is required");
-            }
-            if (string.IsNullOrWhiteSpace(phone))
-            {
-                return Result<Client>.Failure("Phone is required");
-            }
-            if (string.IsNullOrWhiteSpace(region))
-            {
-                return Result<Client>.Failure("Region is required");
             }
 
             var client = new Client(firstName, lastName);
