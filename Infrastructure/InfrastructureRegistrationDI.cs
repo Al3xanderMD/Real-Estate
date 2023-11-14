@@ -30,6 +30,9 @@ namespace Infrastructure
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IBasePostRepository, BasePostRepository>();
+            services.AddScoped<IPartitioningRepository, PartitioningRepository>();
+            services.AddScoped<IHouseTypeRepository, HouseTypeRepository>();
+            services.AddScoped<IHouseRepository, HouseRepository>();
 
             return services;
         }
