@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RealEstate.Application.Features.Apartments.Commands.CreatePartitioning
+namespace RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning
 {
     public class CreatePartitioningCommandValidator : AbstractValidator<CreatePartitioningCommand>
     {

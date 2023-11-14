@@ -35,7 +35,7 @@ namespace RealEstate.Domain.Entities
         public int BuildYear { get; private set; }
 
 
-        public Result<House> Create(Guid basePostId, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear , Guid houseTypeId)
+        public static Result<House> Create(Guid basePostId, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear , Guid houseTypeId)
         {
 
             if (roomCount <= 0)

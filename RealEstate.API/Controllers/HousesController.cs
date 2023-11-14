@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using RealEstate.Application.Features.Houses.Commands.CreateHouse;
 
 namespace RealEstate.API.Controllers
 {
-    public class PartitioningController : ApiControllerBase
+    public class HousesController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Create(CreatePartitioningCommand command)
+        public async Task<IActionResult> Create(CreateHouseCommand command)
         {
             var result = await Mediator.Send(command);
             if (!result.Success)

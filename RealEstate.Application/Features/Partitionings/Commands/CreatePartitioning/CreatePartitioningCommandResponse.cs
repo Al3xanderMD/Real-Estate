@@ -1,6 +1,6 @@
 ﻿using RealEstate.Application.Responses;
 
-namespace RealEstate.Application.Features.Apartments.Commands.CreatePartitioning
+namespace RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning
 {
     public class CreatePartitioningCommandResponse : BaseResponse
     {

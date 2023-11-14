@@ -2,7 +2,7 @@
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
 
-namespace RealEstate.Application.Features.Apartments.Commands.CreatePartitioning
+namespace RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning
 {
     public class CreatePartitioningCommandHandler : IRequestHandler<CreatePartitioningCommand, CreatePartitioningCommandResponse>
     {
@@ -24,9 +24,9 @@ namespace RealEstate.Application.Features.Apartments.Commands.CreatePartitioning
                     ValidationErrors = validationResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
-            
+
             var partitioning = Partitioning.CreatePartitioning(request.Type);
-            
+
             if (!partitioning.IsSuccess)
             {
                 return new CreatePartitioningCommandResponse
@@ -42,6 +42,7 @@ namespace RealEstate.Application.Features.Apartments.Commands.CreatePartitioning
                 Success = true,
                 Partitioning = new CreatePartitioningDTO
                 {
+                    Id = partitioning.Value.Id,
                     Type = partitioning.Value.Type
                 }
             };
