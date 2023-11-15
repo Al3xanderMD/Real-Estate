@@ -8,17 +8,18 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Features\Categories\Commands\CreateRegAuth\" />
-    <Folder Include="Features\Categories\Commands\CreateClient\" />
-    <Folder Include="Features\Categories\Commands\CreateAgent\" />
-    <Folder Include="Features\Categories\Commands\CreateAddress\" />
-    <Folder Include="Features\Categories\Commands\CreateApartament\" />
-    <Folder Include="Features\Categories\Commands\CreateHouse\" />
-    <Folder Include="Features\Categories\Commands\CreateLot\" />
-    <Folder Include="Features\Categories\Commands\CreateHotelPension\" />
-    <Folder Include="Features\Categories\Commands\CreateCommercial\" />
-    <Folder Include="Features\Categories\Queries\" />
-    <Folder Include="Responses\" />
+    <Folder Include="Features\Agents\Queries\" />
+    <Folder Include="Features\Apartments\Queries\" />
+    <Folder Include="Features\BasePosts\Queries\" />
+    <Folder Include="Features\Agents\Commands\CreateAgent\" />
+    <Folder Include="Features\Addresses\Commands\CreateAddress\" />
+    <Folder Include="Features\Clients\Queries\" />
+    <Folder Include="Features\Commercials\" />
+    <Folder Include="Features\CommercialCategories\" />
+    <Folder Include="Features\CommercialSpecifics\" />
+    <Folder Include="Features\HotelPensions\" />
+    <Folder Include="Features\Lots\" />
+    <Folder Include="Features\LotClassifications\" />
   </ItemGroup>
 
   <ItemGroup>

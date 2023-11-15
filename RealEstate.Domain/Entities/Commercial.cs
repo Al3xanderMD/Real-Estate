@@ -4,27 +4,49 @@ namespace RealEstate.Domain.Entities
 {
     public class Commercial : AuditableEntity
     {
-       
-        public CommercialSpecific CommercialSpecificId { get; private set; }
+        public Guid Id { get; private set; }
+        public Guid BasePostId { get; private set; }
+        public BasePost BasePost { get; private set; } = null!;
+        public Guid CommercialSpecificId { get; private set; }
+        public CommercialSpecific CommercialSpecific { get; private set; } = null!;
         public double UsefulSurface { get; private set; }
         public DateTime? Disponibility { get; private set; }
 
-        public Commercial(CommercialSpecific idCommercialSpecific, double usefulSurface, DateTime? disponibility)
+        
+
+        private Commercial(Guid basePostId ,Guid commercialSpecificId, double usefulSurface)
         {
-            CommercialSpecificId = idCommercialSpecific;
+            Id = Guid.NewGuid();
+            BasePostId = basePostId;
+            CommercialSpecificId = commercialSpecificId;
             UsefulSurface = usefulSurface;
-            Disponibility = disponibility;
         }
 
-        public static Result<Commercial> CreateCommercial(CommercialSpecific commercialSpecificId, double usefulSurface, DateTime? disponibility)
+        private Commercial(BasePost basePost, CommercialSpecific commercialSpecific, Guid basePostId, Guid commercialSpecificId, double usefulSurface) : this(basePostId, commercialSpecificId, usefulSurface)
+        {
+            BasePost = basePost;
+            CommercialSpecific = commercialSpecific;
+        }
+
+        public static Result<Commercial> CreateCommercial(Guid basePostId, Guid commercialSpecificId, double usefulSurface)
         {
             if (commercialSpecificId == null)
+            {
                 return Result<Commercial>.Failure("Commercial specific is required");
+            }
 
             if (usefulSurface <= 0)
                 return Result<Commercial>.Failure("Useful surface must be greater than 0");
 
-            return Result<Commercial>.Success(new Commercial(commercialSpecificId, usefulSurface, disponibility));
+            return Result<Commercial>.Success(new Commercial(basePostId, commercialSpecificId, usefulSurface));
+        }
+
+        public void AttachDisponibility(DateTime? disponibility)
+        {
+            if(disponibility != null)
+            {
+                Disponibility = disponibility;
+            }
         }
     }
 }

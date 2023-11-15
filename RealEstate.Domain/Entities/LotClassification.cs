@@ -2,7 +2,7 @@
 
 namespace RealEstate.Domain.Entities
 {
-    public class LotClassification
+    public class LotClassification : AuditableEntity
     {
         public Guid Id { get; private set; }
         public string Type { get; private set; }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using RealEstate.Application.Contracts;
+using RealEstate.Domain.Entities;
 namespace RealEstate.Application.Persistence
 {
-    internal interface IAgentRepository
+    public interface IAgentRepository : IAsyncRepository<Agent>
     {
     }
 }
