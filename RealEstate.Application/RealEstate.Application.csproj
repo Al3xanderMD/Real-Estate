@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Features\Agents\Queries\" />
     <Folder Include="Features\Apartments\Queries\" />
     <Folder Include="Features\BasePosts\Queries\" />
     <Folder Include="Features\Agents\Commands\CreateAgent\" />

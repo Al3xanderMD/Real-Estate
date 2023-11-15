@@ -5,7 +5,7 @@ namespace Infrastructure
 {
     public class RealEstateContext : DbContext
     {
-        public RealEstateContext(DbContextOptions<RealEstateContext> options) : 
+        public RealEstateContext(DbContextOptions<RealEstateContext> options) :
             base(options)
         {
         }
