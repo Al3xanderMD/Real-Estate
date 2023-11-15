@@ -7,9 +7,9 @@ namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCo
 {
     public class CreateCommercialCategoryCommandHandler : IRequestHandler<CreateCommercialCategoryCommand, CreateCommercialCategoryCommandResponse>
     {
-        private readonly ICommercialRepository repository;
+        private readonly ICommercialCategoryRepository repository;
 
-        public CreateCommercialCategoryCommandHandler(ICommercialRepository repository) 
+        public CreateCommercialCategoryCommandHandler(ICommercialCategoryRepository repository) 
         {
             this.repository = repository;
         }
