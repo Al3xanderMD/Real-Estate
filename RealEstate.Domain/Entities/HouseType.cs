@@ -13,7 +13,7 @@ namespace RealEstate.Domain.Entities
             Type = type;
         }
 
-        public static Result<HouseType> CreateHouseType(string type)
+        public static Result<HouseType> Create(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
                 return Result<HouseType>.Failure("'Type' must not be empty");

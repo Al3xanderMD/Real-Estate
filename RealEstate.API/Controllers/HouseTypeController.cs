@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.HouseTypes.Commands.CreateHouseType;
+using RealEstate.Application.Features.HouseTypes.Queries.GetAll;
+using RealEstate.Application.Features.HouseTypes.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
@@ -14,6 +16,22 @@ namespace RealEstate.API.Controllers
             {
                 return BadRequest(result);
             }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await Mediator.Send(new GetAllHouseTypesQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await Mediator.Send(new GetByIdHouseTypeQuery(id));
             return Ok(result);
         }
     }

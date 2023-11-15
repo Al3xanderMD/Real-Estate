@@ -13,7 +13,7 @@ namespace RealEstate.Domain.Entities
             Type = type;
         }
 
-        public static Result<Partitioning> CreatePartitioning(string type)
+        public static Result<Partitioning> Create(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
                 return Result<Partitioning>.Failure("'Type' must not be empty");

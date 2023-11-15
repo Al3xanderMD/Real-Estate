@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.Application.Features.BasePosts.Queries.GetAll;
+using RealEstate.Application.Features.BasePosts.Queries.GetById;
 using RealEstate.Application.Features.Categories.Commands.CreateBasePost;
 
 namespace RealEstate.API.Controllers
@@ -17,5 +19,20 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await Mediator.Send(new GetAllBasePostsQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await Mediator.Send(new GetByIdBasePostQuery(id));
+            return Ok(result);
+        }
     }
 }
