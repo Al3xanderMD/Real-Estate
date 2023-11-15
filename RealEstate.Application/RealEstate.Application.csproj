@@ -10,6 +10,10 @@
     <Folder Include="Contracts\" />
     <Folder Include="Features\Agents\Commands\CreateAgent\" />
     <Folder Include="Features\Addresses\Commands\CreateAddress\" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> a7195cb4c19b4ae494f6fdb5b8bc44cc484a0b6d
     <Folder Include="Features\Clients\Queries\" />
     <Folder Include="Features\CommercialCategories\Queries\" />
     <Folder Include="Features\CommercialSpecifics\Queries\" />
