@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.Application.Features.BasePosts.Commands.DeleteBasePost;
 using RealEstate.Application.Features.BasePosts.Queries.GetAll;
 using RealEstate.Application.Features.BasePosts.Queries.GetById;
 using RealEstate.Application.Features.Categories.Commands.CreateBasePost;
@@ -33,6 +34,17 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdBasePostQuery(id));
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deleteBasePostCommand = new DeleteBasePost() { BasePostId = id };
+            await Mediator.Send(deleteBasePostCommand);
+            return NoContent();
         }
     }
 }

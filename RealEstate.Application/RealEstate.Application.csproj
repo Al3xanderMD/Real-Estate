@@ -10,11 +10,6 @@
     <Folder Include="Contracts\" />
     <Folder Include="Features\Agents\Commands\CreateAgent\" />
     <Folder Include="Features\Addresses\Commands\CreateAddress\" />
-    <Folder Include="Features\Commercials\" />
-    <Folder Include="Features\CommercialCategories\" />
-    <Folder Include="Features\CommercialSpecifics\" />
-    <Folder Include="Features\HotelPensions\" />
-    <Folder Include="Features\LotClassifications\" />
   </ItemGroup>
 
   <ItemGroup>

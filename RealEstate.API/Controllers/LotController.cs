@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Features.Lots.CreateLot;
+using RealEstate.Application.Features.Lots.Commands.CreateLot;
+using RealEstate.Application.Features.Lots.Commands.DeleteLot;
 using RealEstate.Application.Features.Lots.Queries.GetAll;
 using RealEstate.Application.Features.Lots.Queries.GetById;
 
@@ -34,6 +35,17 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdLotQuery(id));
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deleteLotCommand = new DeleteLot() { Id = id };
+            await Mediator.Send(deleteLotCommand);
+            return NoContent();
         }
     }
 }

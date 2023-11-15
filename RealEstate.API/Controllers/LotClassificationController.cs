@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.Application.Features.LotClassifications.Command.DeleteLotClassification;
 using RealEstate.Application.Features.LotClassifications.CreateLotClassifications;
 using RealEstate.Application.Features.LotClassifications.Queries.GetAll;
 using RealEstate.Application.Features.LotClassifications.Queries.GetById;
@@ -35,6 +35,17 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdLotClassificationQuery(id));
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deleteLotClassificationCommand = new DeleteLotClassification() { Id = id };
+            await Mediator.Send(deleteLotClassificationCommand);
+            return NoContent();
         }
     }
 }
