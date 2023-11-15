@@ -8,16 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Features\Apartments\Queries\" />
-    <Folder Include="Features\BasePosts\Queries\" />
     <Folder Include="Features\Agents\Commands\CreateAgent\" />
     <Folder Include="Features\Addresses\Commands\CreateAddress\" />
-    <Folder Include="Features\Clients\Queries\" />
     <Folder Include="Features\Commercials\" />
     <Folder Include="Features\CommercialCategories\" />
     <Folder Include="Features\CommercialSpecifics\" />
     <Folder Include="Features\HotelPensions\" />
-    <Folder Include="Features\Lots\" />
     <Folder Include="Features\LotClassifications\" />
   </ItemGroup>
 
