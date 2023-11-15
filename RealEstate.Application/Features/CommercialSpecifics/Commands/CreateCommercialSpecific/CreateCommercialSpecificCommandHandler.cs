@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
             this.repository = repository;
         }
 
-        public async Task<CreateCommercialSpecificCommandResponse> IRequestHandler<CreateCommercialSpecificCommand, CreateCommercialSpecificCommandResponse>.Handle(CreateCommercialSpecificCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCommercialSpecificCommandResponse> Handle(CreateCommercialSpecificCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateCommercialSpecificCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);

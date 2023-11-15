@@ -13,7 +13,7 @@ namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
         {
             this.repository = repository;
         }
-        public async Task<CreateCommercialCommandResponse> IRequestHandler<CreateCommercialCommand, CreateCommercialCommandResponse>.Handle(CreateCommercialCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCommercialCommandResponse> Handle(CreateCommercialCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateCommercialCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);

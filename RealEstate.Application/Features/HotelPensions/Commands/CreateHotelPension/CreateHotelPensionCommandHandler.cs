@@ -15,7 +15,7 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPens
             this.repository = repository;
         }
 
-        public async Task<CreateHotelPensionCommandResponse> IRequestHandler<CreateHotelPensionCommand, CreateHotelPensionCommandResponse>.Handle(CreateHotelPensionCommand request, CancellationToken cancellationToken)
+        public async Task<CreateHotelPensionCommandResponse> Handle(CreateHotelPensionCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateHotelPensionCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);
