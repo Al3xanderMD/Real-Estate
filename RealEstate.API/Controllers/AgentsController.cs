@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Agents.Commands.CreateAgent;
+using RealEstate.Application.Features.Agents.Commands.DeleteAgent;
 using RealEstate.Application.Features.Agents.Queries.GetAll;
 using RealEstate.Application.Features.Agents.Queries.GetById;
 
@@ -34,6 +35,16 @@ namespace RealEstate.API.Controllers
             var result = await Mediator.Send(new GetByIdAgentsQuery(id));
             return Ok(result);
         }
-       
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deleteAgentCommand = new DeleteAgent() { Id = id };
+            await Mediator.Send(deleteAgentCommand);
+            return NoContent();
+        }
     }
 }

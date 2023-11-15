@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning;
+using RealEstate.Application.Features.Partitionings.Commands.DeletePartitioning;
 using RealEstate.Application.Features.Partitionings.Queries.GetAll;
 using RealEstate.Application.Features.Partitionings.Queries.GetById;
 
@@ -33,6 +34,17 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdPartitioningQuery(id));
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deletePartitioningCommand = new DeletePartitioning() { Id = id };
+            await Mediator.Send(deletePartitioningCommand);
+            return NoContent();
         }
     }
 }
