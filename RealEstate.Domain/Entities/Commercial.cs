@@ -28,7 +28,7 @@ namespace RealEstate.Domain.Entities
             CommercialSpecific = commercialSpecific;
         }
 
-        public static Result<Commercial> CreateCommercial(Guid basePostId, Guid commercialSpecificId, double usefulSurface)
+        public static Result<Commercial> Create(Guid basePostId, Guid commercialSpecificId, double usefulSurface)
         {
             if (commercialSpecificId == null)
             {

@@ -13,7 +13,7 @@ namespace RealEstate.Domain.Entities
             CategoryName = categoryName;
         }
 
-        public Result<CommercialCategory> Create(string categoryName)
+        public static Result<CommercialCategory> Create(string categoryName)
         {
             if (string.IsNullOrWhiteSpace(categoryName))
                 return Result<CommercialCategory>.Failure("Category name is required");

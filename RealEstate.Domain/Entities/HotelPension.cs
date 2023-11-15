@@ -25,7 +25,7 @@ namespace RealEstate.Domain.Entities
         public double RoomSurface { get; private set; }
         public int RoomCount { get; private set; }
 
-        public Result<HotelPension> Create(Guid basePostId, double usefulSurface, double roomSurface, int roomCount)
+        public static Result<HotelPension> Create(Guid basePostId, double usefulSurface, double roomSurface, int roomCount)
         {
             if (usefulSurface <= 0)
             {

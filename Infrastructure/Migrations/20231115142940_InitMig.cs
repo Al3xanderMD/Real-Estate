@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitProject : Migration
+    public partial class InitMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -161,6 +163,12 @@ namespace Infrastructure.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BasePosts_Clients_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -364,6 +372,11 @@ namespace Infrastructure.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BasePosts_UserId",
+                table: "BasePosts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Commercials_BasePostId",
                 table: "Commercials",
                 column: "BasePostId");
@@ -414,9 +427,6 @@ namespace Infrastructure.Migrations
                 name: "Apartments");
 
             migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
                 name: "Commercials");
 
             migrationBuilder.DropTable(
@@ -448,6 +458,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
         }
     }
 }
