@@ -33,6 +33,8 @@ namespace Infrastructure
             services.AddScoped<IPartitioningRepository, PartitioningRepository>();
             services.AddScoped<IHouseTypeRepository, HouseTypeRepository>();
             services.AddScoped<IHouseRepository, HouseRepository>();
+            services.AddScoped<ILotRepository, LotRepository>();
+            services.AddScoped<ILotClassificationRepository, LotClassificationRepository>();
 
             return services;
         }

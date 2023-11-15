@@ -25,7 +25,7 @@ namespace RealEstate.Application.Features.Partitionings.Commands.CreatePartition
                 };
             }
 
-            var partitioning = Partitioning.CreatePartitioning(request.Type);
+            var partitioning = Partitioning.Create(request.Type);
 
             if (!partitioning.IsSuccess)
             {

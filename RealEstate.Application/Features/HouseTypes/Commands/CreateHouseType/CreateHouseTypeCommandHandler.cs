@@ -25,7 +25,7 @@ namespace RealEstate.Application.Features.HouseTypes.Commands.CreateHouseType
                 };
             }
 
-            var houseType = HouseType.CreateHouseType(request.Type);
+            var houseType = HouseType.Create(request.Type);
 
             if (!houseType.IsSuccess)
             {

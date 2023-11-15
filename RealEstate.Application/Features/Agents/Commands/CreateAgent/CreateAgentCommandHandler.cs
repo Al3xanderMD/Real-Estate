@@ -25,7 +25,6 @@ namespace RealEstate.Application.Features.Agents.Commands.CreateAgent
                     Success = false,
                     ValidationErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
-
             }
 
             var agent = Agent.Create(request.AddressId, request.AgentName, request.Phone);

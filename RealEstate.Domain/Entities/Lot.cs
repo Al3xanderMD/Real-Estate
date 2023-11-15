@@ -28,7 +28,7 @@ namespace RealEstate.Domain.Entities
         public double StreetFrontage { get; private set; }
 
 
-        public Result<Lot> Create(Guid basePostId, double lotArea, double streetFrontage, Guid lotClassificationId)
+        public static Result<Lot> Create(Guid basePostId, double lotArea, double streetFrontage, Guid lotClassificationId)
         {
             if (lotArea <= 0)
             {

@@ -13,7 +13,7 @@ namespace RealEstate.Domain.Entities
             Type = type;
         }
 
-        public static Result<LotClassification> CreateLotClassification(string type)
+        public static Result<LotClassification> Create(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
                 return Result<LotClassification>.Failure("'Type' must not be empty");
