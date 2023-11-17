@@ -5,8 +5,7 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
     public class CreateCommercialSpecificDto
     {
         public Guid CommercialSpecificId { get; set; }
-        public string SpecificName { get; set; }
+        public string? SpecificName { get; set; }
         public Guid CommercialCategoryId { get; set; }
-        public CommercialCategory CommercialCategory { get; set; }
     }
 }

@@ -13,12 +13,13 @@ namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCo
         {
             this.repository = repository;
         }
+
         public async Task<CreateCommercialCategoryCommandResponse> Handle(CreateCommercialCategoryCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateCommercialCategoryCommandValidator();
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (validatorResult.IsValid) 
+            if (!validatorResult.IsValid) 
             {
                 return new CreateCommercialCategoryCommandResponse
                 {
@@ -28,6 +29,7 @@ namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCo
             }
 
             var commercialCategory = CommercialCategory.Create(request.CategoryName);
+
             if (!commercialCategory.IsSuccess) 
             {
                 return new CreateCommercialCategoryCommandResponse
@@ -44,6 +46,7 @@ namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCo
                 Success = true,
                 CommercialCategory = new CreateCommercialCategoryDto
                 {
+                    Id = commercialCategory.Value.Id,
                     CategoryName = commercialCategory.Value.CategoryName
                 }
             };

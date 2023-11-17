@@ -4,7 +4,11 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
 {
     public class CreateCommercialSpecificCommandResponse : BaseResponse
     {
-        public CreateCommercialSpecificCommandResponse() : base() { }
+        public CreateCommercialSpecificCommandResponse() 
+            : base() 
+        { 
+        }
+
         public CreateCommercialSpecificDto CommercialSpecific {  get; set; }
     }
 }

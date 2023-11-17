@@ -4,7 +4,11 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPens
 {
     public class CreateHotelPensionCommandResponse : BaseResponse
     {
-        public CreateHotelPensionCommandResponse() : base() { }
+        public CreateHotelPensionCommandResponse() 
+            : base() 
+        { 
+        }
+
         public CreateHotelPensionDto HotelPension { get; set; }
     }
 }

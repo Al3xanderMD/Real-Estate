@@ -6,7 +6,6 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
     public class CreateCommercialSpecificCommand : IRequest<CreateCommercialSpecificCommandResponse>
     {
         public string SpecificName { get; set; } = default!;
-        public CommercialCategory CommercialCategory { get; set; } = default!;
-        public Guid CommercialCategoryId { get; set; } = default!;
+        public Guid CommercialCategoryId { get; set; } 
     }
 }

@@ -29,6 +29,7 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
             }
 
             var commercialSpecific = CommercialSpecific.Create(request.SpecificName,request.CommercialCategoryId);
+
             if(!commercialSpecific.IsSuccess)
             {
                 return new CreateCommercialSpecificCommandResponse
@@ -45,6 +46,7 @@ namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCom
                 Success = true,
                 CommercialSpecific = new CreateCommercialSpecificDto
                 {
+
                     CommercialSpecificId = commercialSpecific.Value.CommercialSpecificId,
                     SpecificName = commercialSpecific.Value.SpecificName,
                     CommercialCategoryId = commercialSpecific.Value.CommercialCategoryId

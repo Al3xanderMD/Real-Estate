@@ -4,7 +4,11 @@ namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCo
 {
     public class CreateCommercialCategoryCommandResponse : BaseResponse
     {
-        public CreateCommercialCategoryCommandResponse() : base() { }
+        public CreateCommercialCategoryCommandResponse() 
+            : base() 
+        {
+        }
+
         public CreateCommercialCategoryDto CommercialCategory { get; set; }
     }
 }
