@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Features.Addresses.Commands.CreateAddress;
-using RealEstate.Application.Features.Addresses.Commands.DeleteAddres;
-using RealEstate.Application.Features.Addresses.Commands.UpdateAddress;
-using RealEstate.Application.Features.Addresses.Queries.GetAll;
-using RealEstate.Application.Features.Addresses.Queries.GetById;
+﻿using Microsoft.AspNetCore.Mvc;
+using Partial.Application.Features.Book.Command.CreateBook;
+using Partial.Application.Features.Book.Command.DeleteBook;
+using Partial.Application.Features.Book.Command.UpdateBook;
+using Partial.Application.Features.Book.Queries.GetAll;
+using Partial.Application.Features.Book.Queries.GetById;
 
-namespace RealEstate.API.Controllers
+namespace Partial.API.Controllers
 {
-    public class AddressesController : ApiControllerBase
+    public class BooksController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Create(CreateAddressCommand command)
+        public async Task<IActionResult> Create(CreateBookCommand command)
         {
             var result = await Mediator.Send(command);
-            if (!result.Success)
+            if(!result.Success)
             {
                 return BadRequest(result);
             }
             return Ok(result);
         }
 
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var result = await Mediator.Send(new GetAllAddressesQuery());
+            var result = await Mediator.Send(new GetAllBooksQuery());
             return Ok(result);
         }
 
@@ -35,16 +35,16 @@ namespace RealEstate.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await Mediator.Send(new GetByIdAddressQuery(id));
+            var result = await Mediator.Send(new GetByIdBookQuery(id));
             return Ok(result);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(Guid id, UpdateAddressCommand command)
+        public async Task<IActionResult> Update(Guid id, UpdateBookCommand command)
         {
-            if (id != command.Id)
+            if(id != command.Id)
             {
                 return BadRequest();
             }
@@ -58,8 +58,11 @@ namespace RealEstate.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteAddressCommand = new DeleteAddressCommand() { Id = id };
-            await Mediator.Send(deleteAddressCommand);
+            var result = await Mediator.Send(new DeleteBookCommand { Id = id});
+            if(!result.Success)
+            {
+                return BadRequest(result);
+            }
             return NoContent();
         }
     }

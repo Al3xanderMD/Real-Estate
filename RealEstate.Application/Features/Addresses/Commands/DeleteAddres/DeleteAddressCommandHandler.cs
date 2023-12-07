@@ -3,28 +3,28 @@ using RealEstate.Application.Persistence;
 
 namespace RealEstate.Application.Features.Addresses.Commands.DeleteAddres
 {
-    public class DeleteAddressHandler : IRequestHandler<DeleteAddress, DeleteAddressResponse>
+    public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, DeleteAddressCommandResponse>
     {
         private readonly IAddressRepository repository;
 
-        public DeleteAddressHandler(IAddressRepository repository)
+        public DeleteAddressCommandHandler(IAddressRepository repository)
         {
             this.repository = repository;
         }
 
-        public async Task<DeleteAddressResponse> Handle(DeleteAddress request, CancellationToken cancellationToken)
+        public async Task<DeleteAddressCommandResponse> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
         {
             var result = await repository.DeleteAsync(request.Id);
 
             if(!result.IsSuccess)
             {
-                return new DeleteAddressResponse
+                return new DeleteAddressCommandResponse
                 {
                     Success = false,
                     ValidationErrors = new List<string> { result.Error }
                 };
             } 
-            return new DeleteAddressResponse
+            return new DeleteAddressCommandResponse
             {
                 Success = true
             };

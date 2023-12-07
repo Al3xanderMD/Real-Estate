@@ -2,7 +2,7 @@
 
 namespace RealEstate.Application.Features.Addresses.Commands.DeleteAddres
 {
-    public class DeleteAddress : IRequest<DeleteAddressResponse>
+    public class DeleteAddressCommand : IRequest<DeleteAddressCommandResponse>
     {
         public Guid Id { get; set; }
     }
