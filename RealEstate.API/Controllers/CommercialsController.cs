@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Commercials.Commands.CreateCommercial;
 using RealEstate.Application.Features.Commercials.Commands.DeleteCommercial;
 using RealEstate.Application.Features.Commercials.Queries.GetAll;
@@ -7,7 +6,7 @@ using RealEstate.Application.Features.Commercials.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class CommercialsController : ApiControllerBase
+	public class CommercialsController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

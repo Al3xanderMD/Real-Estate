@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
-using System.Net;
 
 namespace RealEstate.Application.Features.CommercialCategories.Commands.CreateCommercialCategory
 {
-    public class CreateCommercialCategoryCommandHandler : IRequestHandler<CreateCommercialCategoryCommand, CreateCommercialCategoryCommandResponse>
+	public class CreateCommercialCategoryCommandHandler : IRequestHandler<CreateCommercialCategoryCommand, CreateCommercialCategoryCommandResponse>
     {
         private readonly ICommercialCategoryRepository repository;
 

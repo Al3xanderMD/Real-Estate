@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using RealEstate.Domain.Entities;
 
 namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
 {
-    public class CreateCommercialCommand : IRequest<CreateCommercialCommandResponse>
+	public class CreateCommercialCommand : IRequest<CreateCommercialCommandResponse>
     {
         public Guid BasePostId { get; set; } 
         public Guid CommercialSpecificId { get; set; } 

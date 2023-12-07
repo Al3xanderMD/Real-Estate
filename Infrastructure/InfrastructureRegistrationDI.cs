@@ -7,7 +7,7 @@ using RealEstate.Application.Persistence;
 
 namespace Infrastructure
 {
-    public static class InfrastructureRegistrationDI
+	public static class InfrastructureRegistrationDI
     {
         public static IServiceCollection AddInfrastructureToDI(
          this IServiceCollection services,
@@ -39,6 +39,7 @@ namespace Infrastructure
             services.AddScoped<ICommercialCategoryRepository, CommercialCategoryRepository>();
             services.AddScoped<ICommercialSpecificRepository, CommercialSpecificRepository>();
             services.AddScoped<IHotelPensionRepository, HotelPensionRepository>();
+
 
             return services;
         }

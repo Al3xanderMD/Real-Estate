@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using RealEstate.Application.Features.LotClassifications.Queries;
 using RealEstate.Application.Persistence;
 
 namespace RealEstate.Application.Features.CommercialSpecifics.Queries.GetAll
 {
-    public class GetAllCommercialSpecificsQueryHandler : IRequestHandler<GetAllCommercialSpecificsQuery, GetAllCommercialSpecificsResponse>
+	public class GetAllCommercialSpecificsQueryHandler : IRequestHandler<GetAllCommercialSpecificsQuery, GetAllCommercialSpecificsResponse>
     {
         private readonly ICommercialSpecificRepository repository;
 

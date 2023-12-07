@@ -25,5 +25,17 @@ namespace RealEstate.Domain.Entities
 
             return Result<Address>.Success(new Address(url, addressName));
         }
+
+        public void AttachAddressName(string addressName)
+        {
+            if(!string.IsNullOrWhiteSpace(addressName))
+                AddressName = addressName;
+        }
+
+        public void AttachUrl(string url)
+        {
+            if(!string.IsNullOrWhiteSpace(url))
+                     Url = url;
+        }
     }
 }

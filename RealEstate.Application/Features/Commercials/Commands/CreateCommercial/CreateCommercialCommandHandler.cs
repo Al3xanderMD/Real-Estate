@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
 {
-    public class CreateCommercialCommandHandler : IRequestHandler<CreateCommercialCommand, CreateCommercialCommandResponse>
+	public class CreateCommercialCommandHandler : IRequestHandler<CreateCommercialCommand, CreateCommercialCommandResponse>
     {
         private readonly ICommercialRepository repository;
         public CreateCommercialCommandHandler(ICommercialRepository repository) 

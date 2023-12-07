@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Lots.Commands.CreateLot;
 using RealEstate.Application.Features.Lots.Commands.DeleteLot;
 using RealEstate.Application.Features.Lots.Queries.GetAll;
@@ -7,7 +6,7 @@ using RealEstate.Application.Features.Lots.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class LotController : ApiControllerBase
+	public class LotController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

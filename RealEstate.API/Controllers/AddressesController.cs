@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Addresses.Commands.CreateAddress;
 using RealEstate.Application.Features.Addresses.Commands.DeleteAddres;
+using RealEstate.Application.Features.Addresses.Commands.UpdateAddress;
 using RealEstate.Application.Features.Addresses.Queries.GetAll;
 using RealEstate.Application.Features.Addresses.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class AddressesController : ApiControllerBase
+	public class AddressesController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -38,16 +38,28 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateAddressCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteAddressCommand = new DeleteAddress() { Id = id };
+            var deleteAddressCommand = new DeleteAddressCommand() { Id = id };
             await Mediator.Send(deleteAddressCommand);
             return NoContent();
         }
-
     }
 }
