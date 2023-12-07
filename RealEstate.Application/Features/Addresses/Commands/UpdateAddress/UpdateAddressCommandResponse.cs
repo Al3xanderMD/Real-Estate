@@ -1,10 +1,8 @@
-﻿using MediatR;
-using RealEstate.Application.Features.Addresses.Queries;
-using RealEstate.Application.Responses;
+﻿using RealEstate.Application.Responses;
 
 namespace RealEstate.Application.Features.Addresses.Commands.UpdateAddress
 {
-    public class UpdateAddressCommandResponse : BaseResponse
+	public class UpdateAddressCommandResponse : BaseResponse
     {
         public UpdateAddressCommandResponse() : base()
         {

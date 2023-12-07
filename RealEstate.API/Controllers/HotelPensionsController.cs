@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPension;
 using RealEstate.Application.Features.HotelPensions.Commands.DeleteHotelPension;
 using RealEstate.Application.Features.HotelPensions.Queries.GetAll;
@@ -7,7 +6,7 @@ using RealEstate.Application.Features.HotelPensions.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class HotelPensionsController : ApiControllerBase
+	public class HotelPensionsController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

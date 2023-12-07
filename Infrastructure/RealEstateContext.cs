@@ -1,13 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstate.Domain.Entities;
+using RealEstate.Application.Contracts.Interfaces;
+using RealEstate.Domain.Common;
 
 namespace Infrastructure
 {
     public class RealEstateContext : DbContext
     {
-        public RealEstateContext(DbContextOptions<RealEstateContext> options) :
+		private readonly ICurrentUserService currentUserService;
+
+        public RealEstateContext(
+            DbContextOptions<RealEstateContext> options, ICurrentUserService currentUserService) :
             base(options)
         {
+            this.currentUserService = currentUserService;
         }
 
         public DbSet<Address> Addresses { get; set; }
@@ -23,11 +29,29 @@ namespace Infrastructure
         public DbSet<HouseType> HouseTypes { get; set; }
         public DbSet<Lot> Lots { get; set; }
         public DbSet<Partitioning> Partitionings { get; set; }
-        //public DbSet<RegAuth> RegAuths { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=RealEstateDB;User Id=postgres;Password=root;");
+        //    optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Database=RealEstateDB; User Id=postgres; Password=1234;");
+            
         //}
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+			foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                if(entry.State == EntityState.Added)
+                {
+					entry.Entity.CreatedBy = currentUserService.GetCurrentClaimsPrincipal()?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    entry.Entity.CreatedDate = DateTime.UtcNow;
+				}
+				else if (entry.State == EntityState.Modified) // pot modifica si daca creez 
+                {
+					entry.Entity.LastModifiedBy = currentUserService.GetCurrentClaimsPrincipal()?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
+				}
+            }
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+		}
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Partitionings.Commands.CreatePartitioning;
 using RealEstate.Application.Features.Partitionings.Commands.DeletePartitioning;
 using RealEstate.Application.Features.Partitionings.Queries.GetAll;
@@ -8,6 +9,7 @@ namespace RealEstate.API.Controllers
 {
     public class PartitioningController : ApiControllerBase
     {
+        [Authorize (Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create(CreatePartitioningCommand command)
@@ -20,7 +22,8 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
@@ -36,7 +39,8 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+		[Authorize(Roles = "Admin")]
+		[HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

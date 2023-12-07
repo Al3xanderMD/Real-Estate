@@ -1,8 +1,6 @@
-﻿using RealEstate.Domain.Entities;
-
-namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPension
+﻿namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPension
 {
-    public class CreateHotelPensionDto
+	public class CreateHotelPensionDto
     {
         public Guid Id { get; set; }
         public Guid BasePostId { get; set; }

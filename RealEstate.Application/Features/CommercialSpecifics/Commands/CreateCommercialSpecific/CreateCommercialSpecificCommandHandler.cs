@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Entities;
-using System.Net;
 
 namespace RealEstate.Application.Features.CommercialSpecifics.Commands.CreateCommercialSpecific
 {
-    public class CreateCommercialSpecificCommandHandler : IRequestHandler<CreateCommercialSpecificCommand, CreateCommercialSpecificCommandResponse>
+	public class CreateCommercialSpecificCommandHandler : IRequestHandler<CreateCommercialSpecificCommand, CreateCommercialSpecificCommandResponse>
     {
         private readonly ICommercialSpecificRepository repository;
 

@@ -1,8 +1,6 @@
-﻿using RealEstate.Domain.Entities;
-
-namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
+﻿namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
 {
-    public class CreateCommercialDto
+	public class CreateCommercialDto
     {
         public Guid Id { get; set; }
         public Guid BasePostId { get; set; }

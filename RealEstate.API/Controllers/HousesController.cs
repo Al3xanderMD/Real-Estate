@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Houses.Commands.CreateHouse;
 using RealEstate.Application.Features.Houses.Commands.DeleteHouse;
 using RealEstate.Application.Features.Houses.Queries.GetAll;
@@ -7,7 +6,7 @@ using RealEstate.Application.Features.Houses.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class HousesController : ApiControllerBase
+	public class HousesController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

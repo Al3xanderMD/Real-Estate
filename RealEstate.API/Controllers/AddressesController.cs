@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Addresses.Commands.CreateAddress;
 using RealEstate.Application.Features.Addresses.Commands.DeleteAddres;
 using RealEstate.Application.Features.Addresses.Commands.UpdateAddress;
@@ -8,7 +7,7 @@ using RealEstate.Application.Features.Addresses.Queries.GetById;
 
 namespace RealEstate.API.Controllers
 {
-    public class AddressesController : ApiControllerBase
+	public class AddressesController : ApiControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
