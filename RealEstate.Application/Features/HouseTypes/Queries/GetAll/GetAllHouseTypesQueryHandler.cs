@@ -1,14 +1,9 @@
 ﻿using MediatR;
 using RealEstate.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstate.Application.Features.HouseTypes.Queries.GetAll
 {
-    public class GetAllHouseTypesQueryHandler : IRequestHandler<GetAllHouseTypesQuery, GetAllHouseTypesResponse>
+	public class GetAllHouseTypesQueryHandler : IRequestHandler<GetAllHouseTypesQuery, GetAllHouseTypesResponse>
     {
         private readonly IHouseTypeRepository repository;
         public GetAllHouseTypesQueryHandler(IHouseTypeRepository repository)

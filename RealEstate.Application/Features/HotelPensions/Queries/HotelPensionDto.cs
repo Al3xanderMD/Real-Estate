@@ -1,8 +1,6 @@
-﻿using RealEstate.Domain.Entities;
-
-namespace RealEstate.Application.Features.HotelPensions.Queries
+﻿namespace RealEstate.Application.Features.HotelPensions.Queries
 {
-    public class HotelPensionDto
+	public class HotelPensionDto
     {
         public Guid Id { get; set; }
         public Guid BasePostId { get; set; }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
     <Folder Include="Features\Agents\Commands\CreateAgent\" />
     <Folder Include="Features\Addresses\Commands\CreateAddress\" />
   </ItemGroup>

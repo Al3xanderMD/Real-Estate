@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEstate.Application.Features.Lots.Commands.CreateLot
+﻿namespace RealEstate.Application.Features.Lots.Commands.CreateLot
 {
-    public class CreateLotDTO
+	public class CreateLotDTO
     {
         public Guid Id { get; set; }
         public Guid BasePostId { get; set; }
