@@ -1,0 +1,65 @@
+﻿@page "/login"
+@inject HttpClient Http
+
+<head>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<div class="content-container">
+    <div class="auth-message">@message</div>
+    <div class="form-card">
+        <div class="auth-form-buttons-div">
+            <NavLink href="login">
+                <button class="auth-form-button">
+                    Log In
+                </button>
+            </NavLink>
+
+            <NavLink href="Register">
+                <button class="auth-form-button">
+                    Sign up
+                </button>
+            </NavLink>
+        </div>
+
+        <EditForm OnValidSubmit="HandleValidSubmit">
+            <hr class="auth-hr">
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="email">Email:</label>
+
+                <br>
+
+                <InputText id="email" type="email" class="auth-input" placeholder="Enter email" required />
+            </div>
+
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="password">Password:</label>
+
+                <br>
+
+                <InputText id="password" type="password" class="auth-input" placeholder="Create password" required />
+            </div>
+
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    public string message = "";
+    private bool success = true;
+
+    private void HandleValidSubmit()
+    {
+
+        if (success)
+        {
+            message = "";
+        }
+        else
+        {
+            message = "Wrong credentials";
+        }
+    }
+}
