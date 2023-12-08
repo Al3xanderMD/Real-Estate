@@ -1,0 +1,68 @@
+﻿@page "/register"
+@inject HttpClient Http
+
+<head>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<div class="content-container">
+    <div class="form-card">
+        <div class="auth-form-buttons-div">
+            <NavLink href="Login">
+                <button class="auth-form-button">
+                    Log In
+                </button>
+            </NavLink>
+
+            <NavLink href="register">
+                <button class="auth-form-button">
+                    Sign up
+                </button>
+            </NavLink>
+        </div>
+        <form action="/submit_form" method="post">
+            <hr class="auth-hr">
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="email">Email:</label>
+
+                <br>
+
+                <input class="auth-input" type="email" id="email" name="email" placeholder="Enter email" required>
+            </div>
+
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="password">Password:</label>
+
+                <br>
+
+                <input class="auth-input" type="password" id="password" name="password" placeholder="Create password" required>
+            </div>
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="password-confirm">Confirm Password:</label>
+
+                <br>
+
+                <input class="auth-input" type="password" id="password-confirm" name="password-confirm" placeholder="Confirm password" required>
+            </div>
+
+            <div class="password-suggestions">
+                Must be at least 8 characters <br>
+                At least 1 special character<br>
+                Must contain letters and numbers<br>
+                At least 1 lower and 1 uppercase letter<br>
+            </div>
+
+            <input class="auth-form-submit-button" type="submit" value="Submit">
+            <hr class="auth-hr">
+
+            <div>By submitting I accept the terms of use</div>
+        </form>
+    </div>
+</div>
+
+@code {
+
+}

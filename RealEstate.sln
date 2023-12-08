@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.API", "RealEstat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.App", "RealEstate.App\RealEstate.App.csproj", "{09ACE5BF-83FE-4FBD-9043-5DE4327DF987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Identity", "RealEstate.Identity\RealEstate.Identity.csproj", "{3D270069-87CE-4266-A30B-5A50BCA4C742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Identity", "RealEstate.Identity\RealEstate.Identity.csproj", "{3D270069-87CE-4266-A30B-5A50BCA4C742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
