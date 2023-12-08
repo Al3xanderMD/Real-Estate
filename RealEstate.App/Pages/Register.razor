@@ -1,6 +1,10 @@
 ﻿@page "/register"
+@using RealEstate.App.Objects
 @using RealEstate.App.Validators
+@using System.Net.Http.Json
+@using System.Net.Http
 @inject HttpClient Http
+@inject HttpClient HttpClient
 
 <head>
     <link rel="stylesheet" href="css/styles.css" />
@@ -92,6 +96,23 @@
         private string password;
         private string confirmPassword;
         public string message = "";
+        private User user = new User();
+
+    private async Task SubmitForm(User user)
+    {
+        var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/register"), // Update with your API endpoint
+                Content = JsonContent.Create(user)
+            };
+        // Send a POST request to the API
+        var response = await HttpClient.SendAsync(request);
+
+        // Handle the API response if needed
+        // For demonstration purposes, just print the response to the console
+        Console.WriteLine(response);
+    }
 
         private void HandleValidSubmit()
         {
@@ -99,6 +120,11 @@
             if (password == confirmPassword)
 			{
                 message="";
+                user.Email = emailModel.Email;
+                user.Username = emailModel.Username;
+                user.Phone = emailModel.Phone;
+                user.Password = password;
+                SubmitForm(user);
 			}
 			else
 			{

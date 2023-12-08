@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@using RealEstate.App.Validators
 @inject HttpClient Http
 
 <head>
@@ -22,7 +23,7 @@
             </NavLink>
         </div>
 
-        <EditForm OnValidSubmit="HandleValidSubmit">
+        <EditForm Model="@emailModel" OnValidSubmit="HandleValidSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
@@ -30,7 +31,7 @@
 
                 <br>
 
-                <InputText id="email" type="email" class="auth-input" placeholder="Enter email" required />
+                <InputText @bind-Value="emailModel.Email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
             </div>
 
 
@@ -39,16 +40,20 @@
 
                 <br>
 
-                <InputText id="password" type="password" class="auth-input" placeholder="Create password" required />
+                <InputText @bind-Value="password" id="password" type="password" class="auth-input" placeholder="Create password" required />
             </div>
 
+            <input class="auth-form-submit-button" type="submit" value="Sign in">
+            <hr class="auth-hr">
         </EditForm>
     </div>
 </div>
 
 @code {
+    private EmailModel emailModel = new EmailModel();
     public string message = "";
     private bool success = true;
+    private string password = "";
 
     private void HandleValidSubmit()
     {
