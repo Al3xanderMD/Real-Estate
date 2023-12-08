@@ -1,0 +1,56 @@
+﻿@page "/login"
+@inject HttpClient Http
+
+<head>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<div class="content-container">
+    <div class="auth-message">Please check your email to recover password.</div>
+    <div class="form-card">
+        <div class="auth-form-buttons-div">
+            <NavLink href="login">
+                <button class="auth-form-button">
+                    Log In
+                </button>
+            </NavLink>
+
+            <NavLink href="Register">
+                <button class="auth-form-button">
+                    Sign up
+                </button>
+            </NavLink>
+        </div>
+        <form action="/submit_form" method="post">
+            <hr class="auth-hr">
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="email">Email:</label>
+
+                <br>
+
+                <input class="auth-input" type="email" id="email" name="email" placeholder="Enter email" required>
+            </div>
+
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="password">Password:</label>
+
+                <br>
+
+                <input class="auth-input" type="password" id="password" name="password" placeholder="Create password" required>
+            </div>
+
+            <div class="auth-forgot-password div">
+                <NavLink  class="nav-link" href="forgotpw">Forgot your password?</NavLink>
+            </div>
+
+            <input class="auth-form-submit-button" type="submit" value="Sign in">
+            <hr class="auth-hr">
+        </form>
+    </div>
+</div>
+
+@code {
+
+}
