@@ -16,5 +16,6 @@ namespace RealEstate.Application.Models.Identity
 
 		[Required(ErrorMessage = "Password is required")]
 		public string? Password { get; set; }
+
 	}
 }

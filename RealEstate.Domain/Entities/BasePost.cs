@@ -50,5 +50,40 @@ namespace RealEstate.Domain.Entities
         {
             Images = images;
         }
+
+        public void AttachAddressId(Guid addressId)
+        {
+            if(addressId != Guid.Empty)
+				AddressId = addressId;
+        }
+        public void AttachAddress(Address address)
+        {
+			Address = address;
+		}
+
+        public void AttachTitlePost(string titlePost)
+        {
+			TitlePost = titlePost;
+		}
+
+		public void AttachPrice(double price)
+        {
+			Price = price;
+		}
+
+		public void AttachOfferType(bool offerType)
+        {
+			OfferType = offerType;
+		}
+
+		public void AttachUserId(Guid userId)
+        {
+			UserId = userId;
+		}
+
+        public void AttachClient(Client user)
+        { 
+            User = user;
+        }
     }
 }
