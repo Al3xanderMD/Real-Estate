@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using RealEstate.Application.Contracts.Identity;
 using RealEstate.Application.Models.Identity;
 using RealEstate.Identity.Models;
+using System.Formats.Asn1;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -139,6 +140,19 @@ namespace RealEstate.Identity.Services
             }
             
             return (1, "Password has been changed");
+        }
+
+        public async Task<(int, string)> DeleteUser(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                return (0, "User not found");
+
+            if (user.EmailConfirmed == false)
+                return (0, "Email not confirmed");
+
+            user.EmailConfirmed = false;
+            return (1, "User deleted successfully");
         }
 
         private string GenerateToken(IEnumerable<Claim> claims)
