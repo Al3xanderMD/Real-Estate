@@ -1,4 +1,5 @@
 ﻿@page "/register"
+@using RealEstate.App.Validators
 @inject HttpClient Http
 
 <head>
@@ -6,6 +7,7 @@
 </head>
 
 <div class="content-container">
+    <div class="auth-message"><p>@message</p></div>
     <div class="form-card">
         <div class="auth-form-buttons-div">
             <NavLink href="Login">
@@ -20,7 +22,10 @@
                 </button>
             </NavLink>
         </div>
-        <form action="/submit_form" method="post">
+
+        <EditForm Model="@emailModel" OnValidSubmit="HandleValidSubmit">
+            <FluentValidationValidator />
+
             <hr class="auth-hr">
 
             <div class="auth-input-div">
@@ -28,24 +33,24 @@
 
                 <br>
 
-                <input class="auth-input" type="email" id="email" name="email" placeholder="Enter email" required>
+                <InputText id="email" @bind-Value="emailModel.Email" type="email" class="auth-input" placeholder="Enter email" required />
+                <ValidationMessage For="@(() => emailModel.Email)" />
             </div>
-
 
             <div class="auth-input-div">
                 <label class="auth-label" for="password">Password:</label>
 
                 <br>
 
-                <input class="auth-input" type="password" id="password" name="password" placeholder="Create password" required>
+                <InputText id="password" @bind-Value="password" type="password" class="auth-input" placeholder="Create password" required />
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="password-confirm">Confirm Password:</label>
+                <label class="auth-label" for="confirmPassword">Confirm Password:</label>
 
                 <br>
 
-                <input class="auth-input" type="password" id="password-confirm" name="password-confirm" placeholder="Confirm password" required>
+                <InputText id="confirmPassword" @bind-Value="confirmPassword" type="password" class="auth-input" placeholder="Confirm password" required />
             </div>
 
             <div class="password-suggestions">
@@ -55,14 +60,31 @@
                 At least 1 lower and 1 uppercase letter<br>
             </div>
 
-            <input class="auth-form-submit-button" type="submit" value="Submit">
+            <input class="auth-form-submit-button" type="submit" value="Submit" onclick="">
             <hr class="auth-hr">
 
             <div>By submitting I accept the terms of use</div>
-        </form>
-    </div>
+
+        </EditForm>
+    </div> 
 </div>
 
 @code {
+        private EmailModel emailModel = new EmailModel();
+        private string password;
+        private string confirmPassword;
+        public string message = "";
 
+        private void HandleValidSubmit()
+        {
+
+            if (password == confirmPassword)
+			{
+                message="";
+			}
+			else
+			{
+                message = "Passwords do not match";
+			}
+        }
 }
