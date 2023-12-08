@@ -5,8 +5,12 @@ using RealEstate.Application.Contracts.Interfaces;
 using RealEstate.Identity;
 using Microsoft.OpenApi.Models;
 using RealEstate.API.Utility;
+using RealEstate.Identity.Models;
+using RealEstate.Identity.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 ///////////////
 builder.Services.AddHttpContextAccessor();
@@ -15,9 +19,26 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddInfrastrutureIdentityToDI(builder.Configuration);
 ///////////////
 
+//Add Config for Required Email
+builder.Services.Configure<IdentityOptions>(
+	opts => opts.SignIn.RequireConfirmedEmail = true
+	);
+
+builder.Services.Configure<DataProtectionTokenProviderOptions> (
+	opts =>
+	    opts.TokenLifespan = TimeSpan.FromHours(10));
+
 // Add services to the container.
 builder.Services.AddInfrastructureToDI(builder.Configuration);
 builder.Services.AddApplicationServices();
+
+// Add email Configs
+var emailConfig = builder.Configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -56,7 +77,7 @@ builder.Services.AddSwaggerGen(c =>
 	c.SwaggerDoc("v1", new OpenApiInfo
 	{
 		Version = "v1",
-		Title = "GloboTicket Ticket Management API",
+		Title = "Real Estate Management API",
 
 	});
 
