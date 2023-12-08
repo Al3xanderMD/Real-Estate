@@ -38,6 +38,24 @@
             </div>
 
             <div class="auth-input-div">
+                <label class="auth-label" for="username">Username:</label>
+
+                <br>
+
+                <InputText id="username" @bind-Value="emailModel.Username" type="name" class="auth-input" placeholder="Enter username" required />
+                <ValidationMessage For="@(() => emailModel.Username)" />
+            </div>
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="phone">Phone:</label>
+
+                <br>
+
+                <InputText id="phone" @bind-Value="emailModel.Phone" type="phone" class="auth-input" placeholder="Enter phone number" required />
+                <ValidationMessage For="@(() => emailModel.Username)" />
+            </div>
+
+            <div class="auth-input-div">
                 <label class="auth-label" for="password">Password:</label>
 
                 <br>
