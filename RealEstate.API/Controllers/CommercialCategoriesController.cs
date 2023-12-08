@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.CommercialCategories.Commands.CreateCommercialCategory;
 using RealEstate.Application.Features.CommercialCategories.Commands.DeleteCommercialCategory;
+using RealEstate.Application.Features.CommercialCategories.Commands.UpdateCommercialCategory;
 using RealEstate.Application.Features.CommercialCategories.Queries.GetAll;
 using RealEstate.Application.Features.CommercialCategories.Queries.GetById;
 
@@ -34,6 +35,18 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdCommercialCategoryQuery(id));
             return Ok(result);
+        }
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateCommercialCategoryCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+            await Mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

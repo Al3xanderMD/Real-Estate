@@ -9,7 +9,7 @@ namespace RealEstate.Application.Contracts.Identity
 		Task<(int, string)> Login(LoginModel model);
 		Task<(int, string)> ConfirmEmail(string email, string token);
 		Task<(int, string)> ForgotPassword(string email);
-	//	Task<(int, string)> ResetPassword(string email, string token);
 		Task<(int, string)> ResetPasswordConfirmation(ResetPasswordModel model);
+		Task<(int, string)> DeleteUser(string email);
 	}
 }

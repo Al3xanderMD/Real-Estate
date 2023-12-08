@@ -66,19 +66,65 @@ namespace RealEstate.Domain.Entities
             return Result<Apartment>.Success(new Apartment(roomCount, comfort, floor, usefulSurface, buildYear, basepostId, partitioningId));
         }
 
-        public Result<BasePost> Delete()
+        public void AttachPartitioning(Partitioning partitioning)
         {
-            throw new NotImplementedException();
+            Partitioning = partitioning;
         }
 
-        public Result<BasePost> ReadPost()
+        public void AttachRoomCount(int roomCount)
         {
-            throw new NotImplementedException();
+            if (roomCount > 0)
+            {
+                RoomCount = roomCount;
+            }
         }
 
-        public Result<BasePost> Update()
+        public void AttachComfort(int comfort)
         {
-            throw new NotImplementedException();
+            if (comfort > 0 && comfort < 5)
+            {
+                Comfort = comfort;
+            }
+        }
+
+        public void AttachFloor(int floor)
+        {
+            if (floor > 0)
+            {
+                Floor = floor;
+            }
+        }
+
+        public void AttachUsefulSurface(double usefulSurface)
+        {
+            if (usefulSurface > 0)
+            {
+                UsefulSurface = usefulSurface;
+            }
+        }
+
+        public void AttachBuildYear(int buildYear)
+        {
+            if (buildYear > 1900 && buildYear < DateTime.Now.Year + 1)
+            {
+                BuildYear = buildYear;
+            }
+        }
+
+        public void AttachBasePostId(Guid basePostId)
+        {
+            if (basePostId != Guid.Empty)
+            {
+                BasePostId = basePostId;
+            }
+        }
+
+        public void AttachPartitioningId(Guid partitioningId)
+        {
+            if (partitioningId != Guid.Empty)
+            {
+                PartitioningId = partitioningId;
+            }
         }
     }
 }

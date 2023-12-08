@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Apartments.Commands.CreateApartament;
 using RealEstate.Application.Features.Apartments.Commands.DeleteApartment;
+using RealEstate.Application.Features.Apartments.Commands.UpdateApartment;
 using RealEstate.Application.Features.Apartments.Queries.GetAll;
 using RealEstate.Application.Features.Apartments.Queries.GetById;
 
@@ -34,6 +35,19 @@ namespace RealEstate.API.Controllers
         {
             var result = await Mediator.Send(new GetByIdApartmentQuery(id));
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateApartmentCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+            await Mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
