@@ -58,5 +58,42 @@ namespace RealEstate.Domain.Entities
         {
             throw new NotImplementedException();
         }
+
+        public void AttachBasePostId(Guid basePostId)
+        {
+           if (BasePostId != Guid.Empty)
+           {
+				BasePostId = basePostId;
+		   }
+		}
+
+        public void AttachBasePost(BasePost basePost)
+        {
+			BasePost = basePost;
+		}
+
+        public void AttachLotClassificationId(Guid lotClassificationId)
+        {
+            if (LotClassificationId != Guid.Empty)
+            {
+                LotClassificationId = lotClassificationId;
+            }
+        }
+
+        public void AttachLotClassification(LotClassification lotClassification)
+        {
+			LotClassification = lotClassification;
+		}
+
+        public void AttachLotArea(double lotArea)
+        {
+            LotArea = lotArea;
+        }
+
+        public void AttachStreetFrontage(double streetFrontage)
+        {
+			StreetFrontage = streetFrontage;
+		}
+
     }
 }

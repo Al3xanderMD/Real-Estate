@@ -20,6 +20,9 @@ namespace RealEstate.Domain.Entities
 
             return Result<LotClassification>.Success(new LotClassification(type));
         }
-        
+        public void AttachType(string type)
+        {
+            Type = type;
+        }
     }
 }

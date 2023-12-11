@@ -48,5 +48,29 @@ namespace RealEstate.Domain.Entities
                 Disponibility = disponibility;
             }
         }
+
+        public void AttachBasePostId(Guid basePostId)
+        {
+			if (basePostId != Guid.Empty)
+            {
+				BasePostId = basePostId;
+			}
+		}
+
+        public void AttachCommercialSpecificId(Guid commercialSpecificId)
+        {
+            if(commercialSpecificId != Guid.Empty)
+            {
+				CommercialSpecificId = commercialSpecificId;
+			}
+        }
+
+        public void AttachUsefulSurface(double usefulSurface)
+        {
+			if(usefulSurface > 0)
+            {
+                UsefulSurface = usefulSurface;
+            }
+        }
     }
 }

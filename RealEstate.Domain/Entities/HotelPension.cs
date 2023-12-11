@@ -60,5 +60,37 @@ namespace RealEstate.Domain.Entities
         {
             throw new NotImplementedException();
         }
+
+        public void AttachBasePostId(Guid basePostId)
+        {
+			if (basePostId != Guid.Empty)
+            {
+				BasePostId = basePostId;
+			}
+		}
+
+        public void AttachUsefulSurface(double usefulSurface)
+        {
+			if (usefulSurface > 0)
+            {
+				UsefulSurface = usefulSurface;
+			}
+		}
+
+		public void AttachRoomSurface(double roomSurface)
+        {
+			if (roomSurface > 0)
+            {
+				RoomSurface = roomSurface;
+			}
+		}
+
+		public void AttachRoomCount(int roomCount)
+        {
+			if (roomCount > 0)
+            {
+				RoomCount = roomCount;
+			}
+		}
     }
 }
