@@ -172,5 +172,33 @@ namespace RealEstate.API.Controllers
             }
 		}
 
+		[HttpDelete]
+		[Route("deleteUser")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteUser(string email)
+		{
+			   try
+			{
+                     if (!ModelState.IsValid)
+				{
+                          return BadRequest("Invalid payload");
+                     }
+    
+                     var (status, message) = await _authService.DeleteUser(email);
+    
+                     if (status == 0)
+				{
+                          return BadRequest(message);
+                     }
+    
+                     return CreatedAtAction(nameof(DeleteUser), email);
+                }
+                catch (Exception ex)
+			{
+                     _logger.LogError(ex.Message);
+                     return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
+		}
+
     }
 }

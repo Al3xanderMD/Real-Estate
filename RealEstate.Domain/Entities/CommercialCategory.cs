@@ -20,5 +20,10 @@ namespace RealEstate.Domain.Entities
 
             return Result<CommercialCategory>.Success(new CommercialCategory(categoryName));
         }
+
+        public void AttachCategoryName(string categoryName)
+        {
+            CategoryName = categoryName;
+        }
     }
 }
