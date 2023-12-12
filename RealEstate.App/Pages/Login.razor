@@ -1,8 +1,67 @@
-﻿@page "/login"
+﻿@page "/Login"
+@using RealEstate.App.Auth
+@using RealEstate.App.Models
 @using RealEstate.App.Validators
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
 
-<head>
+<h1 class="h2 font-weight-normal login-title">
+    Login
+</h1>
+
+<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
+    <DataAnnotationsValidator />
+
+    <label for="inputEmail" class="sr-only">Email</label>
+    <InputText id="inputEmail" class="form-control" @bind-Value="loginRequest.Email" autofocus placeholder="Email" />
+    <ValidationMessage For="@(() => loginRequest.Email)" />
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginRequest.Password" />
+    <ValidationMessage For="@(() => loginRequest.Password)" />
+
+    <br />
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    <label class="text-danger">@error</label>
+
+    <NavLink href="register">
+        <h6 class="font-weight-normal text-center">Create account</h6>
+    </NavLink>
+</EditForm>
+
+@code {
+    LoginViewModel loginRequest { get; set; } = new LoginViewModel();
+    string error { get; set; }
+
+    async Task OnSubmit()
+    {
+        error = null;
+        try
+        {
+            await authStateProvider.Login(loginRequest);
+            LogToConsole("Login ok");
+            navigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            LogToConsole("Wrong credentials");
+            error = ex.Message;
+        }
+    }
+
+    void LogToConsole(string message)
+    {
+        // Use console.log to log messages to the browser console
+        JSRuntime.InvokeVoidAsync("console.log", message);
+    }
+}
+
+
+@* <head>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -67,4 +126,4 @@
             message = "Wrong credentials";
         }
     }
-}
+} *@
