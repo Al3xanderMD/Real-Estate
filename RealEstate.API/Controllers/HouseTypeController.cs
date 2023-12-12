@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.HouseTypes.Commands.CreateHouseType;
 using RealEstate.Application.Features.HouseTypes.Commands.DeleteHouseType;
+using RealEstate.Application.Features.HouseTypes.Commands.UpdateHouseType;
 using RealEstate.Application.Features.HouseTypes.Queries.GetAll;
 using RealEstate.Application.Features.HouseTypes.Queries.GetById;
 
@@ -35,6 +36,19 @@ namespace RealEstate.API.Controllers
             var result = await Mediator.Send(new GetByIdHouseTypeQuery(id));
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateHouseTypeCommand command)
+        {
+			if (id != command.Id)
+            {
+				return BadRequest();
+			}
+			await Mediator.Send(command);
+			return NoContent();
+		}
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
