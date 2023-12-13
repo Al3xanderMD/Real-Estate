@@ -1,17 +1,20 @@
 ﻿@page "/register"
-@using RealEstate.App.Objects
+@using RealEstate.App.Auth
+@using RealEstate.App.Models
 @using RealEstate.App.Validators
 @using System.Net.Http.Json
 @using System.Net.Http
 @inject HttpClient Http
-@inject HttpClient HttpClient
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
 
 <head>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <div class="content-container">
-    <div class="auth-message"><p>@message</p></div>
+    <div class="auth-message"><p>@error</p></div>
     <div class="form-card">
         <div class="auth-form-buttons-div">
             <NavLink href="Login">
@@ -27,7 +30,7 @@
             </NavLink>
         </div>
 
-        <EditForm Model="@emailModel" OnValidSubmit="HandleValidSubmit">
+        <EditForm Model="@registerRequest" OnValidSubmit="OnSubmit">
             <FluentValidationValidator />
 
             <hr class="auth-hr">
@@ -37,8 +40,8 @@
 
                 <br>
 
-                <InputText id="email" @bind-Value="emailModel.Email" type="email" class="auth-input" placeholder="Enter email" required />
-                <ValidationMessage For="@(() => emailModel.Email)" />
+                <InputText id="email" @bind-Value="registerRequest.email" type="email" class="auth-input" placeholder="Enter email" required />
+                <ValidationMessage For="@(() => registerRequest.email)" />
             </div>
 
             <div class="auth-input-div">
@@ -46,8 +49,17 @@
 
                 <br>
 
-                <InputText id="username" @bind-Value="emailModel.Username" type="name" class="auth-input" placeholder="Enter username" required />
-                <ValidationMessage For="@(() => emailModel.Username)" />
+                <InputText id="username" @bind-Value="registerRequest.username" type="name" class="auth-input" placeholder="Enter username" required />
+                <ValidationMessage For="@(() => registerRequest.username)" />
+            </div>
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="name">Name:</label>
+
+                <br>
+
+                <InputText id="name" @bind-Value="registerRequest.name" type="name" class="auth-input" placeholder="Enter your name" required />
+                <ValidationMessage For="@(() => registerRequest.name)" />
             </div>
 
             <div class="auth-input-div">
@@ -55,8 +67,8 @@
 
                 <br>
 
-                <InputText id="phone" @bind-Value="emailModel.Phone" type="phone" class="auth-input" placeholder="Enter phone number" required />
-                <ValidationMessage For="@(() => emailModel.Username)" />
+                <InputText id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" class="auth-input" placeholder="Enter phone number" required />
+                <ValidationMessage For="@(() => registerRequest.phoneNumber)" />
             </div>
 
             <div class="auth-input-div">
@@ -64,7 +76,7 @@
 
                 <br>
 
-                <InputText id="password" @bind-Value="password" type="password" class="auth-input" placeholder="Create password" required />
+                <InputText id="password" @bind-Value="registerRequest.password" type="password" class="auth-input" placeholder="Create password" required />
             </div>
 
             <div class="auth-input-div">
@@ -92,18 +104,45 @@
 </div>
 
 @code {
-        private EmailModel emailModel = new EmailModel();
-        private string password;
-        private string confirmPassword;
-        public string message = "";
-        private User user = new User();
+    RegisterViewModel registerRequest { get; set; } = new RegisterViewModel();
+    private string confirmPassword;
+    string error { get; set; }
+
+    async Task OnSubmit()
+    {
+        error = null;
+        try
+        {
+            await authStateProvider.Register(registerRequest);
+            LogToConsole("Login ok");
+            error = "Please confirm your email address";
+        }
+        catch (Exception ex)
+        {
+            LogToConsole("Invalid Credentials");
+            error = ex.Message;
+        }
+    }
+
+    void LogToConsole(string message)
+    {
+        JSRuntime.InvokeVoidAsync("console.log", message);
+    }
+}
+@* 
+@code {
+    private EmailModel emailModel = new EmailModel();
+    private string password;
+    private string confirmPassword;
+    public string message = "";
+    private User user = new User();
 
     private async Task SubmitForm(User user)
     {
         var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/register"), // Update with your API endpoint
+                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/register?role=User"), // Update with your API endpoint
                 Content = JsonContent.Create(user)
             };
         // Send a POST request to the API
@@ -120,11 +159,22 @@
             if (password == confirmPassword)
 			{
                 message="";
-                user.Email = emailModel.Email;
-                user.Username = emailModel.Username;
-                user.Phone = emailModel.Phone;
-                user.Password = password;
-                SubmitForm(user);
+                user.email = emailModel.Email;
+                user.username = emailModel.Username;
+                user.phoneNumber = emailModel.Phone;
+                user.password = password;
+                user.name = "";
+
+                var result = SubmitForm(user);
+
+                if (result.Status != TaskStatus.Faulted)
+				{
+					message = "Success";
+				}
+				else
+				{
+					message = "Please check supplied credentials";
+				}
 			}
 			else
 			{
@@ -132,3 +182,4 @@
 			}
         }
 }
+ *@

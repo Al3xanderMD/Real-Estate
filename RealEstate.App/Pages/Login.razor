@@ -7,31 +7,58 @@
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 
-<h1 class="h2 font-weight-normal login-title">
-    Login
-</h1>
+<head>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
-    <DataAnnotationsValidator />
+<div class="content-container">
+    <div class="auth-message">@error</div>
+    <div class="form-card">
+        <div class="auth-form-buttons-div">
+            <NavLink href="login">
+                <button class="auth-form-button">
+                    Log In
+                </button>
+            </NavLink>
 
-    <label for="inputEmail" class="sr-only">Email</label>
-    <InputText id="inputEmail" class="form-control" @bind-Value="loginRequest.Email" autofocus placeholder="Email" />
-    <ValidationMessage For="@(() => loginRequest.Email)" />
+            <NavLink href="register">
+                <button class="auth-form-button">
+                    Sign up
+                </button>
+            </NavLink>
+        </div>
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginRequest.Password" />
-    <ValidationMessage For="@(() => loginRequest.Password)" />
+        <EditForm Model="@loginRequest" OnValidSubmit="OnSubmit">
+            <hr class="auth-hr">
 
-    <br />
+            <div class="auth-input-div">
+                <label class="auth-label" for="email">Email:</label>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <br>
 
-    <label class="text-danger">@error</label>
+                <InputText @bind-Value="loginRequest.Email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
+            </div>
 
-    <NavLink href="register">
-        <h6 class="font-weight-normal text-center">Create account</h6>
-    </NavLink>
-</EditForm>
+
+            <div class="auth-input-div">
+                <label class="auth-label" for="password">Password:</label>
+
+                <br>
+
+                <InputText @bind-Value="loginRequest.Password" id="password" type="password" class="auth-input" placeholder="Enter password" required />
+            </div>
+
+            <div class="auth-forgot-password-div">
+                <NavLink href="forgotpw">
+                    <p class="forgot-password-anchor">Forgot your password?</p>
+                </NavLink>
+            </div>
+
+            <input class="auth-form-submit-button" type="submit" value="Sign in">
+            <hr class="auth-hr">
+        </EditForm>
+    </div>
+</div>
 
 @code {
     LoginViewModel loginRequest { get; set; } = new LoginViewModel();
@@ -82,7 +109,7 @@
             </NavLink>
         </div>
 
-        <EditForm Model="@emailModel" OnValidSubmit="HandleValidSubmit">
+        <EditForm Model="@loginReq" OnValidSubmit="HandleValidSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
@@ -90,7 +117,7 @@
 
                 <br>
 
-                <InputText @bind-Value="emailModel.Email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
+                <InputText @bind-Value="loginReq.email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
             </div>
 
 
@@ -99,7 +126,7 @@
 
                 <br>
 
-                <InputText @bind-Value="password" id="password" type="password" class="auth-input" placeholder="Create password" required />
+                <InputText @bind-Value="loginReq.password" id="password" type="password" class="auth-input" placeholder="Create password" required />
             </div>
 
             <input class="auth-form-submit-button" type="submit" value="Sign in">
@@ -109,13 +136,32 @@
 </div>
 
 @code {
-    private EmailModel emailModel = new EmailModel();
+    private LoginRequest loginReq = new LoginRequest();
     public string message = "";
     private bool success = true;
     private string password = "";
 
+   
+
+    private async Task SubmitForm(LoginRequest loginReq)
+    {
+        var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/login"), // Update with your API endpoint
+                Content = JsonContent.Create(loginReq)
+            };
+        // Send a POST request to the API
+        var response = await HttpClient.SendAsync(request);
+
+        // Handle the API response if needed
+        // For demonstration purposes, just print the response to the console
+        Console.WriteLine(response);
+    }
+
     private void HandleValidSubmit()
     {
+        SubmitForm(loginReq);
 
         if (success)
         {

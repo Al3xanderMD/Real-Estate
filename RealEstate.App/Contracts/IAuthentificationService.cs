@@ -10,7 +10,9 @@ namespace RealEstate.App.Contracts
                 Task LogoutAsync(); // sa sterg token din browser*/
 
         Task Login(LoginViewModel loginRequest);
-/*        Task Register(RegisterViewModel registerRequest);
-        Task Logout();*/
+        Task Register(RegisterViewModel registerRequest);
+        Task ForgotPassword(ForgotPasswordViewModel forgotPwRequest);
+        Task ResetPassword(ResetPasswordViewModel resetPwRequest);
+        /*Task Logout();*/
     }
 }

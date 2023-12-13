@@ -49,8 +49,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://example.com",
-                                              "http://www.contoso.com");
+                          policy.WithOrigins("https://localhost:7153/",
+                                              "https://localhost:7190/");
                       });
 });
 
@@ -115,7 +115,7 @@ app.UseCors("Open");
 
 app.UseAuthorization();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 
