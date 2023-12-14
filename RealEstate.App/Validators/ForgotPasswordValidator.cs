@@ -7,7 +7,7 @@ namespace RealEstate.App.Validators
     {
         public ForgotPasswordValidator()
         {
-            RuleFor(x => x.email)
+            RuleFor(x => x.Email)
                 .EmailAddress().WithMessage("Email is not valid!")
                 .NotEmpty().WithMessage("Email is required!");
                 

@@ -42,7 +42,7 @@ namespace RealEstate.App.Services
 
         public async Task ForgotPassword(ForgotPasswordViewModel forgotPwRequest)
         {
-            string link = "api/v1/authentication/forgotpassword?email=" + HttpUtility.UrlEncode(forgotPwRequest.email);
+            string link = "api/v1/authentication/forgotpassword?email=" + HttpUtility.UrlEncode(forgotPwRequest.Email);
 
             var result = await httpClient.PostAsync(link, null); ;
             

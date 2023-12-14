@@ -2,6 +2,6 @@
 {
     public class ForgotPasswordViewModel
     {
-        public string email { get; set; }
+        public string Email { get; set; } = string.Empty;
     }
 }

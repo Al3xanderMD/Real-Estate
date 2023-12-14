@@ -2,9 +2,9 @@
 {
     public class ResetPasswordViewModel
     {
-        public string email { get; set; }
-        public string confirmPassword { get; set; }
-        public string password { get; set; }
-        public string token { get; set; }
+        public string email { get; set; } = string.Empty;
+        public string confirmPassword { get; set; } = string.Empty;
+        public string password { get; set; } = string.Empty;
+        public string token { get; set; } = string.Empty;
     }
 }

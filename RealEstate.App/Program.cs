@@ -34,6 +34,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
+builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
