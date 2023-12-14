@@ -1,4 +1,6 @@
 ﻿@page "/register"
+@using FluentValidation
+@using FluentValidation.Results
 @using RealEstate.App.Auth
 @using RealEstate.App.Models
 @using RealEstate.App.Validators
@@ -8,13 +10,12 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
-
+@inject IValidator<RegisterViewModel> Validator
 <head>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <div class="content-container">
-    <div class="auth-message"><p>@error</p></div>
     <div class="form-card">
         <div class="auth-form-buttons-div">
             <NavLink href="Login">
@@ -31,8 +32,6 @@
         </div>
 
         <EditForm Model="@registerRequest" OnValidSubmit="OnSubmit">
-            <FluentValidationValidator />
-
             <hr class="auth-hr">
 
             <div class="auth-input-div">
@@ -40,8 +39,8 @@
 
                 <br>
 
-                <InputText id="email" @bind-Value="registerRequest.email" type="email" class="auth-input" placeholder="Enter email" required />
-                <ValidationMessage For="@(() => registerRequest.email)" />
+                <InputText id="email" @bind-Value="registerRequest.email" type="email" class="auth-input" placeholder="Enter email" />
+                <div class="error-msg auth-message">@emailError</div>
             </div>
 
             <div class="auth-input-div">
@@ -49,8 +48,8 @@
 
                 <br>
 
-                <InputText id="username" @bind-Value="registerRequest.username" type="name" class="auth-input" placeholder="Enter username" required />
-                <ValidationMessage For="@(() => registerRequest.username)" />
+                <InputText id="username" @bind-Value="registerRequest.username" type="name" class="auth-input" placeholder="Enter username" />
+                <div class="error-msg auth-message">@usernameError</div>
             </div>
 
             <div class="auth-input-div">
@@ -58,8 +57,8 @@
 
                 <br>
 
-                <InputText id="name" @bind-Value="registerRequest.name" type="name" class="auth-input" placeholder="Enter your name" required />
-                <ValidationMessage For="@(() => registerRequest.name)" />
+                <InputText id="name" @bind-Value="registerRequest.name" type="name" class="auth-input" placeholder="Enter your name"/>
+                <div class="error-msg auth-message">@nameError</div>
             </div>
 
             <div class="auth-input-div">
@@ -67,8 +66,8 @@
 
                 <br>
 
-                <InputText id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" class="auth-input" placeholder="Enter phone number" required />
-                <ValidationMessage For="@(() => registerRequest.phoneNumber)" />
+                <InputText id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" class="auth-input" placeholder="Enter phone number"/>
+                <div class="error-msg auth-message">@phoneNumberError</div>
             </div>
 
             <div class="auth-input-div">
@@ -76,7 +75,8 @@
 
                 <br>
 
-                <InputText id="password" @bind-Value="registerRequest.password" type="password" class="auth-input" placeholder="Create password" required />
+                <InputText id="password" @bind-Value="registerRequest.password" type="password" class="auth-input" placeholder="Create password"/>
+                <div class="error-msg auth-message">@passwordError</div>
             </div>
 
             <div class="auth-input-div">
@@ -84,7 +84,8 @@
 
                 <br>
 
-                <InputText id="confirmPassword" @bind-Value="confirmPassword" type="password" class="auth-input" placeholder="Confirm password" required />
+                <InputText id="confirmPassword" @bind-Value="registerRequest.confirmPassword" type="password" class="auth-input" placeholder="Confirm password" />
+                <div class="error-msg auth-message">@confirmPasswordError</div>
             </div>
 
             <div class="password-suggestions">
@@ -104,23 +105,56 @@
 </div>
 
 @code {
-    RegisterViewModel registerRequest { get; set; } = new RegisterViewModel();
-    private string confirmPassword;
+    RegisterViewModel registerRequest { get; set; } = new RegisterViewModel(); 
     string error { get; set; }
+    string emailError { get; set; }
+    string usernameError { get; set; }
+    string nameError { get; set; }
+    string passwordError { get; set; }
+    string confirmPasswordError { get; set; }
+    string phoneNumberError { get; set; }
 
     async Task OnSubmit()
     {
+        ValidationResult results = Validator.Validate(registerRequest);
+        emailError = null;
+        passwordError = null;
+        confirmPasswordError = null;
+        phoneNumberError = null;
+        usernameError = null;
+        nameError = null;
         error = null;
-        try
+
+        if (!results.IsValid)
         {
-            await authStateProvider.Register(registerRequest);
-            LogToConsole("Login ok");
-            error = "Please confirm your email address";
+            foreach (var failure in results.Errors)
+            {
+                if (failure.PropertyName == "email" && emailError == null)
+                    emailError = failure.ErrorMessage;
+                else if (failure.PropertyName == "password" && passwordError == null)
+                    passwordError = failure.ErrorMessage;
+                else if (failure.PropertyName == "confirmPassword" && confirmPasswordError == null)
+                    confirmPasswordError = failure.ErrorMessage;
+                else if (failure.PropertyName == "phoneNumber" && phoneNumberError == null)
+                    phoneNumberError = failure.ErrorMessage;
+                else if (failure.PropertyName == "username" && usernameError == null)
+                    usernameError = failure.ErrorMessage;
+                else if (failure.PropertyName == "name" && nameError == null)
+                    nameError = failure.ErrorMessage;
+            }
         }
-        catch (Exception ex)
-        {
-            LogToConsole("Invalid Credentials");
-            error = ex.Message;
+        else {
+            try
+            {
+                await authStateProvider.Register(registerRequest);
+                LogToConsole("Regiser ok");
+                navigationManager.NavigateTo("/Login");
+            }
+            catch (Exception e)
+            {
+                LogToConsole("Register failed");
+                error = e.Message;
+            }
         }
     }
 

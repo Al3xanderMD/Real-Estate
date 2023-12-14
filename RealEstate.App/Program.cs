@@ -11,11 +11,11 @@ using RealEstate.App.Services;
 using RealEstate.App.Validators;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddAuthorizationCore();
+
 builder.Services.AddBlazoredLocalStorage(config =>
 {
     config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
@@ -35,6 +35,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
 builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
+builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
