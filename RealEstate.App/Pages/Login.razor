@@ -1,18 +1,21 @@
 ﻿@page "/Login"
+@using FluentValidation
+@using FluentValidation.Results
 @using RealEstate.App.Auth
 @using RealEstate.App.Models
 @using RealEstate.App.Validators
+@using Microsoft.AspNetCore.Components.Forms
+
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
-
+@inject IValidator<LoginViewModel> Validator
 <head>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <div class="content-container">
-    <div class="auth-message">@error</div>
     <div class="form-card">
         <div class="auth-form-buttons-div">
             <NavLink href="login">
@@ -36,7 +39,8 @@
 
                 <br>
 
-                <InputText @bind-Value="loginRequest.Email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
+                <InputText @bind-Value="loginRequest.Email" id="email" type="email" class="auth-input" placeholder="Enter email" />
+                <div class="error-msg auth-message">@emailError</div>
             </div>
 
 
@@ -45,7 +49,8 @@
 
                 <br>
 
-                <InputText @bind-Value="loginRequest.Password" id="password" type="password" class="auth-input" placeholder="Enter password" required />
+                <InputText @bind-Value="loginRequest.Password" id="password" type="password" class="auth-input" placeholder="Enter password" />
+                <div class="error-msg auth-message">@passwordError</div>
             </div>
 
             <div class="auth-forgot-password-div">
@@ -56,6 +61,7 @@
 
             <input class="auth-form-submit-button" type="submit" value="Sign in">
             <hr class="auth-hr">
+            <div class="auth-message">@error</div>
         </EditForm>
     </div>
 </div>
@@ -63,26 +69,45 @@
 @code {
     LoginViewModel loginRequest { get; set; } = new LoginViewModel();
     string error { get; set; }
+    string emailError { get; set; }
+    string passwordError { get; set; }
 
     async Task OnSubmit()
     {
+        ValidationResult results = Validator.Validate(loginRequest);
+        emailError = null;
+        passwordError = null;
         error = null;
-        try
+        if (!results.IsValid)
         {
-            await authStateProvider.Login(loginRequest);
-            LogToConsole("Login ok");
-            navigationManager.NavigateTo("/");
+            
+            foreach (var failure in results.Errors)
+            {
+                if (failure.PropertyName == "Email")
+                    emailError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Password")
+                    passwordError = failure.ErrorMessage;
+            }
         }
-        catch (Exception ex)
+        else
         {
-            LogToConsole("Wrong credentials");
-            error = ex.Message;
+            try
+            {
+                await authStateProvider.Login(loginRequest);
+                LogToConsole("Login ok");
+                navigationManager.NavigateTo("/");
+            }
+            catch (Exception ex)
+            {
+                LogToConsole("Wrong credentials");
+                if (emailError == null && passwordError == null)
+                    error = ex.Message;
+            }
         }
     }
 
     void LogToConsole(string message)
     {
-        // Use console.log to log messages to the browser console
         JSRuntime.InvokeVoidAsync("console.log", message);
     }
 }
@@ -141,7 +166,7 @@
     private bool success = true;
     private string password = "";
 
-   
+
 
     private async Task SubmitForm(LoginRequest loginReq)
     {

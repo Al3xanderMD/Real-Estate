@@ -1,11 +1,14 @@
 using Blazored.LocalStorage;
+using FluentValidation;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RealEstate.App;
 using RealEstate.App.Auth;
 using RealEstate.App.Contracts;
+using RealEstate.App.Models;
 using RealEstate.App.Services;
+using RealEstate.App.Validators;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -28,6 +31,10 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
+builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
+
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
