@@ -6,6 +6,7 @@
 @using RealEstate.App.Validators
 @using System.Net.Http.Json
 @using System.Net.Http
+@using MatBlazor
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
@@ -13,78 +14,54 @@
 @inject IValidator<RegisterViewModel> Validator
 <head>
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
+    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
 </head>
 
 <div class="content-container">
     <div class="form-card">
         <div class="auth-form-buttons-div">
-            <NavLink href="Login">
-                <button class="auth-form-button">
-                    Log In
-                </button>
-            </NavLink>
-
-            <NavLink href="register">
-                <button class="auth-form-button">
-                    Sign up
-                </button>
-            </NavLink>
+            <MatButtonLink Href="login">Login</MatButtonLink>
+            
+            <MatButtonLink Href="register">Register</MatButtonLink>
         </div>
 
         <EditForm Model="@registerRequest" OnValidSubmit="OnSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
-                <label class="auth-label" for="email">Email:</label>
+                <MatTextField @bind-Value="registerRequest.email" id="email" type="email" Label="Enter email"></MatTextField>
 
-                <br>
-
-                <InputText id="email" @bind-Value="registerRequest.email" type="email" class="auth-input" placeholder="Enter email" />
                 <div class="error-msg auth-message">@emailError</div>
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="username">Username:</label>
-
-                <br>
-
-                <InputText id="username" @bind-Value="registerRequest.username" type="name" class="auth-input" placeholder="Enter username" />
+                <MatTextField id="username" @bind-Value="registerRequest.username" type="name" Label="Username"></MatTextField>
+                
                 <div class="error-msg auth-message">@usernameError</div>
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="name">Name:</label>
+                <MatTextField id="name" @bind-Value="registerRequest.name" type="name" Label="Name"></MatTextField>
 
-                <br>
-
-                <InputText id="name" @bind-Value="registerRequest.name" type="name" class="auth-input" placeholder="Enter your name"/>
                 <div class="error-msg auth-message">@nameError</div>
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="phone">Phone:</label>
+                <MatTextField id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" Label="Phone number"></MatTextField>
 
-                <br>
-
-                <InputText id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" class="auth-input" placeholder="Enter phone number"/>
                 <div class="error-msg auth-message">@phoneNumberError</div>
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="password">Password:</label>
+                <MatTextField id="password" @bind-Value="registerRequest.password" type="password" Label="Password"></MatTextField>
 
-                <br>
-
-                <InputText id="password" @bind-Value="registerRequest.password" type="password" class="auth-input" placeholder="Create password"/>
                 <div class="error-msg auth-message">@passwordError</div>
             </div>
 
             <div class="auth-input-div">
-                <label class="auth-label" for="confirmPassword">Confirm Password:</label>
+                <MatTextField id="confirmPassword" @bind-Value="registerRequest.confirmPassword" type="password" Label="Confirm password"></MatTextField>
 
-                <br>
-
-                <InputText id="confirmPassword" @bind-Value="registerRequest.confirmPassword" type="password" class="auth-input" placeholder="Confirm password" />
                 <div class="error-msg auth-message">@confirmPasswordError</div>
             </div>
 
@@ -95,7 +72,8 @@
                 At least 1 lower and 1 uppercase letter<br>
             </div>
 
-            <input class="auth-form-submit-button" type="submit" value="Submit" onclick="">
+            <MatButton Class="submit-btn" Raised="true" type="submit">Submit</MatButton>
+
             <hr class="auth-hr">
 
             <div>By submitting I accept the terms of use</div>

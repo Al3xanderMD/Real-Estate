@@ -5,7 +5,7 @@
 @using RealEstate.App.Models
 @using RealEstate.App.Validators
 @using Microsoft.AspNetCore.Components.Forms
-
+@using MatBlazor
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
@@ -13,43 +13,31 @@
 @inject IValidator<LoginViewModel> Validator
 <head>
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
+    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
 </head>
 
 <div class="content-container">
     <div class="form-card">
         <div class="auth-form-buttons-div">
-            <NavLink href="login">
-                <button class="auth-form-button">
-                    Log In
-                </button>
-            </NavLink>
+            <MatButtonLink Href="login">Login</MatButtonLink>
 
-            <NavLink href="register">
-                <button class="auth-form-button">
-                    Sign up
-                </button>
-            </NavLink>
+            <MatButtonLink Href="register">Register</MatButtonLink>
         </div>
 
         <EditForm Model="@loginRequest" OnValidSubmit="OnSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
-                <label class="auth-label" for="email">Email:</label>
+                <MatTextField @bind-Value="loginRequest.Email" id="email" type="email" Label="Enter email"></MatTextField>
 
-                <br>
-
-                <InputText @bind-Value="loginRequest.Email" id="email" type="email" class="auth-input" placeholder="Enter email" />
                 <div class="error-msg auth-message">@emailError</div>
             </div>
 
 
             <div class="auth-input-div">
-                <label class="auth-label" for="password">Password:</label>
+                <MatTextField @bind-Value="loginRequest.Password" id="password" type="password" Label="Enter password"></MatTextField>
 
-                <br>
-
-                <InputText @bind-Value="loginRequest.Password" id="password" type="password" class="auth-input" placeholder="Enter password" />
                 <div class="error-msg auth-message">@passwordError</div>
             </div>
 
@@ -59,7 +47,7 @@
                 </NavLink>
             </div>
 
-            <input class="auth-form-submit-button" type="submit" value="Sign in">
+            <MatButton Class="submit-btn" Raised="true" type="submit">Submit</MatButton>
             <hr class="auth-hr">
             <div class="auth-message">@error</div>
         </EditForm>

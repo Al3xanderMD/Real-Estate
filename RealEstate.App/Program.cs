@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using FluentValidation;
+using MatBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
 builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
 builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
+builder.Services.AddMatBlazor();
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
