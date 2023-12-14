@@ -32,7 +32,8 @@ namespace RealEstate.App.Validators
                 .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character!");
 
             RuleFor(x => x.confirmPassword)
-                .Equal(x => x.password).WithMessage("Password and confirmation password do not match.");
+                .Equal(x => x.password).WithMessage("Passwords do not match!")
+                .NotEmpty().WithMessage("Confirm Password is required!");
 
 
         }
