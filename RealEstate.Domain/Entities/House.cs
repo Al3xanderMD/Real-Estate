@@ -25,17 +25,17 @@ namespace RealEstate.Domain.Entities
         public Guid Id { get; private set; }
         public Guid BasePostId { get; private set; } //attach
         public BasePost BasePost { get; private set; } = null!;
-        public int RoomCount { get; private set; }
-        public Guid HouseTypeId { get; private set; }
-        public HouseType HouseType { get; private set; } = null!;
-        public int Comfort { get; private set; }
-        public int FloorCount { get; private set; }
-        public double UsefulSurface { get; private set; }
-        public double LotArea { get; private set; }
-        public int BuildYear { get; private set; }
+        public int RoomCount { get; private set; } //attach
+		public Guid HouseTypeId { get; private set; } //attach
+		public HouseType HouseType { get; private set; } = null!;
+        public int Comfort { get; private set; } //attach
+		public int FloorCount { get; private set; } //attach
+		public double UsefulSurface { get; private set; } //attach
+		public double LotArea { get; private set; } //attach
+		public int BuildYear { get; private set; } //attach
 
 
-        public static Result<House> Create(Guid basePostId, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear , Guid houseTypeId)
+		public static Result<House> Create(Guid basePostId, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear , Guid houseTypeId)
         {
 
             if (roomCount <= 0)
@@ -81,5 +81,51 @@ namespace RealEstate.Domain.Entities
         {
             throw new NotImplementedException();
         }
+
+        public void AttachBasePostId(Guid basePostId)
+        {
+			if(basePostId != Guid.Empty)
+            {
+				BasePostId = basePostId;
+			}
+		}
+
+        public void AttachRoomCount(int roomCount)
+        {
+            RoomCount = roomCount;
+        }
+
+        public void AttachHouseTypeId(Guid houseTypeId)
+        {
+            if(houseTypeId != Guid.Empty)
+            {
+                HouseTypeId = houseTypeId;
+            }
+        }
+        public void AttachComfort(int comfort)
+        {
+			Comfort = comfort;
+		}
+
+        public void AttachFloorCount(int floorCount)
+        {
+            FloorCount = floorCount;
+        }
+
+        public void AttachUsefulSurface(double usefulSurface)
+        {
+			UsefulSurface = usefulSurface;
+		}
+
+        public void AttachLotArea(double lotArea)
+        {
+            LotArea = lotArea;
+        }
+
+        public void AttachBuildYear(int buildYear)
+        {
+            BuildYear = buildYear;
+        }
+
     }
 }

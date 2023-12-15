@@ -29,6 +29,18 @@ namespace RealEstate.Domain.Entities
             return Result<CommercialSpecific>.Success(new CommercialSpecific(specificName, commercialCategoryId));
         }
 
+        public void AttachSpecificName(string specificName)
+        {
+			SpecificName = specificName;
+		}
+
+        public void AttachCommercialCategoryId(Guid commercialCategoryId)
+        {
+            if (commercialCategoryId != Guid.Empty)
+            {
+                CommercialCategoryId = commercialCategoryId;
+            }
+        }
         
     }
 }

@@ -20,5 +20,10 @@ namespace RealEstate.Domain.Entities
 
             return Result<Partitioning>.Success(new Partitioning(type));
         }
+        public void AttachType(string type)
+        {
+			Type = type;
+		}
+
     }
 }
