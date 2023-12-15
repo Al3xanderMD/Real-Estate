@@ -110,8 +110,23 @@
     text-align: center;
     margin-bottom: 10px;
     padding: 5px;
+    color: red;
 }
 
 a {
     text-decoration: none;
+}
+
+.error-message:empty {
+    height: 0;
+}
+
+.submit-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.warning-text {
+    color: #9AD0C2;
+    text-align: center;
 }

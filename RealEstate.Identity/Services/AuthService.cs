@@ -7,6 +7,7 @@ using RealEstate.Identity.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web;
 
 namespace RealEstate.Identity.Services
 {
@@ -55,7 +56,7 @@ namespace RealEstate.Identity.Services
                 await userManager.AddToRoleAsync(user, role);
 
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = configuration["AppUrl"] + "/api/v1/Authentication/ConfirmEmail?email=" + user.Email + "&token=" + token;
+            var confirmationLink = configuration["AppUrl"] + "/api/v1/Authentication/ConfirmEmail?email=" + HttpUtility.UrlEncode(user.Email) + "&token=" + HttpUtility.UrlEncode(token);
             var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
             emailService.SendEmail(message);
 
@@ -71,11 +72,11 @@ namespace RealEstate.Identity.Services
             //if (!await userManager.CheckPasswordAsync(user, model.Password!))
             //	return (0, "Invalid password");
 
-            if (user.EmailConfirmed == false)
-                return (0, "Email not confirmed");
-
             if (user == null || !await userManager.CheckPasswordAsync(user, model.Password!))
                 return (0, "Invalid email or password");
+
+            if (user.EmailConfirmed == false)
+                return (0, "Email not confirmed");
 
             
             var userRoles = await userManager.GetRolesAsync(user);
@@ -114,7 +115,7 @@ namespace RealEstate.Identity.Services
                 return (0, "Email not found");
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            var forgotPasswordLink = configuration["AppUrl"] + "/api/v1/Authentication/resetPassword?email=" + user.Email + "&token=" + token;
+            var forgotPasswordLink = configuration["AppUrl"] + "/resetpw?email=" + HttpUtility.UrlEncode(user.Email) + "&token=" + HttpUtility.UrlEncode(token);
             var message = new Message(new string[] { user.Email }, "Reset password token", forgotPasswordLink);
             emailService.SendEmail(message);
 

@@ -1,7 +1,119 @@
-﻿@page "/login"
+﻿@page "/Login"
+@using FluentValidation
+@using FluentValidation.Results
+@using RealEstate.App.Auth
+@using RealEstate.App.Data
+@using RealEstate.App.Models
+@using RealEstate.App.Validators
+@using Microsoft.AspNetCore.Components.Forms
+@using MatBlazor
+
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
+@inject IValidator<LoginViewModel> Validator
+@inject Blazored.SessionStorage.ISessionStorageService session
 
 <head>
+    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
+    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<div class="content-container">
+    <div class="form-card">
+        <div class="auth-form-buttons-div">
+            <MatButtonLink Href="login">Login</MatButtonLink>
+
+            <MatButtonLink Href="register">Register</MatButtonLink>
+        </div>
+
+        <EditForm Model="@loginRequest" OnValidSubmit="OnSubmit">
+            <hr class="auth-hr">
+
+            <div class="auth-input-div">
+                <MatTextField @bind-Value="loginRequest.Email" id="email" type="email" Label="Enter email"></MatTextField>
+
+                <div class="error-msg auth-message">@emailError</div>
+            </div>
+
+
+            <div class="auth-input-div">
+                <MatTextField @bind-Value="loginRequest.Password" id="password" type="password" Label="Enter password"></MatTextField>
+
+                <div class="error-msg auth-message">@passwordError</div>
+            </div>
+
+            <div class="auth-forgot-password-div">
+                <NavLink href="forgotpw">
+                    <p class="forgot-password-anchor">Forgot your password?</p>
+                </NavLink>
+            </div>
+
+            <MatButton Class="submit-btn" Raised="true" type="submit">Submit</MatButton>
+            <hr class="auth-hr">
+            <div class="auth-message">@error</div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    LoginViewModel loginRequest { get; set; } = new LoginViewModel();
+    string error { get; set; }
+    string emailError { get; set; }
+    string passwordError { get; set; }
+
+    async Task OnSubmit()
+    {
+        ValidationResult results = Validator.Validate(loginRequest);
+        emailError = null;
+        passwordError = null;
+        error = null;
+
+        if (!results.IsValid)
+        {
+
+            foreach (var failure in results.Errors)
+            {
+                if (failure.PropertyName == "Email")
+                    emailError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Password")
+                    passwordError = failure.ErrorMessage;
+            }
+        }
+        else
+        {
+            try
+            {
+                await authStateProvider.Login(loginRequest);
+                LogToConsole("Login ok");
+
+                var user = new UserInfo();
+                user.Email = loginRequest.Email;
+
+                Console.WriteLine("ran session init");
+                await session.SetItemAsync("SessionUser", user);
+
+                navigationManager.NavigateTo("/");
+            }
+            catch (Exception ex)
+            {
+                LogToConsole("Wrong credentials");
+                if (emailError == null && passwordError == null)
+                    error = ex.Message;
+            }
+        }
+    }
+
+    void LogToConsole(string message)
+    {
+        JSRuntime.InvokeVoidAsync("console.log", message);
+    }
+}
+
+
+@* <head>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -22,7 +134,7 @@
             </NavLink>
         </div>
 
-        <EditForm OnValidSubmit="HandleValidSubmit">
+        <EditForm Model="@loginReq" OnValidSubmit="HandleValidSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
@@ -30,7 +142,7 @@
 
                 <br>
 
-                <InputText id="email" type="email" class="auth-input" placeholder="Enter email" required />
+                <InputText @bind-Value="loginReq.email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
             </div>
 
 
@@ -39,19 +151,42 @@
 
                 <br>
 
-                <InputText id="password" type="password" class="auth-input" placeholder="Create password" required />
+                <InputText @bind-Value="loginReq.password" id="password" type="password" class="auth-input" placeholder="Create password" required />
             </div>
 
+            <input class="auth-form-submit-button" type="submit" value="Sign in">
+            <hr class="auth-hr">
         </EditForm>
     </div>
 </div>
 
 @code {
+    private LoginRequest loginReq = new LoginRequest();
     public string message = "";
     private bool success = true;
+    private string password = "";
+
+
+
+    private async Task SubmitForm(LoginRequest loginReq)
+    {
+        var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/login"), // Update with your API endpoint
+                Content = JsonContent.Create(loginReq)
+            };
+        // Send a POST request to the API
+        var response = await HttpClient.SendAsync(request);
+
+        // Handle the API response if needed
+        // For demonstration purposes, just print the response to the console
+        Console.WriteLine(response);
+    }
 
     private void HandleValidSubmit()
     {
+        SubmitForm(loginReq);
 
         if (success)
         {
@@ -62,4 +197,4 @@
             message = "Wrong credentials";
         }
     }
-}
+} *@
