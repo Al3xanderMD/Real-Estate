@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPension;
 using RealEstate.Application.Features.HotelPensions.Commands.DeleteHotelPension;
+using RealEstate.Application.Features.HotelPensions.Commands.UpdateHotelPension;
 using RealEstate.Application.Features.HotelPensions.Queries.GetAll;
 using RealEstate.Application.Features.HotelPensions.Queries.GetById;
 
@@ -35,6 +36,19 @@ namespace RealEstate.API.Controllers
             var result = await Mediator.Send(new GetByIdHotelPensionQuery(id));
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateHotelPensionCommand command)
+        {
+			if (id != command.Id)
+            {
+				return BadRequest();
+			}
+			await Mediator.Send(command);
+			return NoContent();
+		}
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
