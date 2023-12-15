@@ -21,6 +21,10 @@ namespace RealEstate.Domain.Entities
             return Result<HouseType>.Success(new HouseType(type));
         }
 
+        public void AttachType(string type)
+        {
+			Type = type;
+		}
 
     }
 }

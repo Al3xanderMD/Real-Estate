@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RealEstate.Application.Contracts.Identity;
 using RealEstate.Application.Models.Identity;
 using RealEstate.Identity.Models;
-using System.Formats.Asn1;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +11,7 @@ using System.Web;
 
 namespace RealEstate.Identity.Services
 {
-    public class AuthService : IAuthService
+	public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
