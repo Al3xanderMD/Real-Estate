@@ -2,19 +2,23 @@
 @using FluentValidation
 @using FluentValidation.Results
 @using RealEstate.App.Auth
+@using RealEstate.App.Data
 @using RealEstate.App.Models
 @using RealEstate.App.Validators
 @using Microsoft.AspNetCore.Components.Forms
 @using MatBlazor
+
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 @inject IValidator<LoginViewModel> Validator
+@inject Blazored.SessionStorage.ISessionStorageService session
+
 <head>
-    <link rel="stylesheet" href="css/styles.css" />
     <script src="_content/MatBlazor/dist/matBlazor.js"></script>
     <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <div class="content-container">
@@ -69,7 +73,7 @@
 
         if (!results.IsValid)
         {
-            
+
             foreach (var failure in results.Errors)
             {
                 if (failure.PropertyName == "Email")
@@ -84,6 +88,13 @@
             {
                 await authStateProvider.Login(loginRequest);
                 LogToConsole("Login ok");
+
+                var user = new UserInfo();
+                user.Email = loginRequest.Email;
+
+                Console.WriteLine("ran session init");
+                await session.SetItemAsync("SessionUser", user);
+
                 navigationManager.NavigateTo("/");
             }
             catch (Exception ex)

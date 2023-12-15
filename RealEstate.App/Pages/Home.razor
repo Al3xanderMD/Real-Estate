@@ -1,5 +1,8 @@
 ﻿@page "/"
-
+@using RealEstate.App.Data
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject Blazored.SessionStorage.ISessionStorageService session
 <head>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="_content/MatBlazor/dist/matBlazor.js"></script>
@@ -9,3 +12,34 @@
 <PageTitle>Home</PageTitle>
 
 <h1>Propertunity</h1>
+
+@if (user != null)
+{
+	<h3>Welcome, @user.Email</h3>
+	<MatButton @onclick="Logout">Logout</MatButton>
+}
+else
+{
+	<h3>Welcome, guest</h3>
+}
+
+@code {
+	private UserInfo user;
+	public async Task GetSessionUser()
+	{
+			user = await session.GetItemAsync<UserInfo>("SessionUser");
+	}
+
+	public void Logout()
+	{
+		session.ClearAsync();
+		user = new UserInfo();
+		navigationManager.NavigateTo("/login");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetSessionUser();
+		Console.WriteLine("started");
+	}
+}

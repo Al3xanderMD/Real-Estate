@@ -34,11 +34,11 @@ namespace RealEstate.App.Auth
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
 
-        /*public async Task Logout()
+        public async Task Logout()
         {
             await authService.Logout();
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
-        }*/
+        }
         public async Task Login(LoginViewModel loginParameters)
         {
             await authService.Login(loginParameters);
