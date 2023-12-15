@@ -13,17 +13,18 @@
 @inject CustomStateProvider authStateProvider
 @inject IValidator<RegisterViewModel> Validator
 <head>
-    <link rel="stylesheet" href="css/styles.css" />
+    
     <script src="_content/MatBlazor/dist/matBlazor.js"></script>
     <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <div class="content-container">
     <div class="form-card">
         <div class="auth-form-buttons-div">
-            <MatButtonLink Href="login">Login</MatButtonLink>
+            <MatButtonLink Class="login-register-btn"  Href="login">Login</MatButtonLink>
             
-            <MatButtonLink Href="register">Register</MatButtonLink>
+            <MatButtonLink Class="login-register-btn" Href="register">Register</MatButtonLink>
         </div>
 
         <EditForm Model="@registerRequest" OnValidSubmit="OnSubmit">
@@ -72,7 +73,7 @@
                 At least 1 lower and 1 uppercase letter<br>
             </div>
 
-            <MatButton Class="submit-btn" Raised="true" type="submit">Submit</MatButton>
+            <MatButton Class="submit-btn submit-btn-custom" Raised="true" type="submit">Submit</MatButton>
 
             <hr class="auth-hr">
 
