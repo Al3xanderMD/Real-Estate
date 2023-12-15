@@ -23,16 +23,16 @@ namespace RealEstate.Domain.Entities
         }
 
         public Guid Id { get; private set; }
-        public Guid BasePostId { get; private set; } //attach
+        public Guid BasePostId { get; private set; }
         public BasePost BasePost { get; private set; } = null!;
-        public int RoomCount { get; private set; } //attach
-		public Guid HouseTypeId { get; private set; } //attach
+        public int RoomCount { get; private set; }
+		public Guid HouseTypeId { get; private set; }
 		public HouseType HouseType { get; private set; } = null!;
-        public int Comfort { get; private set; } //attach
-		public int FloorCount { get; private set; } //attach
-		public double UsefulSurface { get; private set; } //attach
-		public double LotArea { get; private set; } //attach
-		public int BuildYear { get; private set; } //attach
+        public int Comfort { get; private set; }
+		public int FloorCount { get; private set; } 
+		public double UsefulSurface { get; private set; } 
+		public double LotArea { get; private set; } 
+		public int BuildYear { get; private set; } 
 
 
 		public static Result<House> Create(Guid basePostId, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear , Guid houseTypeId)
