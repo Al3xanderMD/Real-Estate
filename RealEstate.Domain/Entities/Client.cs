@@ -35,7 +35,7 @@ namespace RealEstate.Domain.Entities
 
         public void AttachPhone(string phone)
         {
-             if(phone.Length == 10)
+            if(phone.Length == 10)
             {
                 Phone = phone;
             }
@@ -43,7 +43,7 @@ namespace RealEstate.Domain.Entities
         }
         public void AttachRegion(string region)
         {
-               if(!string.IsNullOrWhiteSpace(region))
+            if(!string.IsNullOrWhiteSpace(region))
             {
                 Region = region;
             }

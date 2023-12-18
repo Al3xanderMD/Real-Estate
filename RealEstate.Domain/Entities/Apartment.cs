@@ -57,9 +57,9 @@ namespace RealEstate.Domain.Entities
 				return Result<Apartment>.Failure("Useful surface must be larger than 0.");
 			}
 
-			if (buildYear <= 1900 && buildYear > DateTime.Now.Year)
+			if (buildYear <= 1900 || buildYear > DateTime.Now.Year)
 			{
-				string str = "The Build Year must be after 1900 and before " + DateTime.Now.Year + 1;
+				string str = "The Build Year must be after 1900 and before " + (DateTime.Now.Year + 1);
 				return Result<Apartment>.Failure(str);
 			}
 

@@ -8,7 +8,7 @@ namespace RealEstate.Domain.Entities
         public string Url { get; private set; }
         public string AddressName { get; private set; }
 
-        public Address(string url, string addressName)
+        private Address(string url, string addressName)
         {
             Id = Guid.NewGuid();
             Url = url;

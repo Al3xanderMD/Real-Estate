@@ -7,7 +7,7 @@ namespace RealEstate.Domain.Entities
         public Guid Id { get; private set; }
         public string Type { get; private set; }
 
-        public Partitioning(string type)
+        private Partitioning(string type)
         {
             Id = Guid.NewGuid();
             Type = type;

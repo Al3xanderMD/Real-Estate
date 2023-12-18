@@ -58,7 +58,7 @@ namespace RealEstate.Domain.Entities
                 return Result<House>.Failure("Lot area must be larger than 0.");
             }
 
-            if (buildYear <= 1900 && buildYear > DateTime.Now.Year)
+            if (buildYear <= 1900 || buildYear > DateTime.Now.Year)
             {
                 string str = "The Build Year must be after 1900 and before " + DateTime.Now.Year + 1;
                 return Result<House>.Failure(str);

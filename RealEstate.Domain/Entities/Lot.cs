@@ -61,7 +61,7 @@ namespace RealEstate.Domain.Entities
 
         public void AttachBasePostId(Guid basePostId)
         {
-           if (BasePostId != Guid.Empty)
+           if (basePostId != Guid.Empty)
            {
 				BasePostId = basePostId;
 		   }
@@ -74,7 +74,7 @@ namespace RealEstate.Domain.Entities
 
         public void AttachLotClassificationId(Guid lotClassificationId)
         {
-            if (LotClassificationId != Guid.Empty)
+            if (lotClassificationId != Guid.Empty)
             {
                 LotClassificationId = lotClassificationId;
             }

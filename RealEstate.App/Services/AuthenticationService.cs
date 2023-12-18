@@ -1,12 +1,10 @@
 ﻿using RealEstate.App.Contracts;
 using RealEstate.App.Models;
-using System.Net;
 using System.Net.Http.Json;
 using System.Web;
-using Blazored.SessionStorage;
 namespace RealEstate.App.Services
 {
-    public class AuthenticationService : IAuthentificationService
+	public class AuthenticationService : IAuthentificationService
     {
         private readonly HttpClient httpClient;
         private readonly ITokenService tokenService;

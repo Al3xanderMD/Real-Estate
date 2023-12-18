@@ -30,7 +30,7 @@ namespace RealEstate.Domain.Entities
 
         public static Result<Commercial> Create(Guid basePostId, Guid commercialSpecificId, double usefulSurface)
         {
-            if (commercialSpecificId == null)
+            if (commercialSpecificId == Guid.Empty)
             {
                 return Result<Commercial>.Failure("Commercial specific is required");
             }

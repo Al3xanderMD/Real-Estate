@@ -44,42 +44,6 @@ namespace RealEstate.Domain.Entities
             return Result<Agent>.Success(agent);
         }
 
-        public static Result<Agent> Update(Guid agentId, string agentName, string phone)
-        {
-            if (string.IsNullOrWhiteSpace(agentName))
-            {
-                return Result<Agent>.Failure("Agent name is required");
-            }
-            if (string.IsNullOrWhiteSpace(phone))
-            {
-                return Result<Agent>.Failure("Phone is required");
-            }
-
-            var agent = new Agent(Guid.Empty, agentName, phone);
-            agent.AgentId = agentId;
-
-            return Result<Agent>.Success(agent);
-        }
-
-        public static Result<Agent> Update(Guid agentId, string agentName, string phone, string logolink, string url)
-        {
-            if (string.IsNullOrWhiteSpace(agentName))
-            {
-                return Result<Agent>.Failure("Agent name is required");
-            }
-            if (string.IsNullOrWhiteSpace(phone))
-            {
-                return Result<Agent>.Failure("Phone is required");
-            }
-
-            var agent = new Agent(Guid.Empty, agentName, phone);
-            agent.AgentId = agentId;
-            agent.AttachLogo(logolink);
-            agent.AttachUrl(url);
-
-            return Result<Agent>.Success(agent);
-        }
-
         public void AttachLogo(string logolink)
         {
             if (!string.IsNullOrWhiteSpace(logolink)) { 

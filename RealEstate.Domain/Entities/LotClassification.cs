@@ -7,7 +7,7 @@ namespace RealEstate.Domain.Entities
         public Guid Id { get; private set; }
         public string Type { get; private set; }
 
-        public LotClassification(string type)
+        private LotClassification(string type)
         {
             Id = Guid.NewGuid();
             Type = type;

@@ -1,11 +1,10 @@
-﻿using FluentValidation;
-using RealEstate.App.Models;
+﻿using RealEstate.App.Models;
 
 namespace RealEstate.App.Validators
 {
-    using FluentValidation;
+	using FluentValidation;
 
-    public class RegisterViewModelValidator : AbstractValidator<RegisterViewModel>
+	public class RegisterViewModelValidator : AbstractValidator<RegisterViewModel>
     {
         public RegisterViewModelValidator()
         {

@@ -15,7 +15,7 @@ namespace RealEstate.Domain.Entities
 		public Address Address { get; set; } = null!;
 		public string? Descripion { get; set; } = null;
 
-		public BasePost(Guid userId, string titlePost, double price, Guid addressId, bool offerType)
+		private BasePost(Guid userId, string titlePost, double price, Guid addressId, bool offerType)
 		{
 			BasePostId = Guid.NewGuid();
 			UserId = userId;
@@ -58,7 +58,7 @@ namespace RealEstate.Domain.Entities
 		}
 		public void AttachAddress(Address address)
 		{
-			Address = address;
+				Address = address;
 		}
 
 		public void AttachTitlePost(string titlePost)
@@ -67,7 +67,7 @@ namespace RealEstate.Domain.Entities
 		}
 
 		public void AttachPrice(double price)
-		{
+		{ 
 			Price = price;
 		}
 

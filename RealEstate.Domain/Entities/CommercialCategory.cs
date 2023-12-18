@@ -7,7 +7,7 @@ namespace RealEstate.Domain.Entities
 		public Guid Id { get; private set; }
 		public string CategoryName { get; private set; }
 
-		public CommercialCategory(string categoryName)
+		private CommercialCategory(string categoryName)
 		{
 			Id = Guid.NewGuid();
 			CategoryName = categoryName;

@@ -47,7 +47,7 @@ builder.Services.AddMatBlazor();
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
+    client.BaseAddress = new Uri("https://localhost:5243/"); // 7165 // 7190 //5243
 });
 
 await builder.Build().RunAsync();
