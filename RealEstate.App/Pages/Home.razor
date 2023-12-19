@@ -1,22 +1,29 @@
 ﻿@page "/"
+@using GlobalBuyTicket.App.Auth
+@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
 @using RealEstate.App.Data
+
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject Blazored.SessionStorage.ISessionStorageService session
+@inject CustomStateProvider authStateProvider
 <head>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
-    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+	<link rel="stylesheet" href="css/styles.css" />
+
+	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </head>
 
 <PageTitle>Home</PageTitle>
 
 <h1>Propertunity</h1>
 
-@if (user != null)
+@if (isAuth)
 {
-	<h3>Welcome, @user.Email</h3>
-	<MatButton @onclick="Logout">Logout</MatButton>
+	<h3>Welcome, @authenticationState.User.Identity.Name</h3>
 }
 else
 {
@@ -25,21 +32,37 @@ else
 
 @code {
 	private UserInfo user;
+	private AuthenticationState authenticationState;
+	public bool isAuth { get; set; }
+
+
 	public async Task GetSessionUser()
 	{
-			user = await session.GetItemAsync<UserInfo>("SessionUser");
+		user = await session.GetItemAsync<UserInfo>("SessionUser");
 	}
 
-	public void Logout()
+	public async Task Logout()
 	{
 		session.ClearAsync();
+		await authStateProvider.Logout();
 		user = new UserInfo();
-		navigationManager.NavigateTo("/login");
+		navigationManager.NavigateTo("/login", forceLoad: true);
 	}
 
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnParametersSetAsync()
 	{
 		await GetSessionUser();
 		Console.WriteLine("started");
+		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+		if (authenticationState.User.Identity.IsAuthenticated)
+		{
+			Console.WriteLine("authState : "+authenticationState.User.Identity.Name);
+			isAuth = true;
+		} else 
+		{
+			Console.WriteLine("not authenticated");
+			isAuth = false;
+		}
 	}
-}
+}              

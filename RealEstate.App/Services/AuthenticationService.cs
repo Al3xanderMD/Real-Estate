@@ -69,8 +69,8 @@ namespace RealEstate.App.Services
         public async Task Logout()
         {
             await tokenService.RemoveTokenAsync();
-            var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
-            result.EnsureSuccessStatusCode();
+            //var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
+            //result.EnsureSuccessStatusCode();
         }
     }
 }

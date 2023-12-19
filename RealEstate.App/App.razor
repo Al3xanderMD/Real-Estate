@@ -1,4 +1,13 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+</head>
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />

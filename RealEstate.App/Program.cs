@@ -1,10 +1,11 @@
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using FluentValidation;
-using MatBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
+using MudBlazor.Services;
 using RealEstate.App;
 using RealEstate.App.Auth;
 using RealEstate.App.Contracts;
@@ -42,7 +43,20 @@ builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordVa
 builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
 builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
 
-builder.Services.AddMatBlazor();
+builder.Services.AddMudServices();
+
+builder.Services.AddMudServices(config => //snackbar pop-ups config
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+
+    config.SnackbarConfiguration.PreventDuplicates = false;
+    config.SnackbarConfiguration.NewestOnTop = false;
+    config.SnackbarConfiguration.ShowCloseIcon = true;
+    config.SnackbarConfiguration.VisibleStateDuration = 10000;
+    config.SnackbarConfiguration.HideTransitionDuration = 500;
+    config.SnackbarConfiguration.ShowTransitionDuration = 500;
+    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+});
 
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
