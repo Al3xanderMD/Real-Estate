@@ -43,7 +43,7 @@ builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
 builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
 builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
-
+builder.Services.AddScoped<IValidator<PostModel>, PostValidator>();
 builder.Services.AddMudServices();
 
 builder.Services.AddMudServices(config => //snackbar pop-ups config

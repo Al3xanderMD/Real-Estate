@@ -1,4 +1,6 @@
 ﻿@page "/createpost"
+@using FluentValidation
+@using FluentValidation.Results
 @using GlobalBuyTicket.App.Auth
 @using Microsoft.AspNetCore.Components.Authorization
 @using RealEstate.App.Auth
@@ -6,321 +8,422 @@
 @using RealEstate.App.Models
 
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 @inject Blazored.SessionStorage.ISessionStorageService session
 @inject CustomStateProvider authStateProvider
 @inject ISnackbar Snackbar
+@inject IValidator<PostModel> Validator
+
 <head>
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 
-	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
-	<script>
-		const map = L.map('my-map').setView([48.1500327, 11.5753989], 10);
-		L.tileLayer('https://maps.geoapify.com/v1/tile/osm-bright-smooth/{z}/{x}/{y}.png?apiKey=YOUR_API_KEY', {
-			attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
-			maxZoom: 20, id: 'osm-bright'
-		}).addTo(map);
-	</script>
+    <script>
+        const map = L.map('my-map').setView([48.1500327, 11.5753989], 10);
+        L.tileLayer('https://maps.geoapify.com/v1/tile/osm-bright-smooth/{z}/{x}/{y}.png?apiKey=YOUR_API_KEY', {
+            attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
+            maxZoom: 20, id: 'osm-bright'
+        }).addTo(map);
+    </script>
 </head>
 
 <PageTitle>Create Post</PageTitle>
 
 <div class="content-container">
-	<h1 class="text-center">Create a post</h1>
-	<MudContainer>
-		<MudForm Model="post" OnValidSubmit="HandleValidSubmit">
-			<MudStack Spacing="6" Justify="Justify.Center">
-				<MudPaper Class="mud-elevation-4" Padding="16px">
-					<MudSelect T="string" @bind-Value="post.PropertyType" Label="Property Type" AnchorOrigin="Origin.BottomCenter">
-						<MudSelectItem Value="@("Apartment")" /> <!-- Make dynamic later -->
-						<MudSelectItem Value="@("House")" />
-						<MudSelectItem Value="@("Lot")" />
-						<MudSelectItem Value="@("Commercial")" />
-						<MudSelectItem Value="@("Hotel/Pension")" />
-					</MudSelect>
+    <h1 class="text-center">Create a post</h1>
+    <MudContainer>
+        <MudForm Model="postRequest" OnValidSubmit="HandleValidSubmit">
+            <MudStack Spacing="6" Justify="Justify.Center">
+                <MudPaper Class="mud-elevation-4" Padding="16px">
+                    <div class="error-msg">@propertyTypeError</div>
+                    <MudSelect T="string" @bind-Value="post.PropertyType" Label="Property Type" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelectItem Value="@("Apartment")" /> <!-- Make dynamic later -->
+                        <MudSelectItem Value="@("House")" />
+                        <MudSelectItem Value="@("Lot")" />
+                        <MudSelectItem Value="@("Commercial")" />
+                        <MudSelectItem Value="@("Hotel/Pension")" />
+                    </MudSelect>
 
-					<MudTextField @bind-Value="post.Title" Label="Title" />
-					<MudTextField T="string" @bind-Value="post.Description" Lines="10" Label="Description" />
-					<MudTextField @bind-Value="post.Price" Label="Amount" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.EuroSymbol" />
-				</MudPaper>
+                    <MudTextField @bind-Value="post.Title" Label="Title" />
+                    <div class="error-msg auth-message">@titleError</div>
+                    <MudTextField T="string" @bind-Value="post.Description" Lines="10" Label="Description" />
+                    <div class="error-msg auth-message">@descriptionError</div>
+                    <MudTextField @bind-Value="post.Price" Label="Amount" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.EuroSymbol" />
+                    <div class="error-msg auth-message">@priceError</div>
+                </MudPaper>
 
-				<MudPaper Class="mud-elevation-4" Padding="16px">
-					<iframe width="600"
-							height="800"
-							style="border:0; height:400px; width:100%;"
-							loading="lazy"
-							allowfullscreen
-							referrerpolicy="no-referrer-when-downgrade"
-							src=@mapString>
-					</iframe>
-					<MudTextField @bind-Value="post.Address" Label="Address" OnKeyDown="GetMapUrl"/>
-				</MudPaper>
+                <MudPaper Class="mud-elevation-4" Padding="16px">
+                    <iframe width="600"
+                            height="800"
+                            style="border:0; height:400px; width:100%;"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src=@mapString>
+                    </iframe>
+                    <MudTextField @bind-Value="post.Address" Label="Address" OnKeyDown="GetMapUrl" />
+                    <div class="error-msg auth-message">@addressError</div>
+                </MudPaper>
 
-				<MudPaper>
-					<MudStack Style="width: 100%">
-						<MudFileUpload T="IReadOnlyList<IBrowserFile>"
-									   AppendMultipleFiles
-										   OnFilesChanged="OnInputFileChanged"
-										   Hidden="@false"
-										   InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
-										   InputStyle="opacity:0"
-										   @ondragenter="@SetDragClass"
-										   @ondragleave="@ClearDragClass"
-										   @ondragend="@ClearDragClass">
-								<ButtonTemplate>
-									<MudPaper Height="300px"
-											  Outlined="true"
-											  Class="@_dragClass">
-										<MudText Typo="Typo.h6">
-											Drag and drop files here or click
-										</MudText>
-										@foreach (var file in _fileNames)
-									{
-										<MudChip Color="Color.Dark" Text="@file" />
-									}
-								</MudPaper>
-								<MudToolBar DisableGutters="true"
-											Class="relative d-flex justify-end gap-4 z-30">
-									<MudButton HtmlTag="label"
-											   Color="Color.Primary"
-											   for="@context.Id"
-											   Variant="Variant.Filled">
-										Open file picker
-									</MudButton>
-									<MudButton OnClick="@Upload"
-											   Color="Color.Primary"
-											   Disabled="@(!_fileNames.Any())"
-											   Variant="Variant.Filled">
-										Upload
-									</MudButton>
-									<MudButton OnClick="@Clear"
-											   Color="Color.Error"
-											   Disabled="@(!_fileNames.Any())"
-											   Variant="Variant.Filled">
-										Clear
-									</MudButton>
-								</MudToolBar>
-							</ButtonTemplate>
-						</MudFileUpload>
-					</MudStack>
-				</MudPaper>
+                <MudPaper>
+                    <MudStack Style="width: 100%">
+                        <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                                              AppendMultipleFiles
+                                        OnFilesChanged="OnInputFileChanged"
+                                        Hidden="@false"
+                                        InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+                                        InputStyle="opacity:0"
+                                        @ondragenter="@SetDragClass"
+                                        @ondragleave="@ClearDragClass"
+                                        @ondragend="@ClearDragClass">
+                             <ButtonTemplate>
+                                 <MudPaper Height="300px"
+                                           Outlined="true"
+                                           Class="@_dragClass">
+                                     <MudText Typo="Typo.h6">
+                                         Drag and drop files here or click
+                                     </MudText>
+                                     @foreach (var file in _fileNames)
+                                    {
+                                        <MudChip Color="Color.Dark" Text="@file" />
+                                    }
+                                </MudPaper>
+                                <MudToolBar DisableGutters="true"
+                                            Class="relative d-flex justify-end gap-4 z-30">
+                                    <MudButton HtmlTag="label"
+                                               Color="Color.Primary"
+                                               for="@context.Id"
+                                               Variant="Variant.Filled">
+                                        Open file picker
+                                    </MudButton>
+                                    <MudButton OnClick="@Upload"
+                                               Color="Color.Primary"
+                                               Disabled="@(!_fileNames.Any())"
+                                               Variant="Variant.Filled">
+                                        Upload
+                                    </MudButton>
+                                    <MudButton OnClick="@Clear"
+                                               Color="Color.Error"
+                                               Disabled="@(!_fileNames.Any())"
+                                               Variant="Variant.Filled">
+                                        Clear
+                                    </MudButton>
+                                </MudToolBar>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                    </MudStack>
+                </MudPaper>
 
-				<MudPaper Class="mud-elevation-4" Padding="16px">
-					@switch (post.PropertyType)
-					{
-						case "Apartment":
-							@* Apartment *@
-							<MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount" Required="true">
-								@for (int i = 1; i < 10; i++)
-								{
-									<MudSelectItem Value=@i.ToString() />
-								}
-								<MudSelectItem Value=@("10+") />
-							</MudSelect>
+                <MudPaper Class="mud-elevation-4" Padding="16px">
+                    @switch (post.PropertyType)
+                    {
+                        case "Apartment":
+                            @* Apartment *@
+                            <MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount">
+                                @*Required="true"*@
+                                @for (int i = 1; i < 10; i++)
+                                {
+                                    <MudSelectItem Value=@i.ToString() />
+                                }
+                                <MudSelectItem Value=@("10+") />
+                            </MudSelect>
+                            <div class="error-msg auth-message">@roomCountError</div>
 
-							<MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" Required="true">
-								@for (int i = DateTime.Now.Year; i > 1900; i--)
-								{
-									<MudSelectItem Value=@i />
-								}
+                            <MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" >
+                                @for (int i = DateTime.Now.Year; i > 1900; i--)
+                                {
+                                    <MudSelectItem Value=@i />
+                                }
 
-							</MudSelect>
+                            </MudSelect>
+                            <div class="error-msg auth-message">@buildYearError</div>
+                            <MudSelect T="string" Label="Floor" @bind-Value="post.Floor" >
+                                @for (int i = 0; i < 20; i++)
+                                {
+                                    <MudSelectItem Value=@(@i.ToString()) />
+                                }
+                                <MudSelectItem Value=@("20+") />
+                            </MudSelect>
+                            <div class="error-msg auth-message">@floorError</div>
 
-							<MudSelect T="string" Label="Floor" @bind-Value="post.Floor" Required="true">
-								@for (int i = 0; i < 20; i++)
-								{
-									<MudSelectItem Value=@(@i.ToString()) />
-								}
-								<MudSelectItem Value=@("20+") />
-							</MudSelect>
+                            <MudTextField @bind-Value="post.UsefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+                            break;
+                        case "House":
+                            @* House *@
+                            <MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount" >
+                                @for (int i = 1; i < 10; i++)
+                                {
+                                    <MudSelectItem Value=@i.ToString() />
+                                }
+                                <MudSelectItem Value=@("10+") />
+                            </MudSelect>
+                            <div class="error-msg auth-message">@roomCountError</div>
+                            <MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" >
+                                @for (int i = DateTime.Now.Year; i > 1900; i--)
+                                {
+                                    <MudSelectItem Value=@i />
+                                }
 
-							<MudTextField @bind-Value="post.UsefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-							break;
-						case "House":
-							@* House *@
-							<MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount" Required="true">
-								@for (int i = 1; i < 10; i++)
-								{
-									<MudSelectItem Value=@i.ToString() />
-								}
-								<MudSelectItem Value=@("10+") />
-							</MudSelect>
+                            </MudSelect>
+                            <div class="error-msg auth-message">@buildYearError</div>
+                            <MudSelect T="int" Label="Floors" @bind-Value="post.FloorCount" >
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <MudSelectItem Value=@i />
+                                }
+                            </MudSelect>
+                            <div class="error-msg auth-message">@floorCountError</div>
+                            <MudTextField @bind-Value="post.UsefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+                            <MudTextField @bind-Value="post.LotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+                            break;
+                        case "Hotel/Pension":
+                            @* Hotel/Pension *@
+                            <MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" >
+                                @for (int i = DateTime.Now.Year; i > 1900; i--)
+                                {
+                                    <MudSelectItem Value=@i />
+                                }
 
-							<MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" Required="true">
-								@for (int i = DateTime.Now.Year; i > 1900; i--)
-								{
-									<MudSelectItem Value=@i />
-								}
+                            </MudSelect>
+                            <div class="error-msg auth-message">@buildYearError</div>
+                            <MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount" >
+                                @for (int i = 1; i < 10; i++)
+                                {
+                                    <MudSelectItem Value=@i.ToString() />
+                                }
+                                <MudSelectItem Value=@("10+") />
+                            </MudSelect>
+                            <div class="error-msg auth-message">@roomCountError</div>
+                            break;
+                        case "Commercial":
+                            @* Commercial *@
+                            <MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" >
+                                @for (int i = DateTime.Now.Year; i > 1900; i--)
+                                {
+                                    <MudSelectItem Value=@i />
+                                }
 
-							</MudSelect>
+                            </MudSelect>
+                            <div class="error-msg auth-message">@buildYearError</div>
+                            <MudSelect T="string" Label="Floor" @bind-Value="post.Floor" >
+                                @for (int i = 0; i < 20; i++)
+                                {
+                                    <MudSelectItem Value=@(@i.ToString()) />
+                                }
+                                <MudSelectItem Value=@("20+") />
+                            </MudSelect>
+                            <div class="error-msg auth-message">@floorError</div>
+                            break;
+                        case "Lot":
+                            @* Lot *@
+                            <MudTextField @bind-Value="post.StreetFrontage" Label="Street frontage (m)" Variant="Variant.Text" Adornment="Adornment.Start" />
+                            <MudTextField @bind-Value="post.LotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+                            break;
+                    }
+                </MudPaper>
 
-							<MudSelect T="int" Label="Floors" @bind-Value="post.FloorCount" Required="true">
-								@for (int i = 1; i <= 5; i++)
-								{
-									<MudSelectItem Value=@i />
-								}
-							</MudSelect>
+                <MudPaper Class="mud-elevation-4" Padding="16px">
+                    @* Contact info *@
+                    <MudTextField @bind-Value="post.ContactName" Label="Contact Name" Variant="Variant.Text" Adornment="Adornment.Start" />
+                    <div class="error-msg auth-message">@contactNameError</div>
 
-							<MudTextField @bind-Value="post.UsefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-							<MudTextField @bind-Value="post.LotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-							break;
-						case "Hotel/Pension":
-							@* Hotel/Pension *@
-							<MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" Required="true">
-								@for (int i = DateTime.Now.Year; i > 1900; i--)
-								{
-									<MudSelectItem Value=@i />
-								}
+                    <MudTextField @bind-Value="post.ContactPhone" Label="Contact Phone" Variant="Variant.Text" Adornment="Adornment.Start" />
+                    <div class="error-msg auth-message">@contactPhoneError</div>
 
-							</MudSelect>
+                    <MudTextField @bind-Value="post.ContactEmail" Label="Contact Email" Variant="Variant.Text" Adornment="Adornment.Start" />
+                    <div class="error-msg auth-message">@contactEmailError</div>
+                </MudPaper>
 
-							<MudSelect T="string" Label="Room count" @bind-Value="post.RoomCount" Required="true">
-								@for (int i = 1; i < 10; i++)
-								{
-									<MudSelectItem Value=@i.ToString() />
-								}
-								<MudSelectItem Value=@("10+") />
-							</MudSelect>
-							
-							break;
-						case "Commercial":
-							@* Commercial *@
-							<MudSelect T="int" Label="Build year" @bind-Value="post.BuildYear" Required="true">
-								@for (int i = DateTime.Now.Year; i > 1900; i--)
-								{
-									<MudSelectItem Value=@i />
-								}
+                <MudButton Type="ButtonType.Submit" Variant="Variant.Filled">Submit</MudButton>
+            </MudStack>
+        </MudForm>
+        @*<Map height="200px" width="200px"></Map>*@
 
-							</MudSelect>
+    </MudContainer>
+    <MudContainer>
+        <MudGrid>
 
-							<MudSelect T="string" Label="Floor" @bind-Value="post.Floor" Required="true">
-								@for (int i = 0; i < 20; i++)
-								{
-									<MudSelectItem Value=@(@i.ToString()) />
-								}
-								<MudSelectItem Value=@("20+") />
-							</MudSelect>
-							break;
-						case "Lot":
-							@* Lot *@
-							<MudTextField @bind-Value="post.StreetFrontage" Label="Street frontage (m)" Variant="Variant.Text" Adornment="Adornment.Start" />
-							<MudTextField @bind-Value="post.LotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-							break;
-					}
-				</MudPaper>
-
-				<MudPaper Class="mud-elevation-4" Padding="16px">
-					@* Contact info *@
-					<MudTextField @bind-Value="post.ContactName" Label="Contact Name" Variant="Variant.Text" Adornment="Adornment.Start" />
-					<MudTextField @bind-Value="post.ContactPhone" Label="Contact Phone" Variant="Variant.Text" Adornment="Adornment.Start" />
-					<MudTextField @bind-Value="post.ContactEmail" Label="Contact Email" Variant="Variant.Text" Adornment="Adornment.Start" />
-				</MudPaper>
-
-				<MudButton Type="ButtonType.Submit" Variant="Variant.Filled">Submit</MudButton>
-			</MudStack>
-		</MudForm>
-		@*<Map height="200px" width="200px"></Map>*@
-
-	</MudContainer>
-	<MudContainer>
-		<MudGrid>
-
-		</MudGrid>
-	</MudContainer>
+        </MudGrid>
+    </MudContainer>
 </div>
 
 @code {
-	private UserInfo user;
-	private AuthenticationState authenticationState;
-	private PostModel post = new PostModel();
-	public bool isAuth { get; set; }
-	private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
-	private string _dragClass = DefaultDragClass;
-	private readonly List<string> _fileNames = new();
-	private string apiKey = "AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk";
-	private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Space+Needle,Seattle+WA";
-	public async Task GetSessionUser()
-	{
-		user = await session.GetItemAsync<UserInfo>("SessionUser");
-	}
+    private UserInfo user;
+    private AuthenticationState authenticationState;
+    private PostModel post = new PostModel();
+    public bool isAuth { get; set; }
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
+    private string _dragClass = DefaultDragClass;
+    private readonly List<string> _fileNames = new();
+    private string apiKey = "AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk";
+    private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Space+Needle,Seattle+WA";
 
-	public async Task Logout()
-	{
-		session.ClearAsync();
-		await authStateProvider.Logout();
-		user = new UserInfo();
-		navigationManager.NavigateTo("/login", forceLoad: true);
-	}
+    PostModel postRequest { get; set; } = new PostModel();
+    string error { get; set; }
+    string propertyTypeError { get; set; }
+    string titleError { get; set; }
+    string descriptionError { get; set; }
+    string priceError { get; set; }
+    string addressError { get; set; }
+    string roomCountError { get; set; }
+    string buildYearError { get; set; }
+    string floorError { get; set; }
+    string floorCountError { get; set; }
+    string contactNameError { get; set; }
+    string contactPhoneError { get; set; }
+    string contactEmailError { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+    async Task HandleValidSubmit()
+    {
+        LogToConsole("submitting!!!");
+        ValidationResult results = Validator.Validate(postRequest);
+        error = null;
+        propertyTypeError = null;
+        titleError = null;
+        descriptionError = null;
+        priceError = null;
+        addressError = null;
+        roomCountError = null;
+        buildYearError = null;
+        floorError = null;
+        floorCountError = null;
+        contactNameError = null;
+        contactPhoneError = null;
+        contactEmailError = null;
+        if (!results.IsValid)
+        {
+            foreach (var failure in results.Errors)
+            {
+                if (failure.PropertyName == "PropertyType")
+                {
+                    propertyTypeError = failure.ErrorMessage;
+                    LogToConsole("PropertyType error");
+                }
+                    
+                else if (failure.PropertyName == "Title")
+                    titleError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Description" && descriptionError == null)
+                    descriptionError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Price" && priceError == null)
+                    priceError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Address" && addressError == null)
+                    addressError = failure.ErrorMessage;
+                else if (failure.PropertyName == "RoomCount" && roomCountError == null)
+                    roomCountError = failure.ErrorMessage;
+                else if (failure.PropertyName == "BuildYear" && buildYearError == null)
+                    buildYearError = failure.ErrorMessage;
+                else if (failure.PropertyName == "Floor" && floorError == null)
+                    floorError = failure.ErrorMessage;
+                else if (failure.PropertyName == "FloorCount" && floorCountError == null)
+                    floorCountError = failure.ErrorMessage;
+                else if (failure.PropertyName == "ContactName" && contactNameError == null)
+                    contactNameError = failure.ErrorMessage;
+                else if (failure.PropertyName == "ContactPhone" && contactPhoneError == null)
+                    contactPhoneError = failure.ErrorMessage;
+                else if (failure.PropertyName == "ContactEmail" && contactEmailError == null)
+                    contactEmailError = failure.ErrorMessage;
+            }
+        }
+        else
+        {
+            try
+            {
+                LogToConsole("idk???");
+            }
+            catch(Exception ex)
+            {
+                error = ex.Message;
+                Snackbar.Add(ex.Message, MudBlazor.Severity.Error);
+            }
+        }
+    }
 
-		if (!authenticationState.User.Identity.IsAuthenticated)
-		{
-			navigationManager.NavigateTo("/");
-		}
-	}
 
-	protected override async Task OnParametersSetAsync()
-	{
-		await GetSessionUser();
-		Console.WriteLine("started");
-		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+    public async Task GetSessionUser()
+    {
+        user = await session.GetItemAsync<UserInfo>("SessionUser");
+    }
 
-		if (authenticationState.User.Identity.IsAuthenticated)
-		{
-			Console.WriteLine("authState : " + authenticationState.User.Identity.Name);
-			isAuth = true;
-		}
-		else
-		{
-			Console.WriteLine("not authenticated");
-			isAuth = false;
-		}
-	}
+    public async Task Logout()
+    {
+        session.ClearAsync();
+        await authStateProvider.Logout();
+        user = new UserInfo();
+        navigationManager.NavigateTo("/login", forceLoad: true);
+    }
 
-	private async Task Clear()
-	{
-		_fileNames.Clear();
-		ClearDragClass();
-		await Task.Delay(100);
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
 
-	private void OnInputFileChanged(InputFileChangeEventArgs e)
-	{
-		ClearDragClass();
-		var files = e.GetMultipleFiles();
-		foreach (var file in files)
-		{
-			_fileNames.Add(file.Name);
-		}
-	}
+        if (!authenticationState.User.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+    }
 
-	private void Upload()
-	{
-		// Upload the files here
-		Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-		Snackbar.Add("TODO: Upload your files!");
-	}
+    protected override async Task OnParametersSetAsync()
+    {
+        await GetSessionUser();
+        Console.WriteLine("started");
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
 
-	public void GetMapUrl(KeyboardEventArgs e)
-	{
-		if (e.Code == "Enter" || e.Code == "NumpadEnter")
-		{
-			string address_gen = post.Address.Replace(" ", "+");
-			mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
-		}
-	}
+        if (authenticationState.User.Identity.IsAuthenticated)
+        {
+            Console.WriteLine("authState : " + authenticationState.User.Identity.Name);
+            isAuth = true;
+        }
+        else
+        {
+            Console.WriteLine("not authenticated");
+            isAuth = false;
+        }
+    }
 
-	private void SetDragClass()
-		=> _dragClass = $"{DefaultDragClass} mud-border-primary";
+    private async Task Clear()
+    {
+        _fileNames.Clear();
+        ClearDragClass();
+        await Task.Delay(100);
+    }
 
-	private void ClearDragClass()
-		=> _dragClass = DefaultDragClass;
+    private void OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        var files = e.GetMultipleFiles();
+        foreach (var file in files)
+        {
+            _fileNames.Add(file.Name);
+        }
+    }
+
+    private void Upload()
+    {
+        // Upload the files here
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add("TODO: Upload your files!");
+    }
+
+    public void GetMapUrl(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            string address_gen = post.Address.Replace(" ", "+");
+            mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
+        }
+    }
+
+    private void SetDragClass()
+        => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+    private void ClearDragClass()
+        => _dragClass = DefaultDragClass;
+
+    void LogToConsole(string message) => JSRuntime.InvokeVoidAsync("console.log", message);
 
 }   
