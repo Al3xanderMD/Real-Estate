@@ -14,15 +14,18 @@ namespace RealEstate.Application.Features.Clients.Queries.GetById
 
         public async Task<ClientDto> Handle(GetByIdClientQuery request, CancellationToken cancellationToken)
         {
-            var client = await repository.FindByIdAsync(request.ClientId);
+            var client = await repository.FindByIdAsync(request.UserId);
 
             if(client.IsSuccess)
             {
                 return new ClientDto
                 {
-                    ClientId = client.Value.ClientId,
-                    FirstName = client.Value.FirstName,
-                    LastName = client.Value.LastName
+                    UserId = client.Value.UserId,
+                    Username = client.Value.Username,
+                    Email = client.Value.Email,
+                    Name = client.Value.Name,
+                    PhoneNumber = client.Value.PhoneNumber,
+                    ImageUrl = client.Value.ImageUrl
                 };
             }
             return new ClientDto();

@@ -21,13 +21,18 @@ namespace RealEstate.Application.Features.Houses.Queries.GetAll
             {
                 response.Houses = result.Value.Select(house => new HouseDto
                 {
-                    Id = house.Id,
+                    BasePostId = house.BasePostId,
+                    UserId = house.UserId,
+                    TitlePost = house.TitlePost,
+                    Price = house.Price,
+                    AddressId = house.AddressId,
+                    OfferType = house.OfferType,
+                    Description = house.Description,
                     RoomCount = house.RoomCount,
                     FloorCount = house.FloorCount,
                     UsefulSurface = house.UsefulSurface,
                     LotArea = house.LotArea,
                     BuildYear = house.BuildYear,
-                    BasePostId = house.BasePostId,
                     HouseTypeId = house.HouseTypeId
                 }).ToList();
             }

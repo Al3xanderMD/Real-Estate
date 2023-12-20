@@ -20,13 +20,18 @@ namespace RealEstate.Application.Features.Apartments.Queries.GetById
             {
                 return new ApartmentDto
                 {
-                    Id = apartment.Value.Id,
+                    BasePostId = apartment.Value.BasePostId,
+                    UserId = apartment.Value.UserId,
+                    TitlePost = apartment.Value.TitlePost,
+                    Price = apartment.Value.Price,
+                    AddressId = apartment.Value.AddressId,
+                    OfferType = apartment.Value.OfferType,
+                    Description = apartment.Value.Description,
                     RoomCount = apartment.Value.RoomCount,
                     Comfort = apartment.Value.Comfort,
                     Floor = apartment.Value.Floor,
                     UsefulSurface = apartment.Value.UsefulSurface,
                     BuildYear = apartment.Value.BuildYear,
-                    BasePostId = apartment.Value.BasePostId,
                     PartitioningId = apartment.Value.PartitioningId
                 };
             }

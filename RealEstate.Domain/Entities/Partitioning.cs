@@ -1,7 +1,9 @@
 ﻿using RealEstate.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Domain.Entities
 {
+    [Table("Partitionings")]
     public class Partitioning : AuditableEntity
     {
         public Guid Id { get; private set; }

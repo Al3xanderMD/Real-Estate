@@ -10,7 +10,6 @@ namespace RealEstate.API.Controllers
 {
     public class PartitioningController : ApiControllerBase
     {
-        [Authorize (Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create(CreatePartitioningCommand command)
@@ -23,7 +22,6 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
-		[Authorize(Roles = "Admin")]
 		[HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()

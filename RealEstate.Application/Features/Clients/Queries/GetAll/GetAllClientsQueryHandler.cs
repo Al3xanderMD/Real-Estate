@@ -21,9 +21,12 @@ namespace RealEstate.Application.Features.Clients.Queries.GetAll
             {
                 response.Clients = result.Value.Select(client => new ClientDto
                 {
-                    ClientId = client.ClientId,
-                    FirstName = client.FirstName,
-                    LastName = client.LastName
+                    UserId = client.UserId,
+                    Username = client.Username,
+                    Email = client.Email,
+                    Name = client.Name,
+                    PhoneNumber = client.PhoneNumber,
+                    ImageUrl = client.ImageUrl
                 }).ToList();
             }
             return response;

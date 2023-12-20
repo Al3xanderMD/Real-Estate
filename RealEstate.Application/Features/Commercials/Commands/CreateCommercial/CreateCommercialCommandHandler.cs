@@ -25,7 +25,8 @@ namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
                 };
             }
 
-            var commercial = Commercial.Create(request.BasePostId, request.CommercialSpecificId, request.UsefulSurface);
+            var commercial = Commercial.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType, request.Description,
+                request.CommercialSpecificId, request.UsefulSurface, request.Disponibility);
 
             if (!commercial.IsSuccess) 
             {
@@ -43,8 +44,13 @@ namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
                 Success = true,
                 Commercial = new CreateCommercialDto 
                 {
-                    Id = commercial.Value.Id,
                     BasePostId = commercial.Value.BasePostId,
+                    UserId = commercial.Value.UserId,
+                    TitlePost = commercial.Value.TitlePost,
+                    Price = commercial.Value.Price,
+                    AddressId = commercial.Value.AddressId,
+                    OfferType = commercial.Value.OfferType,
+                    Description = commercial.Value.Description,
                     CommercialSpecificId = commercial.Value.CommercialSpecificId,
                     UsefulSurface = commercial.Value.UsefulSurface,
                     Disponibility = commercial.Value.Disponibility

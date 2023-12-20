@@ -1,7 +1,9 @@
 ﻿using RealEstate.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Domain.Entities
 {
+    [Table("CommercialSpecifics")]
     public class CommercialSpecific : AuditableEntity
     {
         public Guid CommercialSpecificId { get; private set; }

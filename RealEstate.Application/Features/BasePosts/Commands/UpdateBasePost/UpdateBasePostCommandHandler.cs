@@ -34,14 +34,11 @@ namespace RealEstate.Application.Features.BasePosts.Commands.UpdateBasePost
 				};
 			}
 
-		    basePost.Value.AttachUserId(request.UserId);
-			basePost.Value.AttachClient(request.Client);
 			basePost.Value.AttachTitlePost(request.TitlePost);
 			basePost.Value.AttachImages(request.Images);
 			basePost.Value.AttachOfferType(request.OfferType);
 			basePost.Value.AttachPrice(request.Price);
 			basePost.Value.AttachAddressId(request.AddressId);
-			basePost.Value.AttachAddress(request.Address);
 			basePost.Value.AttachDescription(request.Descripion);
 			var updatedBasePost = await repository.UpdateAsync(basePost.Value);
 
@@ -60,14 +57,12 @@ namespace RealEstate.Application.Features.BasePosts.Commands.UpdateBasePost
 				BasePost = new UpdateBasePostDto
 				{
 					UserId = updatedBasePost.Value.UserId,
-					Client = updatedBasePost.Value.User,
 					TitlePost = updatedBasePost.Value.TitlePost,
 					Images = updatedBasePost.Value.Images,
 					OfferType = updatedBasePost.Value.OfferType,
 					Price = updatedBasePost.Value.Price,
 					AddressId = updatedBasePost.Value.AddressId,
-					Address = updatedBasePost.Value.Address,
-					Descripion = updatedBasePost.Value.Descripion
+					Descripion = updatedBasePost.Value.Description
 				}
 			};
 		}

@@ -2,9 +2,11 @@
 {
     public class CreateClientDto
     {
-        public Guid ClientId { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public Guid UserId { get; set; }
+        public string Username { get; set; } = default!;
+        public string Email { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string PhoneNumber { get; set; } = default!;
 
     }
 }

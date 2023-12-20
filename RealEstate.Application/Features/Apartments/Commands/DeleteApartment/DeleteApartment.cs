@@ -4,6 +4,6 @@ namespace RealEstate.Application.Features.Apartments.Commands.DeleteApartment
 {
     public class DeleteApartment : IRequest<DeleteApartmentResponse>
     {
-        public Guid Id { get; set; }
+        public Guid BasePostId { get; set; }
     }
 }

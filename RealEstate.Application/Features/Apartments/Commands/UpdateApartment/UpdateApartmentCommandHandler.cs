@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Apartments.Commands.UpdateApartment
 		}
 		public async Task<UpdateApartmentCommandResponse> Handle(UpdateApartmentCommand request, CancellationToken cancellationToken)
 		{
-			var apartment = await repository.FindByIdAsync(request.Id);
+			var apartment = await repository.FindByIdAsync(request.BasePostId);
 			var validator = new UpdateApartmentCommandValidator();
 			var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -41,8 +41,14 @@ namespace RealEstate.Application.Features.Apartments.Commands.UpdateApartment
 			apartment.Value.AttachFloor(request.Floor);
 			apartment.Value.AttachUsefulSurface(request.UsefulSurface);
 			apartment.Value.AttachBuildYear(request.BuildYear);
-			apartment.Value.AttachBasePostId(request.BasePostId);
 			apartment.Value.AttachPartitioningId(request.PartitioningId);
+			apartment.Value.AttachUserId(request.UserId);
+			apartment.Value.AttachTitlePost(request.TitlePost);
+			apartment.Value.AttachPrice(request.Price);
+			apartment.Value.AttachAddressId(request.AddressId);
+			apartment.Value.AttachOfferType(request.OfferType);
+			apartment.Value.AttachDescription(request.Description);
+
 			var updatedApartment = await repository.UpdateAsync(apartment.Value);
 
 			if (!updatedApartment.IsSuccess)
@@ -59,12 +65,18 @@ namespace RealEstate.Application.Features.Apartments.Commands.UpdateApartment
 				Success = true,
 				Apartment = new UpdateApartmentDto
 				{
+                    BasePostId = updatedApartment.Value.BasePostId,
+                    UserId = updatedApartment.Value.UserId,
+					TitlePost = updatedApartment.Value.TitlePost,
+					Price = updatedApartment.Value.Price,
+					AddressId = updatedApartment.Value.AddressId,
+					OfferType = updatedApartment.Value.OfferType,
+					Description = updatedApartment.Value.Description,
 					RoomCount = updatedApartment.Value.RoomCount,
 					Comfort = updatedApartment.Value.Comfort,
 					Floor = updatedApartment.Value.Floor,
 					UsefulSurface = updatedApartment.Value.UsefulSurface,
 					BuildYear = updatedApartment.Value.BuildYear,
-					BasePostId = updatedApartment.Value.BasePostId,
 					PartitioningId = updatedApartment.Value.PartitioningId
 				}
 			};

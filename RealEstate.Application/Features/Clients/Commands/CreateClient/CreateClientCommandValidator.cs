@@ -6,15 +6,25 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateClient
     {
         public CreateClientCommandValidator()
         {
-            RuleFor(p => p.FirstName)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+            RuleFor(p => p.UserId)
+                 .NotEmpty().WithMessage("{PropertyName} is required.")
+                 .NotNull();
 
-            RuleFor(p => p.LastName)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+            RuleFor(p => p.Username)
+                 .NotEmpty().WithMessage("{PropertyName} is required.")
+                 .NotNull();
+
+            RuleFor(p => p.Email)
+                 .NotEmpty().WithMessage("{PropertyName} is required.")
+                 .NotNull();
+
+            RuleFor(p => p.Name)
+                 .NotEmpty().WithMessage("{PropertyName} is required.")
+                 .NotNull();
+
+            RuleFor(p => p.PhoneNumber)
+                 .NotEmpty().WithMessage("{PropertyName} is required.")
+                 .NotNull();
         }
     }
 }

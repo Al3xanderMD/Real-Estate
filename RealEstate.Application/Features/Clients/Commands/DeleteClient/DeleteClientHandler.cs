@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Clients.Commands.DeleteClient
 
         public async Task<DeleteClientResponse> Handle(DeleteClient request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteAsync(request.ClientId);
+            var result = await repository.DeleteAsync(request.UserId);
 
             if (!result.IsSuccess)
             {

@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Apartments.Commands.DeleteApartment
 
         public async Task<DeleteApartmentResponse> Handle(DeleteApartment request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteAsync(request.Id);
+            var result = await repository.DeleteAsync(request.BasePostId);
 
             if (!result.IsSuccess)
             {

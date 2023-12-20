@@ -20,8 +20,13 @@ namespace RealEstate.Application.Features.Lots.Queries.GetById
             {
                 return new LotDto
                 {
-                    Id = lot.Value.Id,
                     BasePostId = lot.Value.BasePostId,
+                    UserId = lot.Value.UserId,
+                    TitlePost = lot.Value.TitlePost,
+                    Price = lot.Value.Price,
+                    AddressId = lot.Value.AddressId,
+                    OfferType = lot.Value.OfferType,
+                    Description = lot.Value.Description,
                     LotArea = lot.Value.LotArea,
                     StreetFrontage = lot.Value.StreetFrontage,
                     LotClassificationId = lot.Value.LotClassificationId

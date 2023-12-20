@@ -27,7 +27,7 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateClient
                 };
             }
 
-            var client = Client.Create(request.FirstName, request.LastName);
+            var client = Client.Create(request.UserId, request.Username, request.Email, request.Name,request.PhoneNumber);
             if(!client.IsSuccess)
             {
                 return new CreateClientCommandResponse
@@ -44,9 +44,11 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateClient
                 Success = true,
                 Client = new CreateClientDto
                 {
-                    ClientId = client.Value.ClientId,
-                    FirstName = client.Value.FirstName,
-                    LastName = client.Value.LastName
+                    UserId = client.Value.UserId,
+                    Username = client.Value.Username,
+                    Email = client.Value.Email,
+                    Name = client.Value.Name,
+                    PhoneNumber = client.Value.PhoneNumber
                 }
             };
 

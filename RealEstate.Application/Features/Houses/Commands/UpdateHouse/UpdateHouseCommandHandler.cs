@@ -13,7 +13,7 @@ namespace RealEstate.Application.Features.Houses.Commands.UpdateHouse
 		
 		public async Task<UpdateHouseCommandResponse> Handle(UpdateHouseCommand request, CancellationToken cancellationToken)
 		{
-			var house = await repository.FindByIdAsync(request.Id);
+			var house = await repository.FindByIdAsync(request.BasePostId);
 			var validator = new UpdateHouseCommandValidator();
 			var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -42,7 +42,13 @@ namespace RealEstate.Application.Features.Houses.Commands.UpdateHouse
 			house.Value.AttachBuildYear(request.BuildYear);
 			house.Value.AttachComfort(request.Comfort);
 			house.Value.AttachHouseTypeId(request.HouseTypeId);
-			house.Value.AttachBasePostId(request.BasePostId);
+			house.Value.AttachUserId(request.UserId);
+			house.Value.AttachTitlePost(request.TitlePost);
+			house.Value.AttachPrice(request.Price);
+			house.Value.AttachAddressId(request.AddressId);
+			house.Value.AttachOfferType(request.OfferType);
+			house.Value.AttachDescription(request.Description);
+
 			var updatedHouse = await repository.UpdateAsync(house.Value);
 
 			if(!updatedHouse.IsSuccess)
@@ -59,6 +65,13 @@ namespace RealEstate.Application.Features.Houses.Commands.UpdateHouse
 				Success = true,
 				House = new UpdateHouseDto
 				{
+					BasePostId = updatedHouse.Value.BasePostId,
+					UserId = updatedHouse.Value.UserId,
+					TitlePost = updatedHouse.Value.TitlePost,
+					Price = updatedHouse.Value.Price,
+					AddressId = updatedHouse.Value.AddressId,
+					OfferType = updatedHouse.Value.OfferType,
+					Description = updatedHouse.Value.Description,
 					RoomCount = updatedHouse.Value.RoomCount,
 					FloorCount = updatedHouse.Value.FloorCount,
 					UsefulSurface = updatedHouse.Value.UsefulSurface,
@@ -66,7 +79,6 @@ namespace RealEstate.Application.Features.Houses.Commands.UpdateHouse
 					BuildYear = updatedHouse.Value.BuildYear,
 					Comfort = updatedHouse.Value.Comfort,
 					HouseTypeId = updatedHouse.Value.HouseTypeId,
-					BasePostId = updatedHouse.Value.BasePostId
 				}
 			};
 		}

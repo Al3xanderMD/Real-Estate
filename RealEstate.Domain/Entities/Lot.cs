@@ -1,89 +1,56 @@
 ﻿using RealEstate.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Domain.Entities
 {
-    public class Lot : AuditableEntity
+    [Table("Lots")]
+    public class Lot : BasePost
     {
-        private Lot(Guid basePostId, double lotArea,double streetFrontage, Guid lotClassificationId)
+        private Lot(string userId, string titlePost, double price, Guid addressId, bool offerType, string description,
+            double lotArea, double streetFrontage, Guid lotClassificationId)
+            : base(userId, titlePost, price, addressId, offerType, description)
         {
-            Id = Guid.NewGuid();
-            BasePostId = basePostId;
             LotArea = lotArea;
             StreetFrontage = streetFrontage;
             LotClassificationId = lotClassificationId;
         }
 
-        private Lot(BasePost basePost, LotClassification lotClassification, Guid basePostId, double lotArea,double streetFrontage, Guid lotClassificationId) : this (basePostId, lotArea,streetFrontage, lotClassificationId)
+        private Lot(LotClassification lotClassification, double lotArea,double streetFrontage, Guid lotClassificationId,
+            string userId, string titlePost, double price, Guid addressId, bool offerType, string description) 
+            : this (userId, titlePost, price, addressId, offerType,description, lotArea, streetFrontage, lotClassificationId)
         {
-            BasePost = basePost;
             LotClassification = lotClassification;
         }
 
-        public Guid Id { get; private set; }
-        public Guid BasePostId { get; private set; } //attach
-        public BasePost BasePost { get; private set; } = null!;
         public Guid LotClassificationId { get; private set; }
         public LotClassification LotClassification { get; private set; } = null!;
         public double LotArea { get; private set; }
         public double StreetFrontage { get; private set; }
 
-
-        public static Result<Lot> Create(Guid basePostId, double lotArea, double streetFrontage, Guid lotClassificationId)
+        public static Result<Lot> Create(string userId, string titlePost, double price, Guid addressId, bool offerType, string description,
+            double lotArea, double streetFrontage, Guid lotClassificationId)
         {
+            if (string.IsNullOrWhiteSpace(titlePost))
+                return Result<Lot>.Failure("'TitlePost' must not be empty");
+            if (price <= 0)
+                return Result<Lot>.Failure("'Price' must be greater than 0");
+            if (addressId == Guid.Empty)
+                return Result<Lot>.Failure("'AddressId' must not be empty");
             if (lotArea <= 0)
-            {
-                return Result<Lot>.Failure("Lot area must be larger than 0.");
-            }
-
-            if (streetFrontage <= 0) 
-            {
-                return Result<Lot>.Failure("Street frontage must be larger than 0.");
-            }
+                return Result<Lot>.Failure("'LotArea' must be greater than 0");
+            if (streetFrontage <= 0)
+                return Result<Lot>.Failure("'StreetFrontage' must be greater than 0");
+            if (string.IsNullOrWhiteSpace(description))
+                return Result<Lot>.Failure("'Description' must not be empty");
 
 
-            return Result<Lot>.Success(new Lot(basePostId, lotArea, streetFrontage, lotClassificationId));
+            return Result<Lot>.Success(new Lot(userId, titlePost, price, addressId, offerType,description, lotArea, streetFrontage, lotClassificationId));
         }
-
-        public Result<BasePost> Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result<BasePost> ReadPost()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result<BasePost> Update()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AttachBasePostId(Guid basePostId)
-        {
-           if (BasePostId != Guid.Empty)
-           {
-				BasePostId = basePostId;
-		   }
-		}
-
-        public void AttachBasePost(BasePost basePost)
-        {
-			BasePost = basePost;
-		}
 
         public void AttachLotClassificationId(Guid lotClassificationId)
         {
-            if (LotClassificationId != Guid.Empty)
-            {
                 LotClassificationId = lotClassificationId;
-            }
         }
-
-        public void AttachLotClassification(LotClassification lotClassification)
-        {
-			LotClassification = lotClassification;
-		}
 
         public void AttachLotArea(double lotArea)
         {
@@ -94,6 +61,51 @@ namespace RealEstate.Domain.Entities
         {
 			StreetFrontage = streetFrontage;
 		}
+
+        public void AttachUserId(string userId)
+        {
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                UserId = userId;
+            }
+        }
+
+        public new void AttachTitlePost(string titlePost)
+        {
+            if (!string.IsNullOrWhiteSpace(titlePost))
+            {
+                TitlePost = titlePost;
+            }
+        }
+
+        public new void AttachPrice(double price)
+        {
+            if (price > 0)
+            {
+                Price = price;
+            }
+        }
+
+        public new void AttachAddressId(Guid addressId)
+        {
+            if (addressId != Guid.Empty)
+            {
+                AddressId = addressId;
+            }
+        }
+
+        public new void AttachOfferType(bool offerType)
+        {
+            OfferType = offerType;
+        }
+
+        public new void AttachDescription(string description)
+        {
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                Description = description;
+            }
+        }
 
     }
 }

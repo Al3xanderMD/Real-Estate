@@ -27,7 +27,7 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPens
                 };
             }
 
-            var hotelPension = HotelPension.Create(request.BasePostId,request.UsefulSurface,request.RoomSurface,request.RoomCount);
+            var hotelPension = HotelPension.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType,request.Description, request.UsefulSurface,request.RoomSurface,request.RoomCount);
             if (!hotelPension.IsSuccess)
             {
                 return new CreateHotelPensionCommandResponse
@@ -44,8 +44,13 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.CreateHotelPens
                 Success = true,
                 HotelPension = new CreateHotelPensionDto
                 {
-                    Id = hotelPension.Value.Id,
                     BasePostId = hotelPension.Value.BasePostId,
+                    UserId = hotelPension.Value.UserId,
+                    TitlePost = hotelPension.Value.TitlePost,
+                    Price = hotelPension.Value.Price,
+                    AddressId = hotelPension.Value.AddressId,
+                    OfferType = hotelPension.Value.OfferType,
+                    Description = hotelPension.Value.Description,
                     UsefulSurface = hotelPension.Value.UsefulSurface,
                     RoomSurface = hotelPension.Value.RoomSurface,
                     RoomCount = hotelPension.Value.RoomCount

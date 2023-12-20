@@ -18,8 +18,13 @@ namespace RealEstate.Application.Features.HotelPensions.Queries.GetAll
             {
                 response.HotelPensions = result.Value.Select(hotelPension => new HotelPensionDto
                 {
-                    Id = hotelPension.Id,
                     BasePostId = hotelPension.BasePostId,
+                    UserId = hotelPension.UserId,
+                    TitlePost = hotelPension.TitlePost,
+                    Price = hotelPension.Price,
+                    AddressId = hotelPension.AddressId,
+                    OfferType = hotelPension.OfferType,
+                    Description = hotelPension.Description,
                     UsefulSurface = hotelPension.UsefulSurface,
                     RoomSurface = hotelPension.RoomSurface,
                     RoomCount = hotelPension.RoomCount

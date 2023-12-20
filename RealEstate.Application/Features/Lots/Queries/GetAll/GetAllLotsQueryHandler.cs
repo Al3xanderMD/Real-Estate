@@ -21,8 +21,13 @@ namespace RealEstate.Application.Features.Lots.Queries.GetAll
             {
                 response.Lots = result.Value.Select(lot => new LotDto
                 {
-                    Id = lot.Id,
                     BasePostId = lot.BasePostId,
+                    UserId = lot.UserId,
+                    TitlePost = lot.TitlePost,
+                    Price = lot.Price,
+                    AddressId = lot.AddressId,
+                    OfferType = lot.OfferType,
+                    Description = lot.Description,
                     LotArea = lot.LotArea,
                     StreetFrontage = lot.StreetFrontage,
                     LotClassificationId = lot.LotClassificationId

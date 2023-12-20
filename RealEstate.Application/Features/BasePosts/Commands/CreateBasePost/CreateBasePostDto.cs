@@ -7,6 +7,7 @@
         public double? Price { get; set; }
         public Guid AddressId { get; set; }
         public bool? OfferType { get; set; }
-        public Guid UserId { get; set; }
+        public string? UserId { get; set; }
+        public string? Description { get; set; }
     }
 }

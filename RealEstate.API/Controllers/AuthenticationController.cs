@@ -52,7 +52,7 @@ namespace RealEstate.API.Controllers
 
 		[HttpPost]
 		[Route("register")]
-		public async Task<IActionResult> Register(RegistrationModel model, string role)
+		public async Task<IActionResult> Register(RegistrationModel model)
 		{
 			try
 			{
@@ -61,7 +61,7 @@ namespace RealEstate.API.Controllers
 					return BadRequest("Invalid payload");
 				}
 
-				var (status, message) = await _authService.Registeration(model, role); // by default, all users are clients
+				var (status, message) = await _authService.Registeration(model); // by default, all users are clients
 
 				if (status == 0)
 				{

@@ -1,61 +1,61 @@
 ﻿using RealEstate.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Domain.Entities
 {
-    public class Commercial : AuditableEntity
+    [Table("Commercials")]
+    public class Commercial : BasePost
     {
-        public Guid Id { get; private set; }
-        public Guid BasePostId { get; private set; }
-        public BasePost BasePost { get; private set; } = null!;
         public Guid CommercialSpecificId { get; private set; }
         public CommercialSpecific CommercialSpecific { get; private set; } = null!;
         public double UsefulSurface { get; private set; }
-        public DateTime? Disponibility { get; private set; }
+        public DateTime Disponibility { get; private set; }
 
-        
-
-        private Commercial(Guid basePostId ,Guid commercialSpecificId, double usefulSurface)
+        private Commercial(string userId, string titlePost, double price, Guid addressId, bool offerType, string description,
+            Guid commercialSpecificId, double usefulSurface, DateTime disponibility)
+            : base(userId, titlePost, price, addressId, offerType, description)
         {
-            Id = Guid.NewGuid();
-            BasePostId = basePostId;
             CommercialSpecificId = commercialSpecificId;
             UsefulSurface = usefulSurface;
+            Disponibility = disponibility;
         }
 
-        private Commercial(BasePost basePost, CommercialSpecific commercialSpecific, Guid basePostId, Guid commercialSpecificId, double usefulSurface) : this(basePostId, commercialSpecificId, usefulSurface)
+        private Commercial(CommercialSpecific commercialSpecific, Guid commercialSpecificId, double usefulSurface, DateTime disponibility,
+            string userId, string titlePost, double price, Guid addressId, bool offerType, string description) 
+            : this(userId, titlePost, price, addressId, offerType,description, commercialSpecificId, usefulSurface, disponibility)
         {
-            BasePost = basePost;
             CommercialSpecific = commercialSpecific;
         }
 
-        public static Result<Commercial> Create(Guid basePostId, Guid commercialSpecificId, double usefulSurface)
+        public static Result<Commercial> Create(string userId, string titlePost, double price, Guid addressId, bool offerType, string description,
+            Guid commercialSpecificId, double usefulSurface, DateTime disponibility)
         {
-            if (commercialSpecificId == null)
-            {
-                return Result<Commercial>.Failure("Commercial specific is required");
-            }
-
+            if (string.IsNullOrWhiteSpace(titlePost))
+                return Result<Commercial>.Failure("'TitlePost' must not be empty");
+            if (price <= 0)
+                return Result<Commercial>.Failure("'Price' must be greater than 0");
+            if (addressId == Guid.Empty)
+                return Result<Commercial>.Failure("'AddressId' must not be empty");
+            if (commercialSpecificId == Guid.Empty)
+                return Result<Commercial>.Failure("'CommercialSpecificId' must not be empty"); 
             if (usefulSurface <= 0)
                 return Result<Commercial>.Failure("Useful surface must be greater than 0");
+            if (disponibility < DateTime.Now)
+                return Result<Commercial>.Failure("Disponibility must be greater than today");
+            if (string.IsNullOrWhiteSpace(description))
+                return Result<Commercial>.Failure("'Description' must not be empty");
 
-            return Result<Commercial>.Success(new Commercial(basePostId, commercialSpecificId, usefulSurface));
+            return Result<Commercial>.Success(new Commercial(userId, titlePost, price, addressId, offerType, description,
+                commercialSpecificId, usefulSurface, disponibility));
         }
 
-        public void AttachDisponibility(DateTime? disponibility)
+        public void AttachDisponibility(DateTime disponibility)
         {
-            if(disponibility != null)
+            if (disponibility > DateTime.Now)
             {
                 Disponibility = disponibility;
             }
         }
-
-        public void AttachBasePostId(Guid basePostId)
-        {
-			if (basePostId != Guid.Empty)
-            {
-				BasePostId = basePostId;
-			}
-		}
 
         public void AttachCommercialSpecificId(Guid commercialSpecificId)
         {
@@ -71,6 +71,48 @@ namespace RealEstate.Domain.Entities
             {
                 UsefulSurface = usefulSurface;
             }
+        }
+
+        public void AttachUserId(string userId)
+        {
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                UserId = userId;
+            }
+        }
+
+        public new void AttachTitlePost(string titlePost)
+        {
+            if (!string.IsNullOrWhiteSpace(titlePost))
+            {
+                TitlePost = titlePost;
+            }
+        }
+
+        public new void AttachPrice(double price)
+        {
+            if (price > 0)
+            {
+                Price = price;
+            }
+        }
+
+        public new void AttachAddressId(Guid addressId)
+        {
+            if (addressId != Guid.Empty)
+            {
+                AddressId = addressId;
+            }
+        }
+
+        public new void AttachOfferType(bool offerType)
+        {
+            OfferType = offerType;
+        }
+
+        public new void AttachDescription(string description)
+        {
+            Description = description;
         }
     }
 }

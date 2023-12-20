@@ -26,6 +26,11 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateBasePost
             RuleFor(p => p.UserId)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull();
+
+            RuleFor(p => p.Description)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotNull()
+                .MaximumLength(2000).WithMessage("{PropertyName} must not exceed 2000 characters.");
         }
     }
 }

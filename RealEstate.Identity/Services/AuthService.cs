@@ -24,7 +24,7 @@ namespace RealEstate.Identity.Services
             this.configuration = configuration;
             this.emailService = emailService;
         }
-        public async Task<(int, string)> Registeration(RegistrationModel model, string role)
+        public async Task<(int, string)> Registeration(RegistrationModel model)
         {
             var userExists = await userManager.FindByNameAsync(model.Username);
             var emailExists = await userManager.FindByEmailAsync(model.Email);
@@ -48,11 +48,11 @@ namespace RealEstate.Identity.Services
             if (!createUserResult.Succeeded)
                 return (0, "User creation failed! Please check user details and try again.");
 
-            if (!await roleManager.RoleExistsAsync(role))
-                await roleManager.CreateAsync(new IdentityRole(role));
+            if (!await roleManager.RoleExistsAsync(model.Role))
+                await roleManager.CreateAsync(new IdentityRole(model.Role));
 
-           // if (await roleManager.RoleExistsAsync(UserRoles.Client))
-                await userManager.AddToRoleAsync(user, role);
+            if (await roleManager.RoleExistsAsync(UserRoles.Client))
+                await userManager.AddToRoleAsync(user, model.Role);
 
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = configuration["AppUrl"] + "/api/v1/Authentication/ConfirmEmail?email=" + user.Email + "&token=" + token;

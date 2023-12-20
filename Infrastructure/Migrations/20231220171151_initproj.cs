@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
-	/// <inheritdoc />
-	public partial class InitMig : Migration
+    /// <inheritdoc />
+    public partial class initproj : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,11 +33,12 @@ namespace Infrastructure.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    ClientId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    Phone = table.Column<string>(type: "text", nullable: true),
-                    Region = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
@@ -43,7 +46,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.ClientId);
+                    table.PrimaryKey("PK_Clients", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,7 +82,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LotClassification",
+                name: "LotClassifications",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -91,7 +94,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LotClassification", x => x.Id);
+                    table.PrimaryKey("PK_LotClassifications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,43 +114,17 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Agents",
-                columns: table => new
-                {
-                    AgentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AgentName = table.Column<string>(type: "text", nullable: false),
-                    Logolink = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: false),
-                    AddressId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Url = table.Column<string>(type: "text", nullable: true),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Agents", x => x.AgentId);
-                    table.ForeignKey(
-                        name: "FK_Agents_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BasePosts",
                 columns: table => new
                 {
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
                     TitlePost = table.Column<string>(type: "text", nullable: false),
                     Images = table.Column<List<string>>(type: "text[]", nullable: false),
                     OfferType = table.Column<bool>(type: "boolean", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
                     AddressId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Descripion = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
@@ -161,12 +138,6 @@ namespace Infrastructure.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BasePosts_Clients_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Clients",
-                        principalColumn: "ClientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -197,22 +168,17 @@ namespace Infrastructure.Migrations
                 name: "Apartments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
                     RoomCount = table.Column<int>(type: "integer", nullable: false),
                     PartitioningId = table.Column<Guid>(type: "uuid", nullable: false),
                     Comfort = table.Column<int>(type: "integer", nullable: false),
                     Floor = table.Column<int>(type: "integer", nullable: false),
                     UsefulSurface = table.Column<double>(type: "double precision", nullable: false),
-                    BuildYear = table.Column<int>(type: "integer", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    BuildYear = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Apartments", x => x.Id);
+                    table.PrimaryKey("PK_Apartments", x => x.BasePostId);
                     table.ForeignKey(
                         name: "FK_Apartments_BasePosts_BasePostId",
                         column: x => x.BasePostId,
@@ -231,19 +197,14 @@ namespace Infrastructure.Migrations
                 name: "HotelPensions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
                     UsefulSurface = table.Column<double>(type: "double precision", nullable: false),
                     RoomSurface = table.Column<double>(type: "double precision", nullable: false),
-                    RoomCount = table.Column<int>(type: "integer", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    RoomCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HotelPensions", x => x.Id);
+                    table.PrimaryKey("PK_HotelPensions", x => x.BasePostId);
                     table.ForeignKey(
                         name: "FK_HotelPensions_BasePosts_BasePostId",
                         column: x => x.BasePostId,
@@ -256,7 +217,6 @@ namespace Infrastructure.Migrations
                 name: "Houses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
                     RoomCount = table.Column<int>(type: "integer", nullable: false),
                     HouseTypeId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -264,15 +224,11 @@ namespace Infrastructure.Migrations
                     FloorCount = table.Column<int>(type: "integer", nullable: false),
                     UsefulSurface = table.Column<double>(type: "double precision", nullable: false),
                     LotArea = table.Column<double>(type: "double precision", nullable: false),
-                    BuildYear = table.Column<int>(type: "integer", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    BuildYear = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Houses", x => x.Id);
+                    table.PrimaryKey("PK_Houses", x => x.BasePostId);
                     table.ForeignKey(
                         name: "FK_Houses_BasePosts_BasePostId",
                         column: x => x.BasePostId,
@@ -291,19 +247,14 @@ namespace Infrastructure.Migrations
                 name: "Lots",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
                     LotClassificationId = table.Column<Guid>(type: "uuid", nullable: false),
                     LotArea = table.Column<double>(type: "double precision", nullable: false),
-                    StreetFrontage = table.Column<double>(type: "double precision", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    StreetFrontage = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lots", x => x.Id);
+                    table.PrimaryKey("PK_Lots", x => x.BasePostId);
                     table.ForeignKey(
                         name: "FK_Lots_BasePosts_BasePostId",
                         column: x => x.BasePostId,
@@ -311,9 +262,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "BasePostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Lots_LotClassification_LotClassificationId",
+                        name: "FK_Lots_LotClassifications_LotClassificationId",
                         column: x => x.LotClassificationId,
-                        principalTable: "LotClassification",
+                        principalTable: "LotClassifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -322,19 +273,14 @@ namespace Infrastructure.Migrations
                 name: "Commercials",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
                     CommercialSpecificId = table.Column<Guid>(type: "uuid", nullable: false),
                     UsefulSurface = table.Column<double>(type: "double precision", nullable: false),
-                    Disponibility = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Disponibility = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Commercials", x => x.Id);
+                    table.PrimaryKey("PK_Commercials", x => x.BasePostId);
                     table.ForeignKey(
                         name: "FK_Commercials_BasePosts_BasePostId",
                         column: x => x.BasePostId,
@@ -350,16 +296,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agents_AddressId",
-                table: "Agents",
-                column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Apartments_BasePostId",
-                table: "Apartments",
-                column: "BasePostId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Apartments_PartitioningId",
                 table: "Apartments",
                 column: "PartitioningId");
@@ -368,16 +304,6 @@ namespace Infrastructure.Migrations
                 name: "IX_BasePosts_AddressId",
                 table: "BasePosts",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BasePosts_UserId",
-                table: "BasePosts",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Commercials_BasePostId",
-                table: "Commercials",
-                column: "BasePostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Commercials_CommercialSpecificId",
@@ -390,24 +316,9 @@ namespace Infrastructure.Migrations
                 column: "CommercialCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HotelPensions_BasePostId",
-                table: "HotelPensions",
-                column: "BasePostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Houses_BasePostId",
-                table: "Houses",
-                column: "BasePostId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Houses_HouseTypeId",
                 table: "Houses",
                 column: "HouseTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Lots_BasePostId",
-                table: "Lots",
-                column: "BasePostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lots_LotClassificationId",
@@ -419,10 +330,10 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Agents");
+                name: "Apartments");
 
             migrationBuilder.DropTable(
-                name: "Apartments");
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "Commercials");
@@ -449,16 +360,13 @@ namespace Infrastructure.Migrations
                 name: "BasePosts");
 
             migrationBuilder.DropTable(
-                name: "LotClassification");
+                name: "LotClassifications");
 
             migrationBuilder.DropTable(
                 name: "CommercialCategories");
 
             migrationBuilder.DropTable(
                 name: "Addresses");
-
-            migrationBuilder.DropTable(
-                name: "Clients");
         }
     }
 }

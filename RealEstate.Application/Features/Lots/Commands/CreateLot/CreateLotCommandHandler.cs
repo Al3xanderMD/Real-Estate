@@ -27,7 +27,8 @@ namespace RealEstate.Application.Features.Lots.Commands.CreateLot
                 };
             }
 
-            var lot = Lot.Create(request.BasePostId, request.LotArea, request.StreetFrontage, request.LotClassificationId);
+            var lot = Lot.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType, request.Description,
+                request.LotArea, request.StreetFrontage, request.LotClassificationId);
 
             if (!lot.IsSuccess)
             {
@@ -45,10 +46,15 @@ namespace RealEstate.Application.Features.Lots.Commands.CreateLot
                 Success = true,
                 Lot = new CreateLotDTO
                 {
-                    Id = lot.Value.Id,
+                    BasePostId = lot.Value.BasePostId,
+                    UserId = lot.Value.UserId,
+                    TitlePost = lot.Value.TitlePost,
+                    Price = lot.Value.Price,
+                    AddressId = lot.Value.AddressId,
+                    OfferType = lot.Value.OfferType,
+                    Description = lot.Value.Description,
                     LotArea = lot.Value.LotArea,
                     StreetFrontage = lot.Value.StreetFrontage,
-                    BasePostId = lot.Value.BasePostId,
                     LotClassificationId = lot.Value.LotClassificationId
                 }
             };
