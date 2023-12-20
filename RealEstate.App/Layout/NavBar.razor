@@ -6,7 +6,7 @@
 @inject CustomStateProvider authStateProvider
 @inject NavigationManager navigationManager
 
-<MudAppBar Color="Color.Transparent" Fixed="true">
+<MudAppBar Style=@($"background:{Colors.Grey.Lighten5};") Fixed="true">
     <div>
         <MudMenu Label="Offers" Variant="Variant.Text" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="Origin.TopLeft" Size="Size.Medium">
             <MudMenuItem Href="rent">
@@ -36,7 +36,7 @@
             <MudButton Variant="Variant.Text" Href="profile">Profile</MudButton>
 
             <MudMenu Label="Menu" Variant="Variant.Text" AnchorOrigin="@Origin.BottomRight" TransformOrigin="Origin.TopRight" Size="Size.Medium">
-                <MudMenuItem Href="rent">
+                <MudMenuItem Href="createpost">
                     Create a post
                 </MudMenuItem>
 

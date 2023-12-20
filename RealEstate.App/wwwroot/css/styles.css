@@ -130,3 +130,12 @@ a {
     color: #9AD0C2;
     text-align: center;
 }
+
+.custom-navbar-light {
+    background-color: white
+}
+
+.profile-element {
+    width: 20%;
+    color: aqua;
+}
