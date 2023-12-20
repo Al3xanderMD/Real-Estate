@@ -1,0 +1,148 @@
+﻿@page "/profile"
+@using GlobalBuyTicket.App.Auth
+@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
+@using RealEstate.App.Data
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject Blazored.SessionStorage.ISessionStorageService session
+@inject CustomStateProvider authStateProvider
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+	<link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<PageTitle>Profile</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+	<MudText Typo="Typo.h3" Style="text-align:center;">Profile</MudText>
+	<MudStack Row="true" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center" Style="height:800px;">
+		<MudStack Style="width:20%;">
+			<div>
+				<MudText Typo="Typo.h5">Last browsed</MudText>
+				<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
+					<MudCarouselItem Transition="@transition" Color="@Color.Primary">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+					<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+					<MudCarouselItem Transition="@transition">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+				</MudCarousel>
+				<MudButton Variant="Variant.Text">See all</MudButton>
+			</div>
+
+			<div>
+				<MudText Typo="Typo.h5">Saved Properties</MudText>
+				<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
+					<MudCarouselItem Transition="@transition" Color="@Color.Primary">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+					<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+					<MudCarouselItem Transition="@transition">
+						<div class="d-flex" style="height:100%">
+							<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+						</div>
+					</MudCarouselItem>
+				</MudCarousel>
+				<MudButton Variant="Variant.Text">See all</MudButton>
+			</div>
+		</MudStack>
+
+		<MudStack Style="width:20%;" AlignItems="AlignItems.Center">
+			<MudLink Style="width:100%; text-decoration:none;" Href="settings">
+				<MudPaper Class="pa-16 ma-2" Elevation="3">
+					<MudIcon Icon="@Icons.Material.Filled.Person"></MudIcon>
+					Profile
+				</MudPaper>
+			</MudLink>
+
+			<MudLink Style="width:100%; text-decoration:none;" Href="/">
+				<MudPaper Class="pa-16 ma-2" Elevation="3">
+					<MudIcon Icon="@Icons.Material.Filled.Notifications"></MudIcon>
+					Notifications
+				</MudPaper>
+			</MudLink>
+		</MudStack>
+		
+		
+		<MudPaper Style="width:20%; padding:20px;" Elevation="3">
+			<MudStack AlignItems="AlignItems.Center">
+				<MudImage Src="images/default-icon.jpg" Style="height:100px; width:auto;" Alt="Profile picture" Elevation="25" Class="rounded-lg" />
+				<MudText Typo="Typo.h5">Username</MudText>
+				<MudText>Name</MudText>
+				<MudText>Email</MudText>
+				<MudText>0799999999</MudText>
+			</MudStack>
+		</MudPaper>
+		
+	</MudStack>
+</MudContainer>
+
+
+@code {
+	private UserInfo user;
+	private AuthenticationState authenticationState;
+	public bool isAuth { get; set; }
+	Transition transition = Transition.Slide;
+
+
+	public async Task GetSessionUser()
+	{
+		user = await session.GetItemAsync<UserInfo>("SessionUser");
+	}
+
+	public async Task Logout()
+	{
+		session.ClearAsync();
+		await authStateProvider.Logout();
+		user = new UserInfo();
+		navigationManager.NavigateTo("/login", forceLoad: true);
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await GetSessionUser();
+		Console.WriteLine("started");
+		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+		if (authenticationState.User.Identity.IsAuthenticated)
+		{
+			Console.WriteLine("authState : " + authenticationState.User.Identity.Name);
+			isAuth = true;
+		}
+		else
+		{
+			Console.WriteLine("not authenticated");
+			isAuth = false;
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+		if (!authenticationState.User.Identity.IsAuthenticated)
+		{
+			navigationManager.NavigateTo("/");
+		}
+	}
+}    
