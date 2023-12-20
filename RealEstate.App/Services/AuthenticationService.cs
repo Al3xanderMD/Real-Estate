@@ -3,6 +3,7 @@ using RealEstate.App.Models;
 using System.Net;
 using System.Net.Http.Json;
 using System.Web;
+using Blazored.SessionStorage;
 namespace RealEstate.App.Services
 {
     public class AuthenticationService : IAuthentificationService
@@ -23,6 +24,7 @@ namespace RealEstate.App.Services
             {
                 throw new Exception(await response.Content.ReadAsStringAsync());
             }
+
             response.EnsureSuccessStatusCode();
             var token = await response.Content.ReadAsStringAsync();
             await tokenService.SetTokenAsync(token);
@@ -64,11 +66,11 @@ namespace RealEstate.App.Services
         }
         
 
-        /*(public async Task Logout()
+        public async Task Logout()
         {
             await tokenService.RemoveTokenAsync();
-            var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
-            result.EnsureSuccessStatusCode();
-        }*/
+            //var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
+            //result.EnsureSuccessStatusCode();
+        }
     }
 }

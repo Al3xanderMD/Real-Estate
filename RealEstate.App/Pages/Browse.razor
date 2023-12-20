@@ -1,0 +1,47 @@
+﻿@* @page "/browse"
+
+<h3>Available Properties</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Price</th>
+            <th>Number of Rooms</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var property in Properties)
+        {
+            <tr>
+                <td>@property.Name</td>
+                <td>@property.Address</td>
+                <td>@property.Price.ToString("C")</td>
+                <td>@property.NumberOfRooms</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<House> Properties { get; set; } = new List<Property>();
+
+    protected override void OnInitialized()
+    {
+        // Initialize Properties with sample data or fetch data from a service
+        Properties = GetSampleProperties();
+    }
+
+    List<Property> GetSampleProperties()
+    {
+        // Replace this with your actual data retrieval logic
+        return new List<Property>
+        {
+            new Property { Name = "Property 1", Address = "123 Main St", Price = 250000, NumberOfRooms = 3 },
+            new Property { Name = "Property 2", Address = "456 Elm St", Price = 300000, NumberOfRooms = 4 },
+            // Add more properties as needed
+        };
+    }
+}
+ *@

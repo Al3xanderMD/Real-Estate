@@ -13,6 +13,6 @@ namespace RealEstate.App.Contracts
         Task Register(RegisterViewModel registerRequest);
         Task ForgotPassword(ForgotPasswordViewModel forgotPwRequest);
         Task ResetPassword(ResetPasswordViewModel resetPwRequest);
-        /*Task Logout();*/
+        Task Logout();
     }
 }

@@ -1,43 +1,51 @@
 ﻿@page "/Login"
 @using FluentValidation
 @using FluentValidation.Results
+@using Microsoft.AspNetCore.Components.Authorization
 @using RealEstate.App.Auth
+@using RealEstate.App.Data
 @using RealEstate.App.Models
 @using RealEstate.App.Validators
 @using Microsoft.AspNetCore.Components.Forms
-@using MatBlazor
+@using MudBlazor
+
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 @inject IValidator<LoginViewModel> Validator
+@inject Blazored.SessionStorage.ISessionStorageService session
+@inject ISnackbar Snackbar
+
 <head>
-    
-    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
-    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="css/styles.css" />
+
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </head>
 
 <div class="content-container">
     <div class="form-card">
         <div class="auth-form-buttons-div">
-            <MatButtonLink Class="login-register-btn" Href="login">Login</MatButtonLink>
+            <MudButton Variant="Variant.Text" Href="login">Login</MudButton>
 
-            <MatButtonLink Class="login-register-btn" Href="register">Register</MatButtonLink>
+            <MudButton Variant="Variant.Text" Href="register">Register</MudButton>
         </div>
 
         <EditForm Model="@loginRequest" OnValidSubmit="OnSubmit">
             <hr class="auth-hr">
 
             <div class="auth-input-div">
-                <MatTextField @bind-Value="loginRequest.Email" id="email" type="email" Label="Enter email"></MatTextField>
+                <MudTextField Variant="Variant.Text" @bind-Value="loginRequest.Email" id="email" type="email" Label="Enter email"></MudTextField>
 
                 <div class="error-msg auth-message">@emailError</div>
             </div>
 
 
             <div class="auth-input-div">
-                <MatTextField @bind-Value="loginRequest.Password" id="password" type="password" Label="Enter password"></MatTextField>
+                <MudTextField Variant="Variant.Text" @bind-Value="loginRequest.Password" id="password" InputType="InputType.Password" Label="Enter password"></MudTextField>
 
                 <div class="error-msg auth-message">@passwordError</div>
             </div>
@@ -48,7 +56,8 @@
                 </NavLink>
             </div>
 
-            <MatButton Class="submit-btn submit-btn-custom" Raised="true" type="submit">Submit</MatButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+
             <hr class="auth-hr">
             <div class="auth-message">@error</div>
         </EditForm>
@@ -60,6 +69,17 @@
     string error { get; set; }
     string emailError { get; set; }
     string passwordError { get; set; }
+    private AuthenticationState authenticationState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+        if (authenticationState.User.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+    }
 
     async Task OnSubmit()
     {
@@ -70,7 +90,7 @@
 
         if (!results.IsValid)
         {
-            
+
             foreach (var failure in results.Errors)
             {
                 if (failure.PropertyName == "Email")
@@ -85,13 +105,23 @@
             {
                 await authStateProvider.Login(loginRequest);
                 LogToConsole("Login ok");
-                navigationManager.NavigateTo("/");
+
+                var user = new UserInfo();
+                user.Email = loginRequest.Email;
+
+                Console.WriteLine("ran session init");
+                await session.SetItemAsync("SessionUser", user);
+
+                navigationManager.NavigateTo("/",forceLoad:true);
             }
             catch (Exception ex)
             {
                 LogToConsole("Wrong credentials");
+                Snackbar.Add(ex.Message, MudBlazor.Severity.Error);
                 if (emailError == null && passwordError == null)
+                {
                     error = ex.Message;
+                }
             }
         }
     }
@@ -102,89 +132,3 @@
     }
 }
 
-
-@* <head>
-    <link rel="stylesheet" href="css/styles.css" />
-</head>
-
-<div class="content-container">
-    <div class="auth-message">@message</div>
-    <div class="form-card">
-        <div class="auth-form-buttons-div">
-            <NavLink href="login">
-                <button class="auth-form-button">
-                    Log In
-                </button>
-            </NavLink>
-
-            <NavLink href="Register">
-                <button class="auth-form-button">
-                    Sign up
-                </button>
-            </NavLink>
-        </div>
-
-        <EditForm Model="@loginReq" OnValidSubmit="HandleValidSubmit">
-            <hr class="auth-hr">
-
-            <div class="auth-input-div">
-                <label class="auth-label" for="email">Email:</label>
-
-                <br>
-
-                <InputText @bind-Value="loginReq.email" id="email" type="email" class="auth-input" placeholder="Enter email" required />
-            </div>
-
-
-            <div class="auth-input-div">
-                <label class="auth-label" for="password">Password:</label>
-
-                <br>
-
-                <InputText @bind-Value="loginReq.password" id="password" type="password" class="auth-input" placeholder="Create password" required />
-            </div>
-
-            <input class="auth-form-submit-button" type="submit" value="Sign in">
-            <hr class="auth-hr">
-        </EditForm>
-    </div>
-</div>
-
-@code {
-    private LoginRequest loginReq = new LoginRequest();
-    public string message = "";
-    private bool success = true;
-    private string password = "";
-
-
-
-    private async Task SubmitForm(LoginRequest loginReq)
-    {
-        var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://localhost:7190/api/v1/Authentication/login"), // Update with your API endpoint
-                Content = JsonContent.Create(loginReq)
-            };
-        // Send a POST request to the API
-        var response = await HttpClient.SendAsync(request);
-
-        // Handle the API response if needed
-        // For demonstration purposes, just print the response to the console
-        Console.WriteLine(response);
-    }
-
-    private void HandleValidSubmit()
-    {
-        SubmitForm(loginReq);
-
-        if (success)
-        {
-            message = "";
-        }
-        else
-        {
-            message = "Wrong credentials";
-        }
-    }
-} *@

@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
+@using RealEstate.App.Data
+
+@inject Blazored.SessionStorage.ISessionStorageService session
+@inject CustomStateProvider authStateProvider
+@inject NavigationManager navigationManager
+
+<MudAppBar Color="Color.Transparent" Fixed="true">
+    <div>
+        <MudMenu Label="Offers" Variant="Variant.Text" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="Origin.TopLeft" Size="Size.Medium">
+            <MudMenuItem Href="rent">
+                Rent
+            </MudMenuItem>
+
+            <MudMenuItem Href="buy">
+                Buy
+            </MudMenuItem>
+
+            <MudMenuItem Href="sell">
+                Sell
+            </MudMenuItem>
+        </MudMenu>
+
+        <MudButton Variant="Variant.Text" Href="about">About</MudButton>
+    </div>
+    <MudSpacer />
+
+    <NavLink href="/">
+        <MudImage Src="images/icon1.png" Alt="Propertunity Icon" Elevation="0" Width="64" Class="rounded-lg" />
+    </NavLink>
+
+    <MudSpacer />
+    @if (isAuth) 	{
+		<div>
+            <MudButton Variant="Variant.Text" Href="profile">Profile</MudButton>
+
+            <MudMenu Label="Menu" Variant="Variant.Text" AnchorOrigin="@Origin.BottomRight" TransformOrigin="Origin.TopRight" Size="Size.Medium">
+                <MudMenuItem Href="rent">
+                    Create a post
+                </MudMenuItem>
+
+                <MudMenuItem Href="explore">
+                    Explore
+                </MudMenuItem>
+
+                <MudMenuItem Href="settings">
+                    Account settings
+                </MudMenuItem>
+
+                <MudMenuItem Href="help">
+                    Help
+                </MudMenuItem>
+
+                <MudMenuItem @onclick="Logout">
+                    Logout
+                </MudMenuItem>
+            </MudMenu>
+		</div>
+	}
+	else
+	{
+		<div>
+            <MudButton Variant="Variant.Text" Href="login">Login</MudButton>
+
+            <MudMenu Label="Menu" Variant="Variant.Text" AnchorOrigin="@Origin.BottomRight" TransformOrigin="Origin.TopRight" Size="Size.Medium">
+                <MudMenuItem Href="explore">
+                    Explore
+                </MudMenuItem>
+
+                <MudMenuItem Href="help">
+                    Help
+                </MudMenuItem>
+
+                <MudMenuItem Href="register">
+                    Register
+                </MudMenuItem>
+
+            </MudMenu>
+		</div>
+	}
+</MudAppBar>
+
+@code {
+
+    private UserInfo user;
+    private AuthenticationState authenticationState;
+    public bool isAuth { get; set; }
+
+    public async Task GetSessionUser()
+    {
+        user = await session.GetItemAsync<UserInfo>("SessionUser");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+        if (authenticationState.User.Identity.IsAuthenticated)
+        {
+            Console.WriteLine("navbar : " + authenticationState.User.Identity.Name);
+            isAuth = true;
+        }
+        else
+        {
+            Console.WriteLine("not authenticated navbar");
+            isAuth = false;
+        }
+    }
+
+    public async Task Logout()
+    {
+        session.ClearAsync();
+        await authStateProvider.Logout();
+        user = new UserInfo();
+        navigationManager.NavigateTo("/login", forceLoad: true);
+    }
+}

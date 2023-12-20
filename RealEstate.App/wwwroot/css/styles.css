@@ -130,19 +130,3 @@ a {
     color: #9AD0C2;
     text-align: center;
 }
-
-.submit-btn-custom {
-    background-color: #2D9596 !important;
-    color: white !important;
-}
-
-.login-register-btn {
-    background-color: #2D9596 !important;
-    color: white !important;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-}
-
-.login-register-btn:hover {
-        background-color: #237373 !important; 
-    }

@@ -12,8 +12,8 @@ using RealEstate.Identity;
 namespace RealEstate.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231207205005_useri")]
-    partial class useri
+    [Migration("20231219161516_CreateDb")]
+    partial class CreateDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

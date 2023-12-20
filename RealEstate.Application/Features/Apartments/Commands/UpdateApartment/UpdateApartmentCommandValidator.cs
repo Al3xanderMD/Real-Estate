@@ -19,22 +19,22 @@ namespace RealEstate.Application.Features.Apartments.Commands.UpdateApartment
 			RuleFor(p => p.Comfort)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
-				.GreaterThan(0);
+				.GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
 
 			RuleFor(p => p.Floor)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
-				.GreaterThan(0);
+				.GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
 
 			RuleFor(p => p.UsefulSurface)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
-				.GreaterThan(0);
+				.GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
 
 			RuleFor(p => p.BuildYear)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
-				.GreaterThan(0);
+				.GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
 
 			RuleFor(p => p.BasePostId)
 				.NotEmpty().WithMessage("{PropertyName} is required.")

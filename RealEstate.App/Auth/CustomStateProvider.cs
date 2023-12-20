@@ -2,6 +2,7 @@
 using RealEstate.App.Contracts;
 using RealEstate.App.Models;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RealEstate.App.Auth
 {
@@ -20,9 +21,31 @@ namespace RealEstate.App.Auth
             try
             {
                 var userInfo = await tokenService.GetTokenAsync();
+                var claims = new List<Claim>();
+
                 if (userInfo != null)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, "user logged") };
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(userInfo) as JwtSecurityToken;
+
+                    if (jsonToken != null)
+                    {
+                        foreach (var claim in jsonToken.Claims)
+                        {
+                            if (claim.Type == "unique_name")
+                            {
+                                Console.WriteLine($"{claim.Type}: {claim.Value}");
+                                claims.Add(new Claim(ClaimTypes.Name, claim.Value));
+                            }
+                            //Console.WriteLine($"{claim.Type}: {claim.Value}");
+                            //claims.Add(new Claim(claim.Type, claim.Value));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("jsonToken is null");
+                    }
+                    //var claims = new[] { new Claim(ClaimTypes.Name, "user logged") };
                     identity = new ClaimsIdentity(claims, "Server authentication");
                 }
             }
@@ -34,11 +57,12 @@ namespace RealEstate.App.Auth
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
 
-        /*public async Task Logout()
+
+        public async Task Logout()
         {
             await authService.Logout();
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
-        }*/
+        }
         public async Task Login(LoginViewModel loginParameters)
         {
             await authService.Login(loginParameters);
