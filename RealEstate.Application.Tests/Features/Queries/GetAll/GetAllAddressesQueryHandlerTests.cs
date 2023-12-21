@@ -5,11 +5,11 @@ using RealEstate.Application.Persistence;
 
 namespace RealEstate.Application.Tests.Features.Queries.GetAll
 {
-    public class GetAllAddressesQueryTests : IDisposable
+    public class GetAllAddressesQueryHandlerTests : IDisposable
     {
         private readonly IAddressRepository mockAddressRepository;
 
-        public GetAllAddressesQueryTests()
+        public GetAllAddressesQueryHandlerTests()
         {
             mockAddressRepository = RepositoryMocks.GetAddressRepository();
         }
