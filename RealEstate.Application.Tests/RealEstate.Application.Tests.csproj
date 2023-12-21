@@ -29,9 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\Create\" />
     <Folder Include="Features\Commands\Delete\" />
-    <Folder Include="Features\Commands\" />
     <Folder Include="Features\Commands\Update\" />
     <Folder Include="Models\" />
     <Folder Include="Responses\" />
