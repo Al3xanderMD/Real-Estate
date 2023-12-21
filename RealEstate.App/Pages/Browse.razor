@@ -1,47 +1,127 @@
-﻿@* @page "/browse"
+﻿@page "/browse"
+@using RealEstate.App.Data
+@using RealEstate.App.Models
 
-<h3>Available Properties</h3>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Price</th>
-            <th>Number of Rooms</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var property in Properties)
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<PageTitle>Browse Properties</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+     <MudText Typo="Typo.h4" Style="text-align:center;">Find Properties</MudText>
+
+    <MudStack Row="true" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center" Style="height:auto; border-radius:50px; overflow: hidden;">
+        @foreach (var property in GetHardcodedProperties())
         {
-            <tr>
-                <td>@property.Name</td>
-                <td>@property.Address</td>
-                <td>@property.Price.ToString("C")</td>
-                <td>@property.NumberOfRooms</td>
-            </tr>
+            <div style="width: 25%; padding: 10px;">
+                <MudPaper Elevation="3" Class="pa-16 ma-2">
+                    <div>
+                        <img src="@property.ImageUrl" alt="@property.Title" style="max-width: 100%; height: auto;" />
+                    </div>
+                    <MudText Typo="Typo.h6">@property.Title</MudText>
+                    <MudText Typo="Typo.body2" Class="address-text">@property.Address</MudText>
+                        <MudText Typo="Typo.body2" Class="price-text" Style="@($"color:{Colors.Cyan.Darken3};")">Price: @property.Price</MudText>
+                        <MudText Typo="Typo.body2" Class="room-count-text" Style="@($"color:{Colors.Cyan.Darken2};")">Rooms: @property.RoomCount</MudText>
+                </MudPaper>
+            </div>
         }
-    </tbody>
-</table>
+    </MudStack>
+</MudContainer>
 
 @code {
-    List<House> Properties { get; set; } = new List<Property>();
-
-    protected override void OnInitialized()
+    private List<PostModel> GetHardcodedProperties()
     {
-        // Initialize Properties with sample data or fetch data from a service
-        Properties = GetSampleProperties();
-    }
-
-    List<Property> GetSampleProperties()
+        return new List<PostModel>
     {
-        // Replace this with your actual data retrieval logic
-        return new List<Property>
+        new PostModel
         {
-            new Property { Name = "Property 1", Address = "123 Main St", Price = 250000, NumberOfRooms = 3 },
-            new Property { Name = "Property 2", Address = "456 Elm St", Price = 300000, NumberOfRooms = 4 },
-            // Add more properties as needed
-        };
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            // ImageUrl = "path/to/cottage.jpg"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            // ImageUrl = "path/to/apartment.jpg"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            // ImageUrl = "path/to/villa.jpg"
+        },
+    };
     }
+
+    // private List<PropertyInfo> GetHardcodedProperties()
+    // {
+    //     Replace this with your actual data retrieval logic or use hardcoded data
+    //     return new List<PropertyInfo>
+    //     {
+    //         new PropertyInfo { Name = "House 1", Address = "123 Main St", Price = "$500,000", NumberOfRooms = 4, MainPhotoUrl = "path/to/photo1.jpg" },
+    //         new PropertyInfo { Name = "Apartment 1", Address = "456 Oak Ave", Price = "$300,000", NumberOfRooms = 2, MainPhotoUrl = "path/to/photo2.jpg" },
+    //         Add more properties as needed
+    //     };
+    // }
 }
- *@
+
+
+
+
+
+ @* <h3>Available Properties</h3>
+
+ <table class="table">
+     <thead>
+         <tr>
+             <th>Name</th>
+             <th>Address</th>
+             <th>Price</th>
+             <th>Number of Rooms</th>
+         </tr>
+     </thead>
+      <tbody>
+          @foreach (var property in Properties)
+          {
+             <tr>
+                 <td>@property.Name</td>
+                 <td>@property.Address</td>
+                 <td>@property.Price.ToString("C")</td>
+                 <td>@property.NumberOfRooms</td>
+             </tr>
+         }
+     </tbody> 
+ </table>
+
+ @code {
+     List<House> Properties { get; set; } = new List<Property>();
+
+     protected override void OnInitialized()
+     {
+         Initialize Properties with sample data or fetch data from a service
+         Properties = GetSampleProperties();
+     }
+
+     List<Property> GetSampleProperties()
+     {
+         Replace this with your actual data retrieval logic
+         return new List<Property>
+         {
+             new Property { Name = "Property 1", Address = "123 Main St", Price = 250000, NumberOfRooms = 3 },
+             new Property { Name = "Property 2", Address = "456 Elm St", Price = 300000, NumberOfRooms = 4 },
+             Add more properties as needed
+         };
+     }
+ } *@

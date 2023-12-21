@@ -28,6 +28,10 @@
 		{
 			ImageUrl = new List<string>();
 			BuildYear = DateTime.Now.Year;
+			Title = "Title";
+			Description = "Description";
+			Price = 0;
+			RoomCount = "1";
 		}
 	}
 }
