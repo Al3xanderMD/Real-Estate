@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Application.Features.Categories.Commands.CreateClient;
 using RealEstate.Application.Features.Clients.Commands.DeleteClient;
+using RealEstate.Application.Features.Clients.Commands.UpdateClient;
 using RealEstate.Application.Features.Clients.Queries.GetAll;
 using RealEstate.Application.Features.Clients.Queries.GetById;
 
@@ -36,13 +37,26 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Guid id, UpdateClientCommand command)
+        {
+            if (id != command.UserId)
+            {
+                return BadRequest();
+            }
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteClientCommand = new DeleteClient() { ClientId = id };
+            var deleteClientCommand = new DeleteClient() { UserId = id };
             await Mediator.Send(deleteClientCommand);
             return NoContent();
         }

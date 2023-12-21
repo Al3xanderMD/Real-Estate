@@ -4,6 +4,6 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.DeleteHotelPens
 {
     public class DeleteHotelPension : IRequest<DeleteHotelPensionResponse>
     {
-        public Guid Id { get; set; }
+        public Guid BasePostId { get; set; }
     }
 }

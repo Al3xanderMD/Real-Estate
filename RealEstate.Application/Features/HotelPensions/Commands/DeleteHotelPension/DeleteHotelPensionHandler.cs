@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.HotelPensions.Commands.DeleteHotelPens
 
         public async Task<DeleteHotelPensionResponse> Handle(DeleteHotelPension request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteAsync(request.Id);
+            var result = await repository.DeleteAsync(request.BasePostId);
 
             if(!result.IsSuccess)
             {

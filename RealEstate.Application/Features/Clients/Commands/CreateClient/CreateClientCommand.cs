@@ -4,7 +4,10 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateClient
 {
     public class CreateClientCommand : IRequest<CreateClientCommandResponse>
     {
-        public string FirstName { get; set; } = default!;
-        public string LastName { get; set; } = default!;
+        public Guid UserId { get; set; }
+        public string Username { get; set; } = default!;
+        public string Email { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string PhoneNumber { get; set; } = default!;
     }
 }

@@ -27,7 +27,8 @@ namespace RealEstate.Application.Features.Apartments.Commands.CreateApartament
                 };
             }
 
-            var apartment = Apartment.Create(request.RoomCount, request.Comfort, request.Floor, request.UsefulSurface, request.BuildYear, request.BasePostId, request.PartitioningId);
+            var apartment = Apartment.Create(request.UserId, request.TitlePost, request.Price,request.AddressId, request.OfferType, request.Description,
+                request.RoomCount, request.Comfort, request.Floor, request.UsefulSurface, request.BuildYear, request.PartitioningId);
 
             if (!apartment.IsSuccess)
             {
@@ -45,13 +46,18 @@ namespace RealEstate.Application.Features.Apartments.Commands.CreateApartament
                 Success = true,
                 Apartment = new CreateApartmentDTO
                 {
-                    Id = apartment.Value.Id,
+                    BasePostId = apartment.Value.BasePostId,
+                    UserId = apartment.Value.UserId,
+                    TitlePost = apartment.Value.TitlePost,
+                    Price = apartment.Value.Price,
+                    AddressId = apartment.Value.AddressId,
+                    OfferType = apartment.Value.OfferType,
+                    Description = apartment.Value.Description,
                     RoomCount = apartment.Value.RoomCount,
                     Comfort = apartment.Value.Comfort,
                     Floor = apartment.Value.Floor,
                     UsefulSurface = apartment.Value.UsefulSurface,
                     BuildYear = apartment.Value.BuildYear,
-                    BasePostId = apartment.Value.BasePostId,
                     PartitioningId = apartment.Value.PartitioningId
                 }
             };

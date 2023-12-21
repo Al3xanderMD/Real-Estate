@@ -42,7 +42,7 @@ namespace RealEstate.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(Guid id, UpdateApartmentCommand command)
         {
-            if (id != command.Id)
+            if (id != command.BasePostId)
             {
                 return BadRequest();
             }
@@ -56,7 +56,7 @@ namespace RealEstate.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteApartmentCommand = new DeleteApartment() { Id = id };
+            var deleteApartmentCommand = new DeleteApartment() { BasePostId = id };
             await Mediator.Send(deleteApartmentCommand);
             return NoContent();
         }

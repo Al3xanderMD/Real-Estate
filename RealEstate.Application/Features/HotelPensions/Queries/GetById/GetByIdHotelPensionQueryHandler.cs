@@ -20,8 +20,13 @@ namespace RealEstate.Application.Features.HotelPensions.Queries.GetById
             {
                 return new HotelPensionDto
                 {
-                    Id = hotelPension.Value.Id,
                     BasePostId = hotelPension.Value.BasePostId,
+                    UserId = hotelPension.Value.UserId,
+                    TitlePost = hotelPension.Value.TitlePost,
+                    Price = hotelPension.Value.Price,
+                    AddressId = hotelPension.Value.AddressId,
+                    OfferType = hotelPension.Value.OfferType,
+                    Description = hotelPension.Value.Description,
                     UsefulSurface = hotelPension.Value.UsefulSurface,
                     RoomSurface = hotelPension.Value.RoomSurface,
                     RoomCount = hotelPension.Value.RoomCount

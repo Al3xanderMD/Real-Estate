@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Lots.Commands.DeleteLot
 
         public async Task<DeleteLotResponse> Handle(DeleteLot request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteAsync(request.Id);
+            var result = await repository.DeleteAsync(request.BasePostId);
 
             if (!result.IsSuccess)
             {

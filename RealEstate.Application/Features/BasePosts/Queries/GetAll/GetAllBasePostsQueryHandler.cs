@@ -26,7 +26,8 @@ namespace RealEstate.Application.Features.BasePosts.Queries.GetAll
                     Price = basePost.Price,
                     AddressId = basePost.AddressId,
                     OfferType = basePost.OfferType,
-                    UserId = basePost.UserId
+                    UserId = basePost.UserId,
+                    Description = basePost.Description
                 }).ToList();
             }
             return response;

@@ -27,7 +27,7 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateBasePost
                 };
             }
 
-            var basePost = BasePost.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType);
+            var basePost = BasePost.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType, request.Description);
 
             if(!basePost.IsSuccess)
             {
@@ -50,7 +50,8 @@ namespace RealEstate.Application.Features.Categories.Commands.CreateBasePost
                     Price = basePost.Value.Price,
                     AddressId = basePost.Value.AddressId,
                     OfferType = basePost.Value.OfferType,
-                    UserId = basePost.Value.UserId
+                    UserId = basePost.Value.UserId,
+                    Description = basePost.Value.Description
                 }
             };
         }

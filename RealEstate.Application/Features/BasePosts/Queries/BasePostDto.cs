@@ -7,6 +7,7 @@
         public double Price { get; set; } = default!;
         public Guid AddressId { get; set; }
         public bool OfferType { get; set; } = default!;
-        public Guid UserId { get; set; }
+        public string UserId { get; set; } = default!;
+        public string Description { get; set; } = default!;
     }
 }

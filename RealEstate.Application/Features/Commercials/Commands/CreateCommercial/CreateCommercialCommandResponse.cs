@@ -4,7 +4,9 @@ namespace RealEstate.Application.Features.Commercials.Commands.CreateCommercial
 {
     public class CreateCommercialCommandResponse : BaseResponse
     {
-        public CreateCommercialCommandResponse() : base() { }
+        public CreateCommercialCommandResponse() : base() 
+        { 
+        }
         public CreateCommercialDto Commercial { get; set;}
     }
 }

@@ -4,6 +4,6 @@ namespace RealEstate.Application.Features.Lots.Commands.DeleteLot
 {
     public class DeleteLot : IRequest<DeleteLotResponse>
     {
-        public Guid Id { get; set; }
+        public Guid BasePostId { get; set; }
     }
 }

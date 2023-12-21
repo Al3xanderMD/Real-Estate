@@ -19,13 +19,18 @@ namespace RealEstate.Application.Features.Houses.Queries.GetById
             {
                 return new HouseDto
                 {
-                    Id = house.Value.Id,
+                    BasePostId = house.Value.BasePostId,
+                    UserId = house.Value.UserId,
+                    TitlePost = house.Value.TitlePost,
+                    Price = house.Value.Price,
+                    AddressId = house.Value.AddressId,
+                    OfferType = house.Value.OfferType,
+                    Description = house.Value.Description,
                     RoomCount = house.Value.RoomCount,
                     FloorCount = house.Value.FloorCount,
                     UsefulSurface = house.Value.UsefulSurface,
                     LotArea = house.Value.LotArea,
                     BuildYear = house.Value.BuildYear,
-                    BasePostId = house.Value.BasePostId,
                     HouseTypeId = house.Value.HouseTypeId
                 };
             }

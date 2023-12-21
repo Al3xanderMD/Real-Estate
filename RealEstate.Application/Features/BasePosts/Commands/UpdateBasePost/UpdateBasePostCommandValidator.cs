@@ -11,15 +11,6 @@ namespace RealEstate.Application.Features.BasePosts.Commands.UpdateBasePost
 				.NotNull()
 				.NotEqual(Guid.Empty);
 
-			RuleFor(p => p.UserId)
-				.NotEmpty().WithMessage("{PropertyName} is required.")
-				.NotNull()
-				.NotEqual(Guid.Empty);
-
-			RuleFor(p => p.Client)
-				.NotEmpty().WithMessage("{PropertyName} is required.")
-				.NotNull();
-
 			RuleFor(p => p.TitlePost)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
@@ -43,15 +34,16 @@ namespace RealEstate.Application.Features.BasePosts.Commands.UpdateBasePost
 				.NotNull()
 				.NotEqual(Guid.Empty);
 
-			RuleFor(p => p.Address)
-				.NotEmpty().WithMessage("{PropertyName} is required.")
-				.NotNull();
-
 			RuleFor(p => p.Descripion)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull()
 				.MaximumLength(200)
 				.WithMessage("{PropertyName} must not exceed 200 characters.");
+
+			RuleFor(p => p.UserId)
+				.NotEmpty().WithMessage("{PropertyName} is required.")
+				.NotNull();
+
 		}	
 	}
 }

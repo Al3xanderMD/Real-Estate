@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Commercials.Commands.DeleteCommercial
 
         public async Task<DeleteCommercialResponse> Handle(DeleteCommercial request, CancellationToken cancellationToken)
         {
-            var result = await repository.DeleteAsync(request.Id);
+            var result = await repository.DeleteAsync(request.BasePostId);
 
             if(!result.IsSuccess)
             {

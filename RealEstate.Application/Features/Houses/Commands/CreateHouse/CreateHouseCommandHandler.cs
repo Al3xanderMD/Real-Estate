@@ -26,7 +26,8 @@ namespace RealEstate.Application.Features.Houses.Commands.CreateHouse
                 };
             }
 
-            var house = House.Create(request.BasePostId, request.RoomCount, request.FloorCount, request.UsefulSurface, request.LotArea, request.BuildYear, request.HouseTypeId);
+            var house = House.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType, request.Description,
+                request.RoomCount, request.FloorCount, request.UsefulSurface, request.LotArea, request.BuildYear, request.HouseTypeId);
 
             if (!house.IsSuccess)
             {
@@ -44,13 +45,18 @@ namespace RealEstate.Application.Features.Houses.Commands.CreateHouse
                 Success = true,
                 House = new CreateHouseDTO
                 {
-                    Id = house.Value.Id,
+                    BasePostId = house.Value.BasePostId,
+                    UserId = house.Value.UserId,
+                    TitlePost = house.Value.TitlePost,
+                    Price = house.Value.Price,
+                    AddressId = house.Value.AddressId,
+                    OfferType = house.Value.OfferType,
+                    Description = house.Value.Description,
                     RoomCount = house.Value.RoomCount,
                     FloorCount = house.Value.FloorCount,
                     UsefulSurface = house.Value.UsefulSurface,
                     LotArea = house.Value.LotArea,
                     BuildYear = house.Value.BuildYear,
-                    BasePostId = house.Value.BasePostId,
                     HouseTypeId = house.Value.HouseTypeId
                 }
             };

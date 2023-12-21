@@ -21,8 +21,13 @@ namespace RealEstate.Application.Features.Commercials.Queries.GetAll
             {
                 response.Commercials = result.Value.Select(commercial => new CommercialDto
                 {
-                    Id = commercial.Id,
                     BasePostId = commercial.BasePostId,
+                    UserId = commercial.UserId,
+                    TitlePost = commercial.TitlePost,
+                    Price = commercial.Price,
+                    AddressId = commercial.AddressId,
+                    OfferType = commercial.OfferType,
+                    Description = commercial.Description,
                     CommercialSpecificId = commercial.CommercialSpecificId,
                     UsefulSurface = commercial.UsefulSurface,
                     Disponibility = commercial.Disponibility

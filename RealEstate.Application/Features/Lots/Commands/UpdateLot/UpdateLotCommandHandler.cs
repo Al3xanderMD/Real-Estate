@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RealEstate.Application.Persistence;
+using RealEstate.Domain.Entities;
 
 namespace RealEstate.Application.Features.Lots.Commands.UpdateLot
 {
@@ -12,7 +13,7 @@ namespace RealEstate.Application.Features.Lots.Commands.UpdateLot
 		}
 		public async Task<UpdateLotCommandResponse> Handle(UpdateLotCommand request, CancellationToken cancellationToken)
 		{
-			var lot = await repository.FindByIdAsync(request.Id);
+			var lot = await repository.FindByIdAsync(request.BasePostId);
 			var validator = new UpdateLotCommandValidator();
 			var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -37,10 +38,14 @@ namespace RealEstate.Application.Features.Lots.Commands.UpdateLot
 			lot.Value.AttachLotArea(request.LotArea);
 			lot.Value.AttachStreetFrontage(request.StreetFrontage);
 			lot.Value.AttachLotClassificationId(request.LotClassificationId);
-			lot.Value.AttachBasePostId(request.BasePostId);
-			lot.Value.AttachBasePost(request.BasePost);
-			lot.Value.AttachLotClassification(request.LotClassification);
-			var updatedLot = await repository.UpdateAsync(lot.Value);
+            lot.Value.AttachUserId(request.UserId);
+            lot.Value.AttachTitlePost(request.TitlePost);
+            lot.Value.AttachPrice(request.Price);
+            lot.Value.AttachAddressId(request.AddressId);
+            lot.Value.AttachOfferType(request.OfferType);
+			lot.Value.AttachDescription(request.Description);
+
+            var updatedLot = await repository.UpdateAsync(lot.Value);
 
 			if (!updatedLot.IsSuccess)
 			{
@@ -57,9 +62,13 @@ namespace RealEstate.Application.Features.Lots.Commands.UpdateLot
 				Lot = new UpdateLotDto
 				{
 					BasePostId = updatedLot.Value.BasePostId,
-					BasePost = updatedLot.Value.BasePost,
+					UserId = updatedLot.Value.UserId,
+					TitlePost = updatedLot.Value.TitlePost,
+					Price = updatedLot.Value.Price,
+					AddressId = updatedLot.Value.AddressId,
+					OfferType = updatedLot.Value.OfferType,
+					Description = updatedLot.Value.Description,
 					LotClassificationId = updatedLot.Value.LotClassificationId,
-					LotClassification = updatedLot.Value.LotClassification,
 					LotArea = updatedLot.Value.LotArea,
 					StreetFrontage = updatedLot.Value.StreetFrontage
 				}

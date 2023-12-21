@@ -20,8 +20,13 @@ namespace RealEstate.Application.Features.Commercials.Queries.GetById
             {
                 return new CommercialDto
                 {
-                    Id = commercial.Value.Id,
                     BasePostId = commercial.Value.BasePostId,
+                    UserId = commercial.Value.UserId,
+                    TitlePost = commercial.Value.TitlePost,
+                    Price = commercial.Value.Price,
+                    AddressId = commercial.Value.AddressId,
+                    OfferType = commercial.Value.OfferType,
+                    Description = commercial.Value.Description,
                     CommercialSpecificId = commercial.Value.CommercialSpecificId,
                     UsefulSurface = commercial.Value.UsefulSurface,
                     Disponibility = commercial.Value.Disponibility

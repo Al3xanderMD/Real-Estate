@@ -3,7 +3,7 @@ using RealEstate.Application.Persistence;
 
 namespace RealEstate.Application.Features.Commercials.Commands.UpdateCommercial
 {
-	public class UpdateCommercialCommandHandler: IRequestHandler<UpdateCommercialCommand, UpdateCommercialCommandResponse>
+    public class UpdateCommercialCommandHandler: IRequestHandler<UpdateCommercialCommand, UpdateCommercialCommandResponse>
 	{
 		private readonly ICommercialRepository repository;
 
@@ -13,7 +13,7 @@ namespace RealEstate.Application.Features.Commercials.Commands.UpdateCommercial
 		}
 		public async Task<UpdateCommercialCommandResponse> Handle(UpdateCommercialCommand request, CancellationToken cancellationToken)
 		{
-			var commercial = await repository.FindByIdAsync(request.Id);
+			var commercial = await repository.FindByIdAsync(request.BasePostId);
 			var validator = new UpdateCommercialCommandValidator();
 			var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -37,9 +37,15 @@ namespace RealEstate.Application.Features.Commercials.Commands.UpdateCommercial
 
 			commercial.Value.AttachUsefulSurface(request.UsefulSurface);
 			commercial.Value.AttachDisponibility(request.Disponibility);
-			commercial.Value.AttachBasePostId(request.BasePostId);
 			commercial.Value.AttachCommercialSpecificId(request.CommercialSpecificId);
-			var updatedCommercial = await repository.UpdateAsync(commercial.Value);
+			commercial.Value.AttachUserId(request.UserId);
+			commercial.Value.AttachTitlePost(request.TitlePost);
+            commercial.Value.AttachPrice(request.Price);
+            commercial.Value.AttachAddressId(request.AddressId);
+            commercial.Value.AttachOfferType(request.OfferType);
+			commercial.Value.AttachDescription(request.Description);
+
+            var updatedCommercial = await repository.UpdateAsync(commercial.Value);
 
 			if (!updatedCommercial.IsSuccess)
 			{
@@ -55,9 +61,15 @@ namespace RealEstate.Application.Features.Commercials.Commands.UpdateCommercial
 				Success = true,
 				Commercial = new UpdateCommercialDto
 				{
+					BasePostId = updatedCommercial.Value.BasePostId,
+					UserId = updatedCommercial.Value.UserId,
+					TitlePost = updatedCommercial.Value.TitlePost,
+					Price = updatedCommercial.Value.Price,
+					AddressId = updatedCommercial.Value.AddressId,
+					OfferType = updatedCommercial.Value.OfferType,
+					Description = updatedCommercial.Value.Description,
 					UsefulSurface = updatedCommercial.Value.UsefulSurface,
 					Disponibility = updatedCommercial.Value.Disponibility,
-					BasePostId = updatedCommercial.Value.BasePostId,
 					CommercialSpecificId = updatedCommercial.Value.CommercialSpecificId
 				}
 			};

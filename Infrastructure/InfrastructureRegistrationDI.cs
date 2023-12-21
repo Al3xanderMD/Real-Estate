@@ -26,20 +26,18 @@ namespace Infrastructure
                 (typeof(IAsyncRepository<>),
                 typeof(BaseRepository<>));
             services.AddScoped<IAddressRepository, AddressRepository>();
-            services.AddScoped<IAgentRepository, AgentRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
-            services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IBasePostRepository, BasePostRepository>();
             services.AddScoped<IPartitioningRepository, PartitioningRepository>();
-            services.AddScoped<IHouseTypeRepository, HouseTypeRepository>();
-            services.AddScoped<IHouseRepository, HouseRepository>();
             services.AddScoped<ILotRepository, LotRepository>();
             services.AddScoped<ILotClassificationRepository, LotClassificationRepository>();
+            services.AddScoped<IHotelPensionRepository, HotelPensionRepository>();
+            services.AddScoped<IHouseRepository, HouseRepository>();
+            services.AddScoped<IHouseTypeRepository, HouseTypeRepository>();
             services.AddScoped<ICommercialRepository, CommercialRepository>();
             services.AddScoped<ICommercialCategoryRepository, CommercialCategoryRepository>();
             services.AddScoped<ICommercialSpecificRepository, CommercialSpecificRepository>();
-            services.AddScoped<IHotelPensionRepository, HotelPensionRepository>();
-
+            services.AddScoped<IClientRepository, ClientRepository>();
 
             return services;
         }

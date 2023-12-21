@@ -2,8 +2,14 @@
 {
 	public class UpdateHouseDto
 	{
-		public Guid BasePostId { get; set; }
-		public int? RoomCount { get; set; }
+        public Guid BasePostId { get; set; }
+        public string UserId { get; set; } = default!;
+        public string TitlePost { get; set; } = default!;
+        public double Price { get; set; }
+        public Guid AddressId { get; set; }
+        public bool OfferType { get; set; }
+		public string Description { get; set; } = default!;
+        public int? RoomCount { get; set; }
 		public Guid HouseTypeId { get; set; }
 		public int? Comfort { get; set; }
 		public int? FloorCount { get; set; }
