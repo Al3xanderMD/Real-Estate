@@ -14,8 +14,6 @@
 	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
 	<link rel="stylesheet" href="css/styles.css" />
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&callback=initMap" async defer></script>
-	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </head>
 
 <PageTitle>Home</PageTitle>
@@ -36,7 +34,6 @@ else
 	private AuthenticationState authenticationState;
 	public bool isAuth { get; set; }
 	private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Space+Needle,Seattle+WA";
-
 
 	public async Task GetSessionUser()
 	{

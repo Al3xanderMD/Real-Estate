@@ -10,6 +10,7 @@
 @inject Blazored.SessionStorage.ISessionStorageService session
 @inject CustomStateProvider authStateProvider
 @inject ISnackbar Snackbar
+@inject IJSRuntime JSRuntime
 <head>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
@@ -17,14 +18,6 @@
 	<link rel="stylesheet" href="css/styles.css" />
 
 	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
-
-	<script>
-		const map = L.map('my-map').setView([48.1500327, 11.5753989], 10);
-		L.tileLayer('https://maps.geoapify.com/v1/tile/osm-bright-smooth/{z}/{x}/{y}.png?apiKey=YOUR_API_KEY', {
-			attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
-			maxZoom: 20, id: 'osm-bright'
-		}).addTo(map);
-	</script>
 </head>
 
 <PageTitle>Create Post</PageTitle>
@@ -49,15 +42,13 @@
 				</MudPaper>
 
 				<MudPaper Class="mud-elevation-4" Padding="16px">
-					<iframe width="600"
-							height="800"
-							style="border:0; height:400px; width:100%;"
+					<iframe style="border:0; height:400px !important; width:100% !important;"
 							loading="lazy"
 							allowfullscreen
 							referrerpolicy="no-referrer-when-downgrade"
 							src=@mapString>
 					</iframe>
-					<MudTextField @bind-Value="post.Address" Label="Address" OnKeyDown="GetMapUrl"/>
+					<MudTextField @ref="locationInput" @bind-Value="post.Address" TextChanged="GetMapUrl"/>
 				</MudPaper>
 
 				<MudPaper>
@@ -226,11 +217,6 @@
 		@*<Map height="200px" width="200px"></Map>*@
 
 	</MudContainer>
-	<MudContainer>
-		<MudGrid>
-
-		</MudGrid>
-	</MudContainer>
 </div>
 
 @code {
@@ -242,7 +228,8 @@
 	private string _dragClass = DefaultDragClass;
 	private readonly List<string> _fileNames = new();
 	private string apiKey = "AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk";
-	private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Space+Needle,Seattle+WA";
+	private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Iasi+Romania";
+	public MudTextField<string> locationInput;
 	public async Task GetSessionUser()
 	{
 		user = await session.GetItemAsync<UserInfo>("SessionUser");
@@ -308,12 +295,17 @@
 		Snackbar.Add("TODO: Upload your files!");
 	}
 
-	public void GetMapUrl(KeyboardEventArgs e)
+	public void GetMapUrl(string text)
 	{
-		if (e.Code == "Enter" || e.Code == "NumpadEnter")
+		string address_gen = text.Replace(" ", "+");
+		mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
 		{
-			string address_gen = post.Address.Replace(" ", "+");
-			mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
+			await JSRuntime.InvokeVoidAsync("initGooglePlacesAutocomplete", locationInput.InputReference.ElementReference);
 		}
 	}
 

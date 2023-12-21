@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
+using Microsoft.Extensions.DependencyInjection;
+
 using MudBlazor;
 using MudBlazor.Services;
 using RealEstate.App;
@@ -33,7 +35,6 @@ builder.Services.AddBlazoredLocalStorage(config =>
 });
 
 builder.Services.AddBlazoredSessionStorage();
-
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
