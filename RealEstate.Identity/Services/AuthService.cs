@@ -89,6 +89,12 @@ namespace RealEstate.Identity.Services
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
             }
+
+            authClaims.Add(new Claim("userId",user.Id!));
+            authClaims.Add(new Claim(ClaimTypes.Email, user.Email!));
+            authClaims.Add(new Claim(ClaimTypes.MobilePhone, user.PhoneNumber!));
+            authClaims.Add(new Claim(ClaimTypes.Name, user.Name!));
+
             string token = GenerateToken(authClaims);
             return (1, token);
         }

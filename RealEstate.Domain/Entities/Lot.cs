@@ -44,7 +44,7 @@ namespace RealEstate.Domain.Entities
                 return Result<Lot>.Failure("'Description' must not be empty");
 
 
-            return Result<Lot>.Success(new Lot(userId, titlePost, price, addressId, offerType,description, lotArea, streetFrontage, lotClassificationId));
+            return Result<Lot>.Success(new Lot(userId, titlePost, price, addressId, offerType, description, lotArea, streetFrontage, lotClassificationId));
         }
 
         public void AttachLotClassificationId(Guid lotClassificationId)

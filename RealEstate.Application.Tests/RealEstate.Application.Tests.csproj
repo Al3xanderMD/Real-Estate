@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -29,7 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
+    <Folder Include="Features\Commands\Create\" />
+    <Folder Include="Features\Commands\Delete\" />
+    <Folder Include="Features\Commands\" />
+    <Folder Include="Features\Commands\Update\" />
     <Folder Include="Models\" />
     <Folder Include="Responses\" />
     <Folder Include="Persistance\" />
