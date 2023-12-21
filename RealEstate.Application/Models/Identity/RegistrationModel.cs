@@ -4,6 +4,8 @@ namespace RealEstate.Application.Models.Identity
 {
     public class RegistrationModel
 	{
+        public string? Id { get; set; }
+
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }
 

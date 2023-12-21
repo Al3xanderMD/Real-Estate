@@ -35,7 +35,7 @@ namespace RealEstate.Identity.Services
             if (userExists != null)
                 return (0, "Username already exists");
 
-            ApplicationUser user = new ApplicationUser()
+            ApplicationUser? user = new ApplicationUser()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -48,12 +48,16 @@ namespace RealEstate.Identity.Services
             if (!createUserResult.Succeeded)
                 return (0, "User creation failed! Please check user details and try again.");
 
+            //I need to find created user and to add his id to model
+            user = await userManager.FindByNameAsync(model.Username);
+            model.Id = user.Id.ToString();
+
             if (!await roleManager.RoleExistsAsync(model.Role))
                 await roleManager.CreateAsync(new IdentityRole(model.Role));
 
             if (await roleManager.RoleExistsAsync(UserRoles.Client))
                 await userManager.AddToRoleAsync(user, model.Role);
-
+            
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = configuration["AppUrl"] + "/api/v1/Authentication/ConfirmEmail?email=" + user.Email + "&token=" + token;
             var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
