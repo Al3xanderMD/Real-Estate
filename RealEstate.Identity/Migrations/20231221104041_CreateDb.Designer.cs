@@ -12,7 +12,7 @@ using RealEstate.Identity;
 namespace RealEstate.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231219161516_CreateDb")]
+    [Migration("20231221104041_CreateDb")]
     partial class CreateDb
     {
         /// <inheritdoc />

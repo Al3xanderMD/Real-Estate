@@ -13,13 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealEstateContext))]
-<<<<<<<< HEAD:Infrastructure/Migrations/20231219162232_CreateRCDb.Designer.cs
-    [Migration("20231219162232_CreateRCDb")]
-    partial class CreateRCDb
-========
-    [Migration("20231218105634_Create")]
+    [Migration("20231221104425_Create")]
     partial class Create
->>>>>>>> 2a882f0f4c666fb42d83d900d08554f8d5186558:Infrastructure/Migrations/20231218105634_Create.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
