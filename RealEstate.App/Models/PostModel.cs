@@ -19,6 +19,7 @@
 		public float LotArea { get; set; }
 		public float Price { get; set; }
 		public List<string> ImageUrl { get; set; }
+		public string MainImageUrl { get; set; }
 		public string ContactEmail { get; set; }
 		public string ContactPhone { get; set; }
 		public string ContactName { get; set; }
@@ -27,6 +28,7 @@
 		public PostModel()
 		{
 			ImageUrl = new List<string>();
+			MainImageUrl = "";
 			BuildYear = DateTime.Now.Year;
 			Title = "Title";
 			Description = "Description";

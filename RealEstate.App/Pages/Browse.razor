@@ -13,24 +13,30 @@
 <PageTitle>Browse Properties</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-     <MudText Typo="Typo.h4" Style="text-align:center;">Find Properties</MudText>
+    <MudText Typo="Typo.h4" Style="text-align:center;font-family:Arial, Helvetica, sans-serif; margin:5px">Find Properties</MudText>
 
-    <MudStack Row="true" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center" Style="height:auto; border-radius:50px; overflow: hidden;">
-        @foreach (var property in GetHardcodedProperties())
-        {
-            <div style="width: 25%; padding: 10px;">
-                <MudPaper Elevation="3" Class="pa-16 ma-2">
-                    <div>
-                        <img src="@property.ImageUrl" alt="@property.Title" style="max-width: 100%; height: auto;" />
+    <MudStack Row="true" Spacing="3" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center" Style="height:auto; border-radius:50px; overflow: hidden;">
+        <div class="row">
+            @foreach (var property in GetHardcodedProperties())
+            {
+                <div class="col-md-3" style="padding: 5px;">
+                    <MudPaper Elevation="3" Class="pa-10 ma-2">
+                        <div>
+                            @* <MudImage Src="images/icon1.png" Alt="Propertunity Icon" Elevation="0" Width="64" Class="rounded-lg" /> *@
+                            <img src="@property.MainImageUrl" alt="@property.Title" style="max-width: 100%; height: auto;" />
+                        </div>
+                        <MudText Typo="Typo.h6">@property.Title</MudText>
+                            <MudText Typo="Typo.body2" Class="address-text" Style="font-family:Arial, Helvetica, sans-serif">@property.Address</MudText>
+                            <MudText Typo="Typo.body2" Class="price-text" Style="color: #265073; font-family:Arial, Helvetica, sans-serif">Price: @property.Price</MudText>
+                            <MudText Typo="Typo.body2" Class="room-count-text" Style="color: #2D9596; font-family:Arial, Helvetica, sans-serif">Rooms: @property.RoomCount</MudText>
+                        </MudPaper>
                     </div>
-                    <MudText Typo="Typo.h6">@property.Title</MudText>
-                    <MudText Typo="Typo.body2" Class="address-text">@property.Address</MudText>
-                        <MudText Typo="Typo.body2" Class="price-text" Style="@($"color:{Colors.Cyan.Darken3};")">Price: @property.Price</MudText>
-                        <MudText Typo="Typo.body2" Class="room-count-text" Style="@($"color:{Colors.Cyan.Darken2};")">Rooms: @property.RoomCount</MudText>
-                </MudPaper>
-            </div>
-        }
+            }
+        </div>
+
     </MudStack>
+
+
 </MudContainer>
 
 @code {
@@ -44,7 +50,7 @@
             Address = "123 Pine Street",
             Price = 250000,
             RoomCount = "3",
-            // ImageUrl = "path/to/cottage.jpg"
+            MainImageUrl = "images/prop.png"
         },
         new PostModel
         {
@@ -52,7 +58,7 @@
             Address = "789 Elm Avenue",
             Price = 400000,
             RoomCount = "2",
-            // ImageUrl = "path/to/apartment.jpg"
+            MainImageUrl = "images/prop.png"
         },
         new PostModel
         {
@@ -60,7 +66,55 @@
             Address = "456 Oak Lane",
             Price = 700,
             RoomCount = "5",
-            // ImageUrl = "path/to/villa.jpg"
+            MainImageUrl = "images/prop.png"
+        },
+         new PostModel
+        {
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            MainImageUrl = "images/prop.png"
+        },
+         new PostModel
+        {
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            MainImageUrl = "images/prop.png"
         },
     };
     }
