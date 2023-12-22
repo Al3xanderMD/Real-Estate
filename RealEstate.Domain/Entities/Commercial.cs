@@ -20,7 +20,7 @@ namespace RealEstate.Domain.Entities
             Disponibility = disponibility;
         }
 
-        private Commercial(CommercialSpecific commercialSpecific, Guid commercialSpecificId, double usefulSurface, DateTime disponibility,
+        public Commercial(CommercialSpecific commercialSpecific, Guid commercialSpecificId, double usefulSurface, DateTime disponibility,
             string userId, string titlePost, double price, Guid addressId, bool offerType, string description) 
             : this(userId, titlePost, price, addressId, offerType,description, commercialSpecificId, usefulSurface, disponibility)
         {

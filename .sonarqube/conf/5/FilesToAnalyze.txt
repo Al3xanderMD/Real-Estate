@@ -1,0 +1,12 @@
+﻿D:\Real-Estate\RealEstate.Identity\ApplicationDbContext.cs
+D:\Real-Estate\RealEstate.Identity\InfrastructureIdentityRegistrationDI.cs
+D:\Real-Estate\RealEstate.Identity\Migrations\20231220171645_initUsers.cs
+D:\Real-Estate\RealEstate.Identity\Migrations\20231220171645_initUsers.Designer.cs
+D:\Real-Estate\RealEstate.Identity\Migrations\ApplicationDbContextModelSnapshot.cs
+D:\Real-Estate\RealEstate.Identity\Models\ApplicationUser.cs
+D:\Real-Estate\RealEstate.Identity\Models\EmailConfiguration.cs
+D:\Real-Estate\RealEstate.Identity\Models\Message.cs
+D:\Real-Estate\RealEstate.Identity\Models\UserRoles.cs
+D:\Real-Estate\RealEstate.Identity\Services\AuthService.cs
+D:\Real-Estate\RealEstate.Identity\Services\EmailService.cs
+D:\Real-Estate\RealEstate.Identity\Services\IEmailService.cs

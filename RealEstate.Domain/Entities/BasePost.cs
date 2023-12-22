@@ -27,7 +27,7 @@ namespace RealEstate.Domain.Entities
 			Description = description;
 		}
 
-		private BasePost(string userId, string titlePost, double price, Guid addressId, Address address, bool offerType, string description) 
+		public BasePost(string userId, string titlePost, double price, Guid addressId, Address address, bool offerType, string description) 
 			: this(userId, titlePost, price, addressId, offerType, description)
 		{
 			Address = address;

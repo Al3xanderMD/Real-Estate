@@ -1,0 +1,15 @@
+﻿D:\Real-Estate\RealEstate.Domain\Common\AuditableEntity.cs
+D:\Real-Estate\RealEstate.Domain\Common\Result.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Address.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Apartment.cs
+D:\Real-Estate\RealEstate.Domain\Entities\BasePost.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Client.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Commercial.cs
+D:\Real-Estate\RealEstate.Domain\Entities\CommercialCategory.cs
+D:\Real-Estate\RealEstate.Domain\Entities\CommercialSpecific.cs
+D:\Real-Estate\RealEstate.Domain\Entities\HotelPension.cs
+D:\Real-Estate\RealEstate.Domain\Entities\House.cs
+D:\Real-Estate\RealEstate.Domain\Entities\HouseType.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Lot.cs
+D:\Real-Estate\RealEstate.Domain\Entities\LotClassification.cs
+D:\Real-Estate\RealEstate.Domain\Entities\Partitioning.cs

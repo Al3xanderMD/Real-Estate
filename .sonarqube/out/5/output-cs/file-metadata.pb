@@ -1,0 +1,16 @@
+C
+:D:\Real-Estate\RealEstate.Identity\ApplicationDbContext.csutf-8S
+JD:\Real-Estate\RealEstate.Identity\InfrastructureIdentityRegistrationDI.csutf-8R
+ID:\Real-Estate\RealEstate.Identity\Migrations\20231220171645_initUsers.csutf-8]
+RD:\Real-Estate\RealEstate.Identity\Migrations\20231220171645_initUsers.Designer.csutf-8]
+RD:\Real-Estate\RealEstate.Identity\Migrations\ApplicationDbContextModelSnapshot.csutf-8E
+<D:\Real-Estate\RealEstate.Identity\Models\ApplicationUser.csutf-8H
+?D:\Real-Estate\RealEstate.Identity\Models\EmailConfiguration.csutf-8=
+4D:\Real-Estate\RealEstate.Identity\Models\Message.csutf-8?
+6D:\Real-Estate\RealEstate.Identity\Models\UserRoles.csutf-8C
+:D:\Real-Estate\RealEstate.Identity\Services\AuthService.csutf-8D
+;D:\Real-Estate\RealEstate.Identity\Services\EmailService.csutf-8E
+<D:\Real-Estate\RealEstate.Identity\Services\IEmailService.csutf-8d
+YD:\Real-Estate\RealEstate.Identity\obj\Debug\net8.0\RealEstate.Identity.GlobalUsings.g.csutf-8m
+bD:\Real-Estate\RealEstate.Identity\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8b
+WD:\Real-Estate\RealEstate.Identity\obj\Debug\net8.0\RealEstate.Identity.AssemblyInfo.csutf-8

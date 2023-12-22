@@ -15,7 +15,7 @@ namespace RealEstate.Domain.Entities
             LotClassificationId = lotClassificationId;
         }
 
-        private Lot(LotClassification lotClassification, double lotArea,double streetFrontage, Guid lotClassificationId,
+        public Lot(LotClassification lotClassification, double lotArea,double streetFrontage, Guid lotClassificationId,
             string userId, string titlePost, double price, Guid addressId, bool offerType, string description) 
             : this (userId, titlePost, price, addressId, offerType,description, lotArea, streetFrontage, lotClassificationId)
         {
