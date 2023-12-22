@@ -234,10 +234,5 @@ namespace RealEstate.Application.Tests
 
             return mockRepository;
         }
-
-        internal static void ResetCommercialRepository()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
