@@ -2,6 +2,7 @@
 {
 	public class PostModel
 	{
+		public string Id { get; set; }
 		public string PropertyType { get; set; }
 		public bool OfferType { get; set; }
 		public string Title { get; set; }

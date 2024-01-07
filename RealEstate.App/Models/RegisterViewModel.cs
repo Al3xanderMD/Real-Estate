@@ -8,5 +8,13 @@
         public string phoneNumber { get; set; } = string.Empty;
         public string password { get; set; } = string.Empty;
         public string confirmPassword { get; set; } = string.Empty;
-    }
+        public string role { get; set; } = string.Empty;
+
+		public RegisterViewModel()
+		{
+            role = "User";
+		}
+	}
+
+    
 }

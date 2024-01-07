@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Identity", "Real
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F8D287E-1C7B-416B-A3F3-80ED8B57EB9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Application.Tests", "RealEstate.Application.Tests\RealEstate.Application.Tests.csproj", "{68B2CD08-EBA3-4551-9CCE-6FFE33872993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Application.Tests", "RealEstate.Application.Tests\RealEstate.Application.Tests.csproj", "{68B2CD08-EBA3-4551-9CCE-6FFE33872993}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

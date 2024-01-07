@@ -38,14 +38,14 @@ namespace RealEstate.App.Auth
                                 claims.Add(new Claim(ClaimTypes.Name, claim.Value));
                             }
                             //Console.WriteLine($"{claim.Type}: {claim.Value}");
-                            //claims.Add(new Claim(claim.Type, claim.Value));
+                            claims.Add(new Claim(claim.Type, claim.Value));
                         }
                     }
                     else
                     {
                         Console.WriteLine("jsonToken is null");
                     }
-                    //var claims = new[] { new Claim(ClaimTypes.Name, "user logged") };
+
                     identity = new ClaimsIdentity(claims, "Server authentication");
                 }
             }
@@ -83,6 +83,12 @@ namespace RealEstate.App.Auth
         public async Task ResetPassword(ResetPasswordViewModel resetPwParameters)
         {
             await authService.ResetPassword(resetPwParameters);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        public async Task FetchData(string id)
+        {
+            await authService.FetchData(id);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
     }

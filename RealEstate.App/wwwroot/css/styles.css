@@ -6,7 +6,7 @@
 .content-container {
     width: 80%;
     margin: auto;
-    margin-top: 10vw
+    margin-top: 100px;
 }
 
 .form-card {
@@ -138,4 +138,38 @@ a {
 .profile-element {
     width: 20%;
     color: aqua;
+}
+
+.page-footer {
+    width:100%;
+    margin : 0px;
+    max-width: 100%;
+    padding: 0px;
+    margin-top: 50px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-hr {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 2px;
+    color: #96CACB;
+}
+
+.footer-links {
+    width : 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-text-link {
+    font-size: 10px;
+    color: #5C7C96;
 }

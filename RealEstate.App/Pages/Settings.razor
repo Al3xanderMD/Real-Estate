@@ -1,6 +1,67 @@
 ﻿@page "/settings"
+@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
+@using RealEstate.App.Models
+@using RealEstate.App.Operations.Update
+@using RealEstate.App.Services
+
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject CustomStateProvider authStateProvider
+@inject UpdateService updater
+@inject NavigationManager navigationManager
 <h3>Settings</h3>
 
-@code {
+<div class="content-container">
+	<h1 class="text-center">Change profile details</h1>
 
+	@if (isLoaded)
+	{
+		<MudContainer>
+			<EditForm Model="@client" OnValidSubmit="HandleValidSubmit">
+				<MudPaper Class="mud-elevation-4" Padding="16px">
+					<MudStack Spacing="6" Justify="Justify.Center">
+						<MudTextField @bind-Value="client.name" Label="Name" />
+						<MudTextField @bind-Value="client.email" Label="Email" />
+						<MudTextField @bind-Value="client.phoneNumber" Label="Phone Number" />
+
+						<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+					</MudStack>
+				</MudPaper>
+			</EditForm>
+		</MudContainer>
+	}
+</div>
+
+@code {
+	public ClientDataViewModel client = new ClientDataViewModel();
+	private AuthenticationState authenticationState;
+	private bool isLoaded = false;
+	string id = "";
+
+	protected override async Task OnParametersSetAsync()
+	{
+		client = await localStorage.GetItemAsync<ClientDataViewModel>("clientData");
+		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+		isLoaded = true;
+	}
+
+	public async void HandleValidSubmit()
+	{
+		// try
+		// {
+			if (client != null)
+			{
+				Console.WriteLine(client.userId);
+				if (isLoaded)
+				{
+					await updater.UpdateClientData(client);
+					navigationManager.NavigateTo("/", forceLoad: true);
+				}
+			}
+		// catch (Exception ex)
+		// {
+		// 	Console.WriteLine($"An error occurred: {ex.Message}");
+		// }
+	}
 }

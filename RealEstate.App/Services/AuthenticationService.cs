@@ -4,6 +4,9 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Web;
 using Blazored.SessionStorage;
+using Newtonsoft.Json;
+using System;
+
 namespace RealEstate.App.Services
 {
     public class AuthenticationService : IAuthentificationService
@@ -34,15 +37,44 @@ namespace RealEstate.App.Services
 
         public async Task Register(RegisterViewModel registerRequest)
         {
-            var result = await httpClient.PostAsJsonAsync("api/v1/authentication/register?role=User", registerRequest);
+            var result = await httpClient.PostAsJsonAsync("api/v1/authentication/register", registerRequest);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
+            var content = await result.Content.ReadAsStringAsync();
+
+			var json = JsonConvert.DeserializeObject<RegisterResponseModel>(content);
+            
+            ClientViewModel clientRequest = new ClientViewModel
+            {
+				userId = json.id,
+				name = registerRequest.name,
+                username = json.username,
+				email = registerRequest.email,
+				phoneNumber = registerRequest.phoneNumber
+			};
+
+            await CreateClient(clientRequest);
+
+			Console.WriteLine("Register result: " + json.id);
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task ForgotPassword(ForgotPasswordViewModel forgotPwRequest)
+		public async Task CreateClient(ClientViewModel clientRequest)
+		{
+			var result = await httpClient.PostAsJsonAsync("api/v1/Client", clientRequest);
+			if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+			{
+				throw new Exception(await result.Content.ReadAsStringAsync());
+			}
+			var content = await result.Content.ReadAsStringAsync();
+
+			Console.WriteLine("Client create result: " + content);
+			result.EnsureSuccessStatusCode();
+		}
+
+		public async Task ForgotPassword(ForgotPasswordViewModel forgotPwRequest)
         {
             string link = "api/v1/authentication/forgotpassword?email=" + HttpUtility.UrlEncode(forgotPwRequest.Email);
 
@@ -68,9 +100,22 @@ namespace RealEstate.App.Services
 
         public async Task Logout()
         {
-            await tokenService.RemoveTokenAsync();
-            //var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
-            //result.EnsureSuccessStatusCode();
-        }
-    }
+			await tokenService.RemoveTokenAsync();
+			//var result = await httpClient.PostAsync("api/v1/authentication/logout", null);
+			//result.EnsureSuccessStatusCode();
+		}
+
+		public async Task FetchData(string id)
+		{
+			var result = await httpClient.GetAsync("api/v1/Client/" + id);
+			if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+			{
+				throw new Exception(await result.Content.ReadAsStringAsync());
+			}
+			var content = await result.Content.ReadAsStringAsync();
+
+			Console.WriteLine("Client data result: " + content);
+			result.EnsureSuccessStatusCode();
+		}
+	}
 }

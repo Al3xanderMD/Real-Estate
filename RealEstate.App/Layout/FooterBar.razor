@@ -1,13 +1,84 @@
-﻿@*
-<MudContainer MaxWidth="MaxWidth.Large">
-	<MudDivider />
-	<MudPaper Height="100px" Width="100%" Square="true" Class="mud-theme-primary"></MudPaper>
-	<MudDivider />
-	<MudStack Row="true">
+﻿
+@inject IJSRuntime JsRuntime;
 
+
+
+<MudContainer Class="page-footer">
+	<hr class="footer-hr" />
+
+	<MudStack Row="true" Justify="Justify.Center">
+		<MudButton>Agents</MudButton>
+		<MudButton>Help</MudButton>
+		<MudButton OnClick="@(() => BackToTop())">Back to top</MudButton>
+		<MudButton>About us</MudButton>
+		<MudButton>Terms of use</MudButton>
+		
+		
 	</MudStack>
-</MudContainer>
-*@
-@code {
 
+	<hr class="footer-hr" />
+
+	<div class="d-flex flex-grow-1 gap-4 footer-links">
+		<MudPaper Class="flex-none d-flex py-8" Width="10%" Elevation="0">
+			<MudStack Justify="Justify.Center">
+				<MudImage Src="images/icon1.png" Alt="Propertunity Icon" Elevation="0" Width="64" Class="rounded-lg" />
+				<MudText Typo="Typo.h6">Propertunity</MudText>
+				<NavLink href="about">Privacy Policy</NavLink>
+				<NavLink href="about">Legal</NavLink>
+			</MudStack>
+		</MudPaper>
+
+		<MudPaper Class="flex-1 d-flex py-8" Elevation="0"/>
+
+		<MudPaper Class="flex-none d-flex py-8" Width="auto" Elevation="0">
+			<MudStack>
+				<MudText Typo="Typo.h6">Contact</MudText>
+
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Email"></MudIcon>
+					propertunity@gmail.com
+				</MudText>
+				
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.LocalPhone"></MudIcon>
+					+40 768 000 000
+				</MudText>
+
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.LocationOn"></MudIcon>
+					Str. Lorem Ipsum, nr. 1, Bucuresti, Romania
+				</MudText>
+				
+			</MudStack>
+		</MudPaper>
+
+		<MudPaper Class="flex-none d-flex py-8" Width="auto" Elevation="0">
+			<MudStack>
+				<MudText Typo="Typo.h6">Follow us</MudText>
+
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Custom.Brands.Facebook"></MudIcon>
+					Facebook
+				</MudText>
+
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Custom.Brands.Twitter"></MudIcon>
+					Twitter
+				</MudText>
+
+
+				<MudText Class="footer-text-link">
+					<MudIcon Size="Size.Small" Icon="@Icons.Custom.Brands.Instagram"></MudIcon>
+					Instagram
+				</MudText>
+			</MudStack>
+		</MudPaper>
+	</div>
+</MudContainer>
+
+@code {
+	private async Task BackToTop()
+	{
+		await JsRuntime.InvokeVoidAsync("backToTop");
+	}
 }

@@ -1,8 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿@using RealEstate.App.Tools
+@inherits LayoutComponentBase
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+
+<head>
+    <link rel="stylesheet" href="css/styles.css?v=@MyTools.ver" />
+</head>
 
 <MudLayout>
     <NavBar/>
@@ -13,7 +18,7 @@
 </MudLayout>
 @code {
     bool _drawerOpen = true;
-
+    MyTools tool = new MyTools();
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;

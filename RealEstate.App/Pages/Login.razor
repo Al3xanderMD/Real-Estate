@@ -8,6 +8,7 @@
 @using RealEstate.App.Validators
 @using Microsoft.AspNetCore.Components.Forms
 @using MudBlazor
+@using RealEstate.App.Tools
 
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
@@ -21,10 +22,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css?v=@MyTools.ver" />
 
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </head>
+<DataLoader />
 
 <PageTitle>Login</PageTitle>
 

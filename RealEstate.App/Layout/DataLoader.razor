@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using RealEstate.App.Auth
+@using RealEstate.App.Models
+
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject CustomStateProvider authStateProvider
+@inject HttpClient httpClient
+
+@code {
+    private AuthenticationState authenticationState;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("DataLoader init");
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+        if (authenticationState.User.Identity.IsAuthenticated)
+        {
+            localStorage.SetItemAsync("isAuth", true);
+            await FetchDataAndStoreInLocalStorage();
+        }
+        else
+        {
+            localStorage.SetItemAsync("isAuth", false);
+        }
+    }
+
+    /*public async Task FetchDataAndStoreInLocalStorage()
+    {
+    ClientDataViewModel clientData;
+
+    if (authenticationState.User.Identity.IsAuthenticated)
+        {
+        // Make the API call
+        string id = authenticationState.User.FindFirst("userId").Value;
+
+        var result = await httpClient.GetAsync("https://localhost:7190/api/v1/Client/" + id); //make the link dynamic later
+        if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+            throw new Exception(await result.Content.ReadAsStringAsync());
+            } else 
+            {
+            var jsonString = await result.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonString);
+            clientData = JsonConvert.DeserializeObject<ClientDataViewModel>(jsonString);
+
+            await localStorage.SetItemAsync<ClientDataViewModel>("clientData",clientData);
+            Console.WriteLine("clientData stored ",clientData.email);
+        }
+
+    }
+    }*/
+
+    public async Task FetchDataAndStoreInLocalStorage()
+    {
+        if (authenticationState.User.Identity.IsAuthenticated)
+        {
+            // Make the API call
+            string id = authenticationState.User.FindFirst("userId").Value;
+            string jsonString = "";
+            var result = await httpClient.GetAsync("https://localhost:7190/api/v1/Client/" + id); //make the link dynamic later
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            } else
+            {
+                jsonString = await result.Content.ReadAsStringAsync();
+                Console.WriteLine(jsonString);
+                ClientDataViewModel clientData = JsonConvert.DeserializeObject<ClientDataViewModel>(jsonString);
+
+                await localStorage.SetItemAsync<ClientDataViewModel>("clientData", clientData);
+            }
+
+        }
+    }
+}

@@ -17,6 +17,7 @@ using RealEstate.App.Services;
 using RealEstate.App.Validators;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using RealEstate.App.Operations.Update;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -37,6 +38,10 @@ builder.Services.AddBlazoredLocalStorage(config =>
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<CustomStateProvider>();
+builder.Services.AddScoped<UpdateService>();
+builder.Services.AddScoped<FetchService>();
+builder.Services.AddScoped<CreateService>();
+builder.Services.AddScoped<PostBuilderService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
@@ -64,6 +69,21 @@ builder.Services.AddMudServices(config => //snackbar pop-ups config
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
+});
+
+builder.Services.AddHttpClient<IFetchService, FetchService>(client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
+});
+
+builder.Services.AddHttpClient<IUpdateService, UpdateService>(client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
+});
+
+builder.Services.AddHttpClient<IPostBuilderService, PostBuilderService>(client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7190/"); // 7165
 });
 
 await builder.Build().RunAsync();

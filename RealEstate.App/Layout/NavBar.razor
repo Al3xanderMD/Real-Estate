@@ -5,6 +5,7 @@
 @inject Blazored.SessionStorage.ISessionStorageService session
 @inject CustomStateProvider authStateProvider
 @inject NavigationManager navigationManager
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <MudAppBar Style=@($"background:{Colors.Grey.Lighten5};") Fixed="true">
     <div>
@@ -100,17 +101,20 @@
         {
             Console.WriteLine("navbar : " + authenticationState.User.Identity.Name);
             isAuth = true;
+            
         }
         else
         {
             Console.WriteLine("not authenticated navbar");
             isAuth = false;
         }
+        
     }
 
     public async Task Logout()
     {
         session.ClearAsync();
+        await localStorage.ClearAsync();
         await authStateProvider.Logout();
         user = new UserInfo();
         navigationManager.NavigateTo("/login", forceLoad: true);
