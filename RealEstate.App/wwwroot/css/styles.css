@@ -173,3 +173,16 @@ a {
     font-size: 10px;
     color: #5C7C96;
 }
+
+.browse-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.mud-layout {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}

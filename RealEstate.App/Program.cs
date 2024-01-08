@@ -65,6 +65,8 @@ builder.Services.AddMudServices(config => //snackbar pop-ups config
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 
+builder.Services.AddSingleton<ISnackbar, SnackbarService>();
+
 
 builder.Services.AddHttpClient<IAuthentificationService, AuthenticationService>(client =>
 {

@@ -23,85 +23,92 @@
 
 <PageTitle>Profile</PageTitle>
 
-@if (isLoaded) 
+@if (isLoaded)  @* Please, for the love of God transfer the styles to .css *@
 {
+
 	<MudContainer MaxWidth="MaxWidth.ExtraLarge">
 		<MudText Typo="Typo.h3" Style="text-align:center;">Profile</MudText>
-		<MudStack Row="true" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center" Style="height:800px;">
-			<MudStack Style="width:20%;">
-				<div>
-					<MudText Typo="Typo.h5">Last browsed</MudText>
-					<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
-						<MudCarouselItem Transition="@transition" Color="@Color.Primary">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-						<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-						<MudCarouselItem Transition="@transition">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-					</MudCarousel>
-					<MudButton Variant="Variant.Text">See all</MudButton>
-				</div>
+		<MudGrid Justify="Justify.SpaceEvenly">
+			<MudItem xs="12" sm="12" md="4" lg="4">
+				<MudPaper Elevation="3" Style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+					<MudStack AlignItems="AlignItems.Center">
+						<MudImage Src="images/default-icon.jpg" Style="height:100px; width:auto;" Alt="Profile picture" Elevation="25" Class="rounded-lg" />
+						<MudText Typo="Typo.h5">@authenticationState.User.Identity.Name</MudText>
+						<MudText>@client.name</MudText>
+						<MudText>@client.email</MudText>
+						<MudText>@client.phoneNumber</MudText>
+					</MudStack>
+				</MudPaper>
+			</MudItem>
 
-				<div>
-					<MudText Typo="Typo.h5">Saved Properties</MudText>
-					<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
-						<MudCarouselItem Transition="@transition" Color="@Color.Primary">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-						<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-						<MudCarouselItem Transition="@transition">
-							<div class="d-flex" style="height:100%">
-								<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
-							</div>
-						</MudCarouselItem>
-					</MudCarousel>
-					<MudButton Variant="Variant.Text">See all</MudButton>
-				</div>
-			</MudStack>
-
-			<MudStack Style="width:20%;" AlignItems="AlignItems.Center">
-				<MudLink Style="width:100%; text-decoration:none;" Href="settings">
-					<MudPaper Class="pa-16 ma-2" Elevation="3">
-						<MudIcon Icon="@Icons.Material.Filled.Person"></MudIcon>
-						Profile
-					</MudPaper>
-				</MudLink>
-
-				<MudLink Style="width:100%; text-decoration:none;" Href="/">
-					<MudPaper Class="pa-16 ma-2" Elevation="3">
-						<MudIcon Icon="@Icons.Material.Filled.Notifications"></MudIcon>
-						Notifications
-					</MudPaper>
-				</MudLink>
-			</MudStack>
-		
-		
-			<MudPaper Style="width:20%; padding:20px;" Elevation="3">
+			<MudItem xs="12" sm="12" md="4" lg="4">
 				<MudStack AlignItems="AlignItems.Center">
-					<MudImage Src="images/default-icon.jpg" Style="height:100px; width:auto;" Alt="Profile picture" Elevation="25" Class="rounded-lg" />
-					<MudText Typo="Typo.h5">@authenticationState.User.Identity.Name</MudText>
-					<MudText>@client.name</MudText>
-					<MudText>@client.email</MudText>
-					<MudText>@client.phoneNumber</MudText>
+					<MudLink Style="width:100%; text-decoration:none; text-align:center;" Href="settings">
+						<MudPaper Class="pa-16 ma-2" Elevation="3">
+							<MudIcon Icon="@Icons.Material.Filled.Person"></MudIcon>
+							Profile
+						</MudPaper>
+					</MudLink>
+
+					<MudLink Style="width:100%; text-decoration:none; text-align:center;" Href="/">
+						<MudPaper Class="pa-16 ma-2" Elevation="3">
+							<MudIcon Icon="@Icons.Material.Filled.Notifications"></MudIcon>
+							Notifications
+						</MudPaper>
+					</MudLink>
 				</MudStack>
-			</MudPaper>
-		
-		</MudStack>
+			</MudItem>
+
+			<MudItem xs="12" sm="12" md="4" lg="4">
+				<MudStack>
+					<div>
+						<MudText Typo="Typo.h5">Last browsed</MudText>
+						<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
+							<MudCarouselItem Transition="@transition" Color="@Color.Primary">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+							<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+							<MudCarouselItem Transition="@transition">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+						</MudCarousel>
+						<MudButton Variant="Variant.Text">See all</MudButton>
+					</div>
+
+					<div>
+						<MudText Typo="Typo.h5">Saved Properties</MudText>
+						<MudCarousel Style="height:200px;" Class="mud-width-full" ShowArrows="true" ShowBullets="false" EnableSwipeGesture="false" AutoCycle="false" TData="object">
+							<MudCarouselItem Transition="@transition" Color="@Color.Primary">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+							<MudCarouselItem Transition="@transition" Color="@Color.Secondary">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+							<MudCarouselItem Transition="@transition">
+								<div class="d-flex" style="height:100%">
+									<MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+								</div>
+							</MudCarouselItem>
+						</MudCarousel>
+						<MudButton Variant="Variant.Text">See all</MudButton>
+					</div>
+				</MudStack>
+			</MudItem>
+
+			
+		</MudGrid>
 	</MudContainer>
 }
 

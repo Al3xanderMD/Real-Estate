@@ -18,7 +18,7 @@ namespace RealEstate.App.Services
 			return apartmentPost;
 		}
 
-		public CommercialViewModel BuildCommercialPost(CommercialViewModel commercialPost, BasePostViewModel basePost, Dictionary<string, string> extraValues, DateTime? date)
+		public CommercialViewModel BuildCommercialPost(CommercialViewModel commercialPost, BasePostViewModel basePost, Dictionary<string, string> extraValues, DateTime date)
 		{
 			commercialPost.price = basePost.price;
 			commercialPost.titlePost = basePost.title;
@@ -26,7 +26,7 @@ namespace RealEstate.App.Services
 			commercialPost.offerType = SetOfferType(basePost.offerType);
 			commercialPost.addressId = basePost.addressId;
 			commercialPost.commercialSpecificId = extraValues[basePost.extraFieldValue];
-			commercialPost.disponibility = (DateTime)date;
+			commercialPost.disponibility = (DateTime)date.ToUniversalTime();
 
 			return commercialPost;
 		}

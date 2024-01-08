@@ -39,7 +39,7 @@
 			<EditForm Model="@post" OnValidSubmit="HandleValidSubmit">
 				<MudStack Spacing="6" Justify="Justify.Center">
 					<MudPaper Class="mud-elevation-4" Padding="16px">
-						<MudSelect T="string" @bind-Value="basePost.postType" Label="Property Type" AnchorOrigin="Origin.BottomCenter">
+						<MudSelect T="string" @bind-Value="basePost.postType" Label="Property Type" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="OfferTypeChanged">
 							<MudSelectItem Value="@("Apartment")" /> <!-- Make dynamic later -->
 							<MudSelectItem Value="@("House")" />
 							<MudSelectItem Value="@("Lot")" />
@@ -51,7 +51,7 @@
 						<MudTextField T="string" @bind-Value="basePost.description" Lines="10" Label="Description" />
 						<MudTextField @bind-Value="basePost.price" Label="Amount" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.EuroSymbol" />
 						<MudSelect T="string" @bind-Value="basePost.offerType" Label="Offer type" AnchorOrigin="Origin.BottomCenter">
-							<MudSelectItem Value="@("Renting")" />
+							@* <MudSelectItem Value="@("Renting")" /> *@
 							<MudSelectItem Value="@("Selling")" />
 						</MudSelect>
 					</MudPaper>
@@ -71,6 +71,14 @@
 
 								<MudSelect T="int" Label="Room count" @bind-Value="apartment.roomCount" Required="true">
 									@for (int i = 1; i <= 10; i++)
+									{
+										<MudSelectItem Value=@i />
+									}
+
+								</MudSelect>
+
+								<MudSelect T="int" Label="Comfort" @bind-Value="apartment.comfort" Required="true">
+									@for (int i = 1; i <= 5; i++)
 									{
 										<MudSelectItem Value=@i />
 									}
@@ -145,7 +153,7 @@
 								break;
 							case "Commercial":
 								@* Commercial *@
-								<MudDatePicker Label="Available starting" @bind-Date="date" />
+								<MudDatePicker Label="Available starting" @bind-Date="date"/>
 
 								<MudSelect T="string" SelectedValuesChanged="CategoryChanged" @bind-Value="categorySelect" Label="Commercial classification" Clearable="true" Required="true">
 									@foreach (CommercialCategoryViewModel category in commercialClassifications)
@@ -252,14 +260,14 @@
 						</MudStack>
 					</MudPaper>
 
-					<MudPaper Class="mud-elevation-4" Padding="16px">
-						@* Contact info *@
+					@* <MudPaper Class="mud-elevation-4" Padding="16px">
+						//Contact info 
 						<MudTextField @bind-Value="post.ContactName" Label="Contact Name" Variant="Variant.Text" Adornment="Adornment.Start" />
 						<MudTextField @bind-Value="post.ContactPhone" Label="Contact Phone" Variant="Variant.Text" Adornment="Adornment.Start" />
 						<MudTextField @bind-Value="post.ContactEmail" Label="Contact Email" Variant="Variant.Text" Adornment="Adornment.Start" />
-					</MudPaper>
+					</MudPaper> *@
 
-					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled">Submit</MudButton>
+				<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" @onkeypress:preventDefault>Submit</MudButton>
 				</MudStack>
 			</EditForm>
 			@*<Map height="200px" width="200px"></Map>*@
@@ -309,6 +317,7 @@
 
 	async Task HandleValidSubmit()
 	{
+		Console.WriteLine("submitting??");
 		address.url = "google.com";
 		Console.WriteLine("submitting " + address.addressName + " " + address.url);
 		var addressId = await createService.CreateAddress(address);
@@ -322,45 +331,60 @@
 			Console.WriteLine("ExtraFieldValues "+val.Key + " " + val.Value);
 		}
 
-		if (basePost.postType == "Apartment")
+		if (extraFieldValues.Count != 0 && basePost.extraFieldValue != "")
 		{
-			Console.WriteLine("asd");// await CreateApartment();
-			apartment.userId = user.userId;
-			apartment = postBuilderService.BuildApartmentPost(apartment, basePost, extraFieldValues);
-			await createService.CreateApartment(apartment);
-		}
-		else if (basePost.postType == "House")
-		{
-			house.userId = user.userId;
-			house = postBuilderService.BuildHousePost(house, basePost, extraFieldValues);
-			await createService.CreateHouse(house);
+			if (basePost.postType == "Apartment")
+			{
+				Console.WriteLine("asd");// await CreateApartment();
+				apartment.userId = user.userId;
+				apartment = postBuilderService.BuildApartmentPost(apartment, basePost, extraFieldValues);
+				await createService.CreateApartment(apartment);
+			}
+			else if (basePost.postType == "House")
+			{
+				house.userId = user.userId;
 
-		}
-		else if (basePost.postType == "Commercial")
-		{
-			commercial.userId = user.userId;
-			commercial = postBuilderService.BuildCommercialPost(commercial, basePost, extraFieldValues, date);
-			await createService.CreateCommercial(commercial);
+				house = postBuilderService.BuildHousePost(house, basePost, extraFieldValues);
+				await createService.CreateHouse(house);
 
+			}
+			else if (basePost.postType == "Commercial")
+			{
+				commercial.userId = user.userId;
+				commercial = postBuilderService.BuildCommercialPost(commercial, basePost, extraFieldValues, (DateTime)date);
+				await createService.CreateCommercial(commercial);
+
+			}
+			else if (basePost.postType == "Lot")
+			{
+				lot.userId = user.userId;
+				lot = postBuilderService.BuildLotPost(lot, basePost, extraFieldValues);
+				await createService.CreateLot(lot);
+			}
+			else if (basePost.postType == "Hotel/Pension")
+			{
+				hotelPension.userId = user.userId;
+				hotelPension = postBuilderService.BuildHotelPensionPost(hotelPension, basePost);
+				await createService.CreateHotelPension(hotelPension);
+			};
 		}
-		else if (basePost.postType == "Lot")
+		else
 		{
-			lot.userId = user.userId;
-			lot = postBuilderService.BuildLotPost(lot, basePost, extraFieldValues);
-			await createService.CreateLot(lot);
+			
+		Snackbar.Add("Please select a category and it's specifics", Severity.Error);
 		}
-		else if (basePost.postType == "Hotel/Pension")
-		{
-			hotelPension.userId = user.userId;
-			hotelPension = postBuilderService.BuildHotelPensionPost(hotelPension, basePost);
-			await createService.CreateHotelPension(hotelPension);
-		};
-		
 	}
 
 	public void CategoryChanged()
 	{
 		Console.WriteLine("category changed " + categorySelect);
+		basePost.extraFieldValue = "";
+	}
+
+	public void OfferTypeChanged()
+	{
+		Console.WriteLine("offer type changed " + basePost.postType);
+		basePost.extraFieldValue = "";
 	}
 
 	public async Task Logout()
@@ -425,6 +449,11 @@
 		}
 	}
 
+	public void attachDate(DateTime time)
+	{
+		time.ToUniversalTime();
+	}
+
 	private void Upload()
 	{
 		// Upload the files here
@@ -434,6 +463,7 @@
 
 	public void GetMapUrl(string text)
 	{
+		if (text =="" || text == " ") text = "Romania";
 		string address_gen = text.Replace(" ", "+");
 		mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
 	}

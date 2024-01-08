@@ -4,6 +4,7 @@
 @using RealEstate.App.Auth
 @using RealEstate.App.Data
 @using RealEstate.App.Services
+@using RealEstate.App.Tools
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -16,7 +17,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="css/styles.css?v=1.02" />
+	<link rel="stylesheet" href="css/styles.css?v=@MyTools.ver" />
 </head>
 <DataLoader />
 

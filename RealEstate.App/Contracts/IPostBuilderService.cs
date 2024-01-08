@@ -7,7 +7,7 @@ namespace RealEstate.App.Contracts
 	{
 		bool SetOfferType(string offerType);
 		ApartmentViewModel BuildApartmentPost(ApartmentViewModel apartmentPost, BasePostViewModel basePost, Dictionary<string,string> extraValues);
-		CommercialViewModel BuildCommercialPost(CommercialViewModel commercialPost, BasePostViewModel basePost, Dictionary<string, string> extraValues, DateTime? date);
+		CommercialViewModel BuildCommercialPost(CommercialViewModel commercialPost, BasePostViewModel basePost, Dictionary<string, string> extraValues, DateTime date);
 		HotelPensionViewModel BuildHotelPensionPost(HotelPensionViewModel hotelPensionPost, BasePostViewModel basePost);
 		HouseViewModel BuildHousePost(HouseViewModel housePost, BasePostViewModel basePost, Dictionary<string, string> extraValues);
 		LotViewModel BuildLotPost(LotViewModel lotPost, BasePostViewModel basePost, Dictionary<string, string> extraValues);

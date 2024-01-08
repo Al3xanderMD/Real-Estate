@@ -1,0 +1,134 @@
+﻿@page "/browse"
+@using RealEstate.App.Data
+@using RealEstate.App.Models
+@using RealEstate.App.Tools
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css?v=@MyTools.ver" />
+</head>
+
+<PageTitle>Browse Properties</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Typo="Typo.h4" Style="text-align:center;font-family:Arial, Helvetica, sans-serif; margin:5px">Find Properties</MudText>
+
+    <MudGrid Justify="Justify.SpaceEvenly">
+        <div class="row">
+            @foreach (var property in GetHardcodedProperties())
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudCard Class="browse-card" Elevation="1">
+						<MudCardMedia Image="@property.MainImageUrl" />
+						<MudCardContent>
+							<MudText Typo="Typo.h5">@property.Title</MudText>
+							<MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Euro" />@property.Price</MudText>
+							@* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
+						</MudCardContent>
+						<MudCardActions>
+							<MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+							<MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+						</MudCardActions>
+					</MudCard>
+                </MudItem>
+            }
+        </div>
+    </MudGrid>
+
+
+</MudContainer>
+
+@code {
+    private List<PostModel> GetHardcodedProperties()
+    {
+        return new List<PostModel>
+    {
+        new PostModel
+        {
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            MainImageUrl = "https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            MainImageUrl = "images/prop.png"
+        },
+         new PostModel
+        {
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            MainImageUrl = "images/prop.png"
+        },
+         new PostModel
+        {
+            Title = "Cozy Cottage",
+            Address = "123 Pine Street",
+            Price = 250000,
+            RoomCount = "3",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Modern Apartment",
+            Address = "789 Elm Avenue",
+            Price = 400000,
+            RoomCount = "2",
+            MainImageUrl = "images/prop.png"
+        },
+        new PostModel
+        {
+            Title = "Spacious Villa",
+            Address = "456 Oak Lane",
+            Price = 700,
+            RoomCount = "5",
+            MainImageUrl = "images/prop.png"
+        },
+    };
+    }
+
+    // private List<PropertyInfo> GetHardcodedProperties()
+    // {
+    //     Replace this with your actual data retrieval logic or use hardcoded data
+    //     return new List<PropertyInfo>
+    //     {
+    //         new PropertyInfo { Name = "House 1", Address = "123 Main St", Price = "$500,000", NumberOfRooms = 4, MainPhotoUrl = "path/to/photo1.jpg" },
+    //         new PropertyInfo { Name = "Apartment 1", Address = "456 Oak Ave", Price = "$300,000", NumberOfRooms = 2, MainPhotoUrl = "path/to/photo2.jpg" },
+    //         Add more properties as needed
+    //     };
+    // }
+}
