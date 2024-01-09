@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Addresses\Commands\CreateAddress\" />
+    <Folder Include="Features\Posts\Queries\GetByIds\" />
   </ItemGroup>
 
   <ItemGroup>

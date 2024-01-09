@@ -29,6 +29,7 @@ namespace RealEstate.Application.Features.Houses.Commands.CreateHouse
             var house = House.Create(request.UserId, request.TitlePost, request.Price, request.AddressId, request.OfferType, request.Description,
                 request.RoomCount, request.FloorCount, request.UsefulSurface, request.LotArea, request.BuildYear, request.HouseTypeId);
 
+
             if (!house.IsSuccess)
             {
                 return new CreateHouseCommandResponse

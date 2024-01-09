@@ -26,6 +26,7 @@ namespace Infrastructure
                 (typeof(IAsyncRepository<>),
                 typeof(BaseRepository<>));
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<IBasePostRepository, BasePostRepository>();
             services.AddScoped<IPartitioningRepository, PartitioningRepository>();
