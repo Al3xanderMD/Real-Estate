@@ -43,37 +43,37 @@
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" @bind-Value="registerRequest.email" id="email" type="email" Label="Enter email"></MudTextField>
 
-                <div class="error-msg auth-message">@emailError</div>
+               @*  <div class="error-msg auth-message">@emailError</div> *@
             </div>
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" id="username" @bind-Value="registerRequest.username" type="name" Label="Username"></MudTextField>
                 
-                <div class="error-msg auth-message">@usernameError</div>
+               @*  <div class="error-msg auth-message">@usernameError</div> *@
             </div>
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" id="name" @bind-Value="registerRequest.name" type="name" Label="Name"></MudTextField>
 
-                <div class="error-msg auth-message">@nameError</div>
+                @* <div class="error-msg auth-message">@nameError</div> *@
             </div>
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" id="phone" @bind-Value="registerRequest.phoneNumber" type="phone" Label="Phone number"></MudTextField>
 
-                <div class="error-msg auth-message">@phoneNumberError</div>
+                @* <div class="error-msg auth-message">@phoneNumberError</div> *@
             </div>
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" id="password" @bind-Value="registerRequest.password" InputType="InputType.Password" Label="Password"></MudTextField>
 
-                <div class="error-msg auth-message">@passwordError</div>
+                @* <div class="error-msg auth-message">@passwordError</div> *@
             </div>
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" id="confirmPassword" @bind-Value="registerRequest.confirmPassword" InputType="InputType.Password" Label="Confirm password"></MudTextField>
 
-                <div class="error-msg auth-message">@confirmPasswordError</div>
+                @* <div class="error-msg auth-message">@confirmPasswordError</div> *@
             </div>
 
             <div class="password-suggestions">
@@ -142,6 +142,23 @@
                 else if (failure.PropertyName == "name" && nameError == null)
                     nameError = failure.ErrorMessage;
             }
+            if (!string.IsNullOrEmpty(emailError))
+                Snackbar.Add(emailError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(passwordError))
+                Snackbar.Add(passwordError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(confirmPasswordError))
+                Snackbar.Add(confirmPasswordError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(phoneNumberError))
+                Snackbar.Add(phoneNumberError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(usernameError))
+                Snackbar.Add(usernameError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(nameError))
+                Snackbar.Add(nameError, MudBlazor.Severity.Error);
         }
         else {
             try

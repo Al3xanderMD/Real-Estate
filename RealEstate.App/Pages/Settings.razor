@@ -1,14 +1,19 @@
 ﻿@page "/settings"
+@using FluentValidation
+@using FluentValidation.Results
 @using Microsoft.AspNetCore.Components.Authorization
 @using RealEstate.App.Auth
 @using RealEstate.App.Models
 @using RealEstate.App.Operations.Update
 @using RealEstate.App.Services
 
+@inject IValidator<ClientDataViewModel> Validator
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject CustomStateProvider authStateProvider
 @inject UpdateService updater
 @inject NavigationManager navigationManager
+@inject ISnackbar Snackbar
+
 <h3>Settings</h3>
 
 <div class="content-container">
@@ -21,9 +26,11 @@
 				<MudPaper Class="mud-elevation-4" Padding="16px">
 					<MudStack Spacing="6" Justify="Justify.Center">
 						<MudTextField @bind-Value="client.name" Label="Name" />
+						 <div class="error-msg auth-message">@nameError</div>
 						<MudTextField @bind-Value="client.email" Label="Email" />
+						
 						<MudTextField @bind-Value="client.phoneNumber" Label="Phone Number" />
-
+						 <div class="error-msg auth-message">@phoneNumberError</div>
 						<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
 					</MudStack>
 				</MudPaper>
@@ -37,6 +44,10 @@
 	private AuthenticationState authenticationState;
 	private bool isLoaded = false;
 	string id = "";
+	
+	string error { get; set; }
+	string nameError { get; set; }
+	string phoneNumberError { get; set; }
 
 	protected override async Task OnParametersSetAsync()
 	{
@@ -48,20 +59,49 @@
 
 	public async void HandleValidSubmit()
 	{
-		// try
-		// {
-			if (client != null)
+		ValidationResult results = Validator.Validate(client);
+		nameError = null;
+		phoneNumberError = null;
+
+
+		if (!results.IsValid)
+		{
+			foreach (var failure in results.Errors)
 			{
-				Console.WriteLine(client.userId);
-				if (isLoaded)
+				if (failure.PropertyName == "phoneNumber" && phoneNumberError == null)
+					phoneNumberError = failure.ErrorMessage;
+				else if (failure.PropertyName == "name" && nameError == null)
+					nameError = failure.ErrorMessage;
+			}
+
+
+			if (!string.IsNullOrEmpty(phoneNumberError))
+				Snackbar.Add(phoneNumberError, MudBlazor.Severity.Error);
+
+			if (!string.IsNullOrEmpty(nameError))
+				Snackbar.Add(nameError, MudBlazor.Severity.Error);
+		}
+		else
+		{
+			try
+			{
+				if (client != null)
 				{
-					await updater.UpdateClientData(client);
-					navigationManager.NavigateTo("/", forceLoad: true);
+					Console.WriteLine(client.userId);
+					if (isLoaded)
+					{
+						await updater.UpdateClientData(client);
+						navigationManager.NavigateTo("/", forceLoad: true);
+					}
 				}
 			}
-		// catch (Exception ex)
-		// {
-		// 	Console.WriteLine($"An error occurred: {ex.Message}");
-		// }
+			catch (Exception ex)
+			{
+
+				Console.WriteLine("Changing info failed.");
+				error = ex.Message;
+				Snackbar.Add(ex.Message, MudBlazor.Severity.Error);
+			}
+		}
 	}
 }

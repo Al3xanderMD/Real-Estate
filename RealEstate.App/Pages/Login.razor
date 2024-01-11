@@ -44,14 +44,14 @@
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" @bind-Value="loginRequest.Email" id="email" type="email" Label="Enter email"></MudTextField>
 
-                <div class="error-msg auth-message">@emailError</div>
+                @* <div class="error-msg auth-message">@emailError</div> *@
             </div>
 
 
             <div class="auth-input-div">
                 <MudTextField Variant="Variant.Text" @bind-Value="loginRequest.Password" id="password" InputType="InputType.Password" Label="Enter password"></MudTextField>
 
-                <div class="error-msg auth-message">@passwordError</div>
+                @* <div class="error-msg auth-message">@passwordError</div> *@
             </div>
 
             <div class="auth-forgot-password-div">
@@ -63,7 +63,7 @@
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
 
             <hr class="auth-hr">
-            <div class="auth-message">@error</div>
+            @* <div class="auth-message">@error</div> *@
         </EditForm>
     </div>
 </div>
@@ -102,6 +102,11 @@
                 else if (failure.PropertyName == "Password")
                     passwordError = failure.ErrorMessage;
             }
+            if (!string.IsNullOrEmpty(emailError))
+                Snackbar.Add(emailError, MudBlazor.Severity.Error);
+
+            if (!string.IsNullOrEmpty(passwordError))
+                Snackbar.Add(passwordError, MudBlazor.Severity.Error);
         }
         else
         {
