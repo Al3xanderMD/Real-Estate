@@ -26,11 +26,11 @@
 				<MudPaper Class="mud-elevation-4" Padding="16px">
 					<MudStack Spacing="6" Justify="Justify.Center">
 						<MudTextField @bind-Value="client.name" Label="Name" />
-						 <div class="error-msg auth-message">@nameError</div>
+						 @* <div class="error-msg auth-message">@nameError</div> *@
 						<MudTextField @bind-Value="client.email" Label="Email" />
 						
 						<MudTextField @bind-Value="client.phoneNumber" Label="Phone Number" />
-						 <div class="error-msg auth-message">@phoneNumberError</div>
+						@*  <div class="error-msg auth-message">@phoneNumberError</div> *@
 						<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
 					</MudStack>
 				</MudPaper>

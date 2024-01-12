@@ -18,6 +18,7 @@ using RealEstate.App.Validators;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using RealEstate.App.Operations.Update;
+using RealEstate.App.Operations.Fetch.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -49,6 +50,8 @@ builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<ForgotPasswordViewModel>, ForgotPasswordValidator>();
 builder.Services.AddScoped<IValidator<ResetPasswordViewModel>, ResetPasswordValidator>();
 builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
+builder.Services.AddScoped<IValidator<BasePostViewModel>, PostModelValidator>();
+builder.Services.AddScoped<IValidator<ClientDataViewModel>, ClientDataValidator>();
 
 builder.Services.AddMudServices();
 
@@ -56,10 +59,10 @@ builder.Services.AddMudServices(config => //snackbar pop-ups config
 {
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
 
-    config.SnackbarConfiguration.PreventDuplicates = false;
-    config.SnackbarConfiguration.NewestOnTop = false;
+    config.SnackbarConfiguration.PreventDuplicates = true;
+    config.SnackbarConfiguration.NewestOnTop = true;
     config.SnackbarConfiguration.ShowCloseIcon = true;
-    config.SnackbarConfiguration.VisibleStateDuration = 10000;
+    config.SnackbarConfiguration.VisibleStateDuration = 6000;
     config.SnackbarConfiguration.HideTransitionDuration = 500;
     config.SnackbarConfiguration.ShowTransitionDuration = 500;
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;

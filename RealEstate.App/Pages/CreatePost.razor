@@ -8,6 +8,7 @@
 @using RealEstate.App.Operations.Fetch.Models
 @using RealEstate.App.Operations.Fetch.Response
 @using RealEstate.App.Tools
+@using RealEstate.App.Validators
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -33,247 +34,247 @@
 
 <PageTitle>Create Post</PageTitle>
 
-	<div class="content-container">
-		<h1 class="text-center">Create a post</h1>
-		<MudContainer>
-			<EditForm Model="@post" OnValidSubmit="HandleValidSubmit">
-				<MudStack Spacing="6" Justify="Justify.Center">
-					<MudPaper Class="mud-elevation-4" Padding="16px">
-						<MudSelect T="string" @bind-Value="basePost.postType" Label="Property Type" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="OfferTypeChanged">
-							<MudSelectItem Value="@("Apartment")" /> <!-- Make dynamic later -->
-							<MudSelectItem Value="@("House")" />
-							<MudSelectItem Value="@("Lot")" />
-							<MudSelectItem Value="@("Commercial")" />
-							<MudSelectItem Value="@("Hotel/Pension")" />
-						</MudSelect>
+<div class="content-container">
+	<h1 class="text-center">Create a post</h1>
+	<MudContainer>
+		<EditForm Model="@post" OnValidSubmit="HandleValidSubmit">
+			<MudStack Spacing="6" Justify="Justify.Center">
+				<MudPaper Class="mud-elevation-4" Padding="16px">
+					<MudSelect T="string" @bind-Value="basePost.postType" Label="Property Type" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="OfferTypeChanged">
+						<MudSelectItem Value="@("Apartment")" /> <!-- Make dynamic later -->
+						<MudSelectItem Value="@("House")" />
+						<MudSelectItem Value="@("Lot")" />
+						<MudSelectItem Value="@("Commercial")" />
+						<MudSelectItem Value="@("Hotel/Pension")" />
+					</MudSelect>
 
-						<MudTextField @bind-Value="basePost.title" Label="Title" />
-						<MudTextField T="string" @bind-Value="basePost.description" Lines="10" Label="Description" />
-						<MudTextField @bind-Value="basePost.price" Label="Amount" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.EuroSymbol" />
-						<MudSelect T="string" @bind-Value="basePost.offerType" Label="Offer type" AnchorOrigin="Origin.BottomCenter">
-							@* <MudSelectItem Value="@("Renting")" /> *@
-							<MudSelectItem Value="@("Selling")" />
-						</MudSelect>
-					</MudPaper>
+					<MudTextField @bind-Value="basePost.title" Label="Title" />
+					<MudTextField T="string" @bind-Value="basePost.description" Lines="10" Label="Description" />
+					<MudTextField @bind-Value="basePost.price" Label="Amount" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.EuroSymbol" />
+					<MudSelect T="string" @bind-Value="basePost.offerType" Label="Offer type" AnchorOrigin="Origin.BottomCenter">
+						@* <MudSelectItem Value="@("Renting")" /> *@
+						<MudSelectItem Value="@("Selling")" />
+					</MudSelect>
+				</MudPaper>
 
-					<MudPaper Class="mud-elevation-4" Padding="16px">
-						@switch (basePost.postType)
-						{
-							case "Apartment":
-								@* Apartment *@
-								<MudSelect T="string" @bind-Value="basePost.extraFieldValue" Label="Partitioning type" Clearable="true" Required="true">
-									@foreach (ApartmentPartitioningViewModel? partition in apartmentPartitionings)
+				<MudPaper Class="mud-elevation-4" Padding="16px">
+					@switch (basePost.postType)
+					{
+						case "Apartment":
+							@* Apartment *@
+							<MudSelect T="string" @bind-Value="basePost.extraFieldValue" Label="Partitioning type" Clearable="true" Required="true">
+								@foreach (ApartmentPartitioningViewModel? partition in apartmentPartitionings)
+								{
+									<MudSelectItem Value="@partition.type" />
+									extraFieldValues.TryAdd(partition.type, partition.id); ;
+								}
+							</MudSelect>
+
+							<MudSelect T="int" Label="Room count" @bind-Value="apartment.roomCount" Required="true">
+								@for (int i = 1; i <= 10; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+
+							</MudSelect>
+
+							<MudSelect T="int" Label="Comfort" @bind-Value="apartment.comfort" Required="true">
+								@for (int i = 1; i <= 5; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+
+							</MudSelect>
+
+							<MudSelect T="int" Label="Build year" @bind-Value="apartment.buildYear" Required="true">
+								@for (int i = DateTime.Now.Year; i > 1900; i--)
+								{
+									<MudSelectItem Value=@i />
+								}
+
+							</MudSelect>
+
+							<MudSelect T="int" Label="Floor" @bind-Value="apartment.floor" Required="true">
+								@for (int i = 0; i <= 20; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+							</MudSelect>
+
+							<MudTextField T="float" @bind-Value="apartment.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							break;
+						case "House":
+							@* House *@
+							<MudSelect T="string" @bind-Value="basePost.extraFieldValue" Label="House type" Clearable="true" Required="true">
+								@foreach (HouseTypeViewModel? type in houseTypes)
+								{
+									<MudSelectItem Value="@type.type" />
+									extraFieldValues.TryAdd(type.type, type.id); ;
+								}
+							</MudSelect>
+
+							<MudSelect T="int" Label="Room count" @bind-Value="house.roomCount" Required="true">
+								@for (int i = 1; i < 10; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+							</MudSelect>
+
+							<MudSelect T="int" Label="Build year" @bind-Value="house.buildYear" Required="true">
+								@for (int i = DateTime.Now.Year; i > 1900; i--)
+								{
+									<MudSelectItem Value=@i />
+								}
+
+							</MudSelect>
+
+							<MudSelect T="int" Label="Floors" @bind-Value="house.floorCount" Required="true">
+								@for (int i = 1; i <= 5; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+							</MudSelect>
+
+							<MudTextField @bind-Value="house.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							<MudTextField @bind-Value="house.lotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							break;
+						case "Hotel/Pension":
+							@* Hotel/Pension *@
+
+							<MudSelect T="int" Label="Room count" @bind-Value="hotelPension.roomCount" Required="true">
+								@for (int i = 1; i <= 10; i++)
+								{
+									<MudSelectItem Value=@i />
+								}
+							</MudSelect>
+
+							<MudTextField @bind-Value="hotelPension.roomSurface" Label="Room surface" Variant="Variant.Text" Adornment="Adornment.Start" />
+							<MudTextField @bind-Value="hotelPension.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+
+							break;
+						case "Commercial":
+							@* Commercial *@
+							<MudDatePicker Label="Available starting" @bind-Date="date" />
+
+							<MudSelect T="string" SelectedValuesChanged="CategoryChanged" @bind-Value="categorySelect" Label="Commercial classification" Clearable="true" Required="true">
+								@foreach (CommercialCategoryViewModel category in commercialClassifications)
+								{
+									<MudSelectItem Value="@category.categoryName" />
+									extraFieldValues.TryAdd(category.categoryName, category.id);
+								}
+							</MudSelect>
+
+							<MudSelect T="string" Disabled=@hasSelectedCategory @bind-Value="basePost.extraFieldValue" Label="Commercial specific" Clearable="true" Required="true">
+
+								@if (categorySelect != "")
+								{
+									hasSelectedCategory = false;
+
+									foreach (CommercialSpecificViewModel specific in commercialSpecifics)
 									{
-										<MudSelectItem Value="@partition.type" />
-										extraFieldValues.TryAdd(partition.type, partition.id); ;
-									}
-								</MudSelect>
-
-								<MudSelect T="int" Label="Room count" @bind-Value="apartment.roomCount" Required="true">
-									@for (int i = 1; i <= 10; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-
-								</MudSelect>
-
-								<MudSelect T="int" Label="Comfort" @bind-Value="apartment.comfort" Required="true">
-									@for (int i = 1; i <= 5; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-
-								</MudSelect>
-
-								<MudSelect T="int" Label="Build year" @bind-Value="apartment.buildYear" Required="true">
-									@for (int i = DateTime.Now.Year; i > 1900; i--)
-									{
-										<MudSelectItem Value=@i />
-									}
-
-								</MudSelect>
-
-								<MudSelect T="int" Label="Floor" @bind-Value="apartment.floor" Required="true">
-									@for (int i = 0; i <= 20; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-								</MudSelect>
-
-								<MudTextField T="float" @bind-Value="apartment.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								break;
-							case "House":
-								@* House *@
-								<MudSelect T="string" @bind-Value="basePost.extraFieldValue" Label="House type" Clearable="true" Required="true">
-									@foreach (HouseTypeViewModel? type in houseTypes)
-									{
-										<MudSelectItem Value="@type.type" />
-										extraFieldValues.TryAdd(type.type, type.id); ;
-									}
-								</MudSelect>
-
-								<MudSelect T="int" Label="Room count" @bind-Value="house.roomCount" Required="true">
-									@for (int i = 1; i < 10; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-								</MudSelect>
-
-								<MudSelect T="int" Label="Build year" @bind-Value="house.buildYear" Required="true">
-									@for (int i = DateTime.Now.Year; i > 1900; i--)
-									{
-										<MudSelectItem Value=@i />
-									}
-
-								</MudSelect>
-
-								<MudSelect T="int" Label="Floors" @bind-Value="house.floorCount" Required="true">
-									@for (int i = 1; i <= 5; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-								</MudSelect>
-
-								<MudTextField @bind-Value="house.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								<MudTextField @bind-Value="house.lotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								break;
-							case "Hotel/Pension":
-								@* Hotel/Pension *@
-
-								<MudSelect T="int" Label="Room count" @bind-Value="hotelPension.roomCount" Required="true">
-									@for (int i = 1; i <= 10; i++)
-									{
-										<MudSelectItem Value=@i />
-									}
-								</MudSelect>
-
-								<MudTextField @bind-Value="hotelPension.roomSurface" Label="Room surface" Variant="Variant.Text" Adornment="Adornment.Start" />
-								<MudTextField @bind-Value="hotelPension.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-
-								break;
-							case "Commercial":
-								@* Commercial *@
-								<MudDatePicker Label="Available starting" @bind-Date="date"/>
-
-								<MudSelect T="string" SelectedValuesChanged="CategoryChanged" @bind-Value="categorySelect" Label="Commercial classification" Clearable="true" Required="true">
-									@foreach (CommercialCategoryViewModel category in commercialClassifications)
-									{
-										<MudSelectItem Value="@category.categoryName" />
-										extraFieldValues.TryAdd(category.categoryName, category.id);
-									}
-								</MudSelect>
-
-								<MudSelect T="string" Disabled=@hasSelectedCategory @bind-Value="basePost.extraFieldValue" Label="Commercial specific" Clearable="true" Required="true">
-									
-										@if (categorySelect != "")
+										if (specific.commercialCategoryId == extraFieldValues[categorySelect])
 										{
-											hasSelectedCategory = false;
-
-											foreach (CommercialSpecificViewModel specific in commercialSpecifics)
-											{
-												if (specific.commercialCategoryId == extraFieldValues[categorySelect])
-												{
-													<MudSelectItem Value="specific.specificName" />
-													extraFieldValues.TryAdd(specific.specificName, specific.commercialSpecificId);
-												}
-											}
+											<MudSelectItem Value="specific.specificName" />
+											extraFieldValues.TryAdd(specific.specificName, specific.commercialSpecificId);
 										}
-										else
-										{
-											hasSelectedCategory = true;
-										}
+									}
+								}
+								else
+								{
+									hasSelectedCategory = true;
+								}
 
-								</MudSelect>
+							</MudSelect>
 
-								<MudTextField @bind-Value="commercial.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								break;
-							case "Lot":
-								@* Lot *@
+							<MudTextField @bind-Value="commercial.usefulSurface" Label="Useful surface (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							break;
+						case "Lot":
+							@* Lot *@
 							<MudSelect T="string" @bind-Value="basePost.extraFieldValue" Label="Lot classification" Clearable="true" Required="true">
-									@foreach (LotClassificationViewModel lot in lotClassifications)
-									{
-										<MudSelectItem Value="@lot.type" />
+								@foreach (LotClassificationViewModel lot in lotClassifications)
+								{
+									<MudSelectItem Value="@lot.type" />
 									extraFieldValues.TryAdd(lot.type, lot.id);
-									}
-								</MudSelect>
-								<MudTextField @bind-Value="lot.streetFrontage" Label="Street frontage (m)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								<MudTextField @bind-Value="lot.lotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
-								break;
-						}
-					</MudPaper>
+								}
+							</MudSelect>
+							<MudTextField @bind-Value="lot.streetFrontage" Label="Street frontage (m)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							<MudTextField @bind-Value="lot.lotArea" Label="Lot area (m^2)" Variant="Variant.Text" Adornment="Adornment.Start" />
+							break;
+					}
+				</MudPaper>
 
-					<MudPaper Class="mud-elevation-4" Padding="16px">
-						<iframe style="border:0; height:400px !important; width:100% !important;"
-								loading="lazy"
-								allowfullscreen
-								referrerpolicy="no-referrer-when-downgrade"
-								src=@mapString>
-						</iframe>
-						<MudTextField @ref="locationInput" @bind-Value="address.addressName" TextChanged="GetMapUrl" />
-					</MudPaper>
+				<MudPaper Class="mud-elevation-4" Padding="16px">
+					<iframe style="border:0; height:400px !important; width:100% !important;"
+							loading="lazy"
+							allowfullscreen
+							referrerpolicy="no-referrer-when-downgrade"
+							src=@mapString>
+					</iframe>
+					<MudTextField @ref="locationInput" @bind-Value="address.addressName" TextChanged="GetMapUrl" />
+				</MudPaper>
 
-					<MudPaper>
-						<MudStack Style="width: 100%">
-							<MudFileUpload Context="post" T="IReadOnlyList<IBrowserFile>"
+				<MudPaper>
+					<MudStack Style="width: 100%">
+						<MudFileUpload Context="post" T="IReadOnlyList<IBrowserFile>"
 									   AppendMultipleFiles
-											   OnFilesChanged="OnInputFileChanged"
-											   Hidden="@false"
-											   InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
-											   InputStyle="opacity:0"
-											   @ondragenter="@SetDragClass"
-											   @ondragleave="@ClearDragClass"
-											   @ondragend="@ClearDragClass">
-									<ButtonTemplate>
-										<MudPaper Height="300px"
-												  Outlined="true"
-												  Class="@_dragClass">
-											<MudText Typo="Typo.h6">
-												Drag and drop files here or click
-											</MudText>
-											@foreach (var file in _fileNames)
-										{
-											<MudChip Color="Color.Dark" Text="@file" />
-										}
-									</MudPaper>
-									<MudToolBar DisableGutters="true"
-												Class="relative d-flex justify-end gap-4 z-30">
-										<MudButton HtmlTag="label"
-												   Color="Color.Primary"
-												   Variant="Variant.Filled">
-											Open file picker
-										</MudButton>
-										<MudButton OnClick="@Upload"
-												   Color="Color.Primary"
-												   Disabled="@(!_fileNames.Any())"
-												   Variant="Variant.Filled">
-											Upload
-										</MudButton>
-										<MudButton OnClick="@Clear"
-												   Color="Color.Error"
-												   Disabled="@(!_fileNames.Any())"
-												   Variant="Variant.Filled">
-											Clear
-										</MudButton>
-									</MudToolBar>
-								</ButtonTemplate>
-							</MudFileUpload>
-						</MudStack>
-					</MudPaper>
+										   OnFilesChanged="OnInputFileChanged"
+										   Hidden="@false"
+										   InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+										   InputStyle="opacity:0"
+										   @ondragenter="@SetDragClass"
+										   @ondragleave="@ClearDragClass"
+										   @ondragend="@ClearDragClass">
+								<ButtonTemplate>
+									<MudPaper Height="300px"
+											  Outlined="true"
+											  Class="@_dragClass">
+										<MudText Typo="Typo.h6">
+											Drag and drop files here or click
+										</MudText>
+										@foreach (var file in _fileNames)
+									{
+										<MudChip Color="Color.Dark" Text="@file" />
+									}
+								</MudPaper>
+								<MudToolBar DisableGutters="true"
+											Class="relative d-flex justify-end gap-4 z-30">
+									<MudButton HtmlTag="label"
+											   Color="Color.Primary"
+											   Variant="Variant.Filled">
+										Open file picker
+									</MudButton>
+									<MudButton OnClick="@Upload"
+											   Color="Color.Primary"
+											   Disabled="@(!_fileNames.Any())"
+											   Variant="Variant.Filled">
+										Upload
+									</MudButton>
+									<MudButton OnClick="@Clear"
+											   Color="Color.Error"
+											   Disabled="@(!_fileNames.Any())"
+											   Variant="Variant.Filled">
+										Clear
+									</MudButton>
+								</MudToolBar>
+							</ButtonTemplate>
+						</MudFileUpload>
+					</MudStack>
+				</MudPaper>
 
-					@* <MudPaper Class="mud-elevation-4" Padding="16px">
-						//Contact info 
-						<MudTextField @bind-Value="post.ContactName" Label="Contact Name" Variant="Variant.Text" Adornment="Adornment.Start" />
-						<MudTextField @bind-Value="post.ContactPhone" Label="Contact Phone" Variant="Variant.Text" Adornment="Adornment.Start" />
-						<MudTextField @bind-Value="post.ContactEmail" Label="Contact Email" Variant="Variant.Text" Adornment="Adornment.Start" />
-					</MudPaper> *@
+				@* <MudPaper Class="mud-elevation-4" Padding="16px">
+				//Contact info
+				<MudTextField @bind-Value="post.ContactName" Label="Contact Name" Variant="Variant.Text" Adornment="Adornment.Start" />
+				<MudTextField @bind-Value="post.ContactPhone" Label="Contact Phone" Variant="Variant.Text" Adornment="Adornment.Start" />
+				<MudTextField @bind-Value="post.ContactEmail" Label="Contact Email" Variant="Variant.Text" Adornment="Adornment.Start" />
+				</MudPaper> *@
 
 				<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" @onkeypress:preventDefault>Submit</MudButton>
-				</MudStack>
-			</EditForm>
-			@*<Map height="200px" width="200px"></Map>*@
+			</MudStack>
+		</EditForm>
+		@*<Map height="200px" width="200px"></Map>*@
 
-		</MudContainer>
-	</div>
+	</MudContainer>
+</div>
 
 
 @code {
@@ -290,7 +291,7 @@
 	private string apiKey = "AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk";
 	private string mapString = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q=Iasi+Romania";
 	public MudTextField<string> locationInput;
-	private string[] lots = { "Type A", "Type B"};
+	private string[] lots = { "Type A", "Type B" };
 	private DateTime? date = DateTime.Today;
 
 	private Dictionary<string, string> extraFieldValues = new Dictionary<string, string>();
@@ -303,7 +304,7 @@
 
 	private string postType = "";
 
-	private ApartmentViewModel apartment  = new ApartmentViewModel();
+	private ApartmentViewModel apartment = new ApartmentViewModel();
 	private HouseViewModel house = new HouseViewModel();
 	private CommercialViewModel commercial = new CommercialViewModel();
 	private LotViewModel lot = new LotViewModel();
@@ -313,6 +314,7 @@
 	ExtraFieldsViewModel extraFields = new ExtraFieldsViewModel();
 
 	private AddressViewModel address = new AddressViewModel();
+	private bool isPropertyTypeSelected = false;
 
 
 	async Task HandleValidSubmit()
@@ -320,6 +322,26 @@
 		Console.WriteLine("submitting??");
 		address.url = "google.com";
 		Console.WriteLine("submitting " + address.addressName + " " + address.url);
+
+		 if (!isPropertyTypeSelected)
+		{
+			Snackbar.Add("Please select a Property type", Severity.Error);
+			return;
+		}
+		var validator = new PostModelValidator();
+		var validationResult = validator.Validate(basePost);
+
+		if (!validationResult.IsValid)
+		{
+
+			foreach (var error in validationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+			{
+				Snackbar.Add(error.ErrorMessage, Severity.Error);
+			}
+			return;
+		}
+
+		isPropertyTypeSelected = true;
 		var addressId = await createService.CreateAddress(address);
 		Console.WriteLine("address id " + addressId);
 		basePost.addressId = addressId;
@@ -328,7 +350,7 @@
 
 		foreach (var val in extraFieldValues)
 		{
-			Console.WriteLine("ExtraFieldValues "+val.Key + " " + val.Value);
+			Console.WriteLine("ExtraFieldValues " + val.Key + " " + val.Value);
 		}
 
 		if (extraFieldValues.Count != 0 && basePost.extraFieldValue != "")
@@ -370,8 +392,7 @@
 		}
 		else
 		{
-			
-		Snackbar.Add("Please select a category and it's specifics", Severity.Error);
+			Snackbar.Add("Please select a category and it's specifics", Severity.Error);
 		}
 	}
 
@@ -385,6 +406,7 @@
 	{
 		Console.WriteLine("offer type changed " + basePost.postType);
 		basePost.extraFieldValue = "";
+		isPropertyTypeSelected = !string.IsNullOrEmpty(basePost.postType);
 	}
 
 	public async Task Logout()
@@ -463,7 +485,7 @@
 
 	public void GetMapUrl(string text)
 	{
-		if (text =="" || text == " ") text = "Romania";
+		if (text == "" || text == " ") text = "Romania";
 		string address_gen = text.Replace(" ", "+");
 		mapString = $"https://www.google.com/maps/embed/v1/place?key=AIzaSyAAaZMqlkwagX5OT8cvyoEEu14VJx--Kjk&q={address_gen}";
 	}

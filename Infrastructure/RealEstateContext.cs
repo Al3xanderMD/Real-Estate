@@ -31,11 +31,11 @@ namespace Infrastructure
         public DbSet<Client> Clients { get; set; }
 		public DbSet<Post> Posts { get; set; }
 
-		//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-  //      {
-  //          optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Database=RealEstateDB; User Id=postgres; Password=root;");
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Database=RealEstateDB; User Id=postgres; Password=postgres;");
 
-  //      }
+        //}
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {

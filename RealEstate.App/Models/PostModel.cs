@@ -9,7 +9,7 @@
 		public string Location { get; set; }
 		public string RoomCount { get; set; }
 		public string Floor { get; set; }
-		public int FloorCount { get; set; }
+		public string FloorCount { get; set; }
 		public int BuildYear { get; set; }
 		public float Area { get; set; }
 		public float UsefulSurface { get; set; }
