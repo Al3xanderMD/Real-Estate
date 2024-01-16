@@ -46,7 +46,7 @@ namespace RealEstate.Domain.Entities
                 return Result<Apartment>.Failure("'AddressId' must not be empty");
             if (roomCount <= 0)
                 return Result<Apartment>.Failure("'RoomCount' must be greater than 0");
-            if (comfort <= 0 || comfort > 4)
+            if (comfort <= 0 || comfort > 5)
                 return Result<Apartment>.Failure("'Comfort' must be greater than 0 and less than 5");
             if (floor <= 0)
                 return Result<Apartment>.Failure("'Floor' must be greater than 0");

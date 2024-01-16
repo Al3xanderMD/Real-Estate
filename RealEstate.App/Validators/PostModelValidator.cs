@@ -8,9 +8,9 @@ namespace RealEstate.App.Validators
 	{
 		public PostModelValidator()
 		{
-			RuleFor(x => x.postType)
-				.NotNull().WithMessage("Property type is required!")
-				.NotEqual(default(string)).WithMessage("Property type is required!");
+			//RuleFor(x => x.postType)
+			//	.NotNull().WithMessage("Property type is required!")
+			//	.NotEqual(default(string)).WithMessage("Property type is required!");
 
 			RuleFor(x => x.title)
 				.NotEmpty().WithMessage("Title is required!")
@@ -23,7 +23,6 @@ namespace RealEstate.App.Validators
 			RuleFor(x => x.price)
 				.NotEmpty().WithMessage("Price is required!")
 				.GreaterThan(0).WithMessage("Price must be greater than 0!");
-
 
 			//RuleFor(x => x.RoomCount)
 			//	.NotEmpty().WithMessage("Room count is required!");
