@@ -5,7 +5,6 @@ using RealEstate.Application.Features.Addresses.Queries.GetById;
 using RealEstate.Application.Persistence;
 using RealEstate.Domain.Common;
 using RealEstate.Domain.Entities;
-using System.Security.Cryptography.X509Certificates;
 
 namespace RealEstate.Application.Tests.Features.Queries.GetById
 {
@@ -19,7 +18,7 @@ namespace RealEstate.Application.Tests.Features.Queries.GetById
         }
 
         [Fact]
-        public async Task GetAddressByIdHandler_WithValidId_ReturnsAddress()
+        public async Task GetByIdAddressHandler_WithValidId_ReturnsAddress()
         {
             // Arrange
             var exceptedAddress = Address.Create("Test Url", "Test AddressName").Value;
@@ -41,7 +40,7 @@ namespace RealEstate.Application.Tests.Features.Queries.GetById
         }
 
         [Fact]
-        public async Task GetsByIdAddresHandler_WithInvalidId_ReturnsFailure()
+        public async Task GetByIdAddresHandler_WithInvalidId_ReturnsFailure()
         {
             // Arrange
             var invalidId = new Guid("a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5678");

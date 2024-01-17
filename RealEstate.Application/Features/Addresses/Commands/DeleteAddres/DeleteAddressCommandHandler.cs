@@ -16,7 +16,7 @@ namespace RealEstate.Application.Features.Addresses.Commands.DeleteAddres
         {
             var result = await repository.DeleteAsync(request.Id);
 
-            if(!result.IsSuccess)
+            if (!result.IsSuccess)
             {
                 return new DeleteAddressCommandResponse
                 {

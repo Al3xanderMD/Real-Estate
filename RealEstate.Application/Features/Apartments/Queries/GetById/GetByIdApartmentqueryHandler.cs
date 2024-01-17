@@ -3,11 +3,11 @@ using RealEstate.Application.Persistence;
 
 namespace RealEstate.Application.Features.Apartments.Queries.GetById
 {
-    public class GetByIdApartmentqueryHandler : IRequestHandler<GetByIdApartmentQuery, ApartmentDto>
+    public class GetByIdApartmentQueryHandler : IRequestHandler<GetByIdApartmentQuery, ApartmentDto>
     {
         private readonly IApartmentRepository repository;
 
-        public GetByIdApartmentqueryHandler(IApartmentRepository repository)
+        public GetByIdApartmentQueryHandler(IApartmentRepository repository)
         {
             this.repository = repository;
         }

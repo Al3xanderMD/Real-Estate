@@ -18,7 +18,7 @@ namespace RealEstate.Domain.Entities
             CommercialCategoryId = commercialCategoryId;
         }
 
-        private CommercialSpecific(CommercialCategory commercialCategory, Guid commercialCategoryId, string specificName) : this(specificName, commercialCategoryId)
+        public CommercialSpecific(CommercialCategory commercialCategory, Guid commercialCategoryId, string specificName) : this(specificName, commercialCategoryId)
         {
             CommercialCategory = commercialCategory;
         }

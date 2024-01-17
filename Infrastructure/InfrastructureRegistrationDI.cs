@@ -39,6 +39,7 @@ namespace Infrastructure
             services.AddScoped<ICommercialCategoryRepository, CommercialCategoryRepository>();
             services.AddScoped<ICommercialSpecificRepository, CommercialSpecificRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IFavouritesRepository, FavouritesRepository>();
 
             return services;
         }

@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F8D287E-1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Application.Tests", "RealEstate.Application.Tests\RealEstate.Application.Tests.csproj", "{68B2CD08-EBA3-4551-9CCE-6FFE33872993}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Domain.Tests", "RealEstate.Domain.Tests\RealEstate.Domain.Tests.csproj", "{C3149F4D-AFD6-411E-B377-E411C53875E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{68B2CD08-EBA3-4551-9CCE-6FFE33872993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68B2CD08-EBA3-4551-9CCE-6FFE33872993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68B2CD08-EBA3-4551-9CCE-6FFE33872993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3149F4D-AFD6-411E-B377-E411C53875E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3149F4D-AFD6-411E-B377-E411C53875E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3149F4D-AFD6-411E-B377-E411C53875E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3149F4D-AFD6-411E-B377-E411C53875E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{09ACE5BF-83FE-4FBD-9043-5DE4327DF987} = {6E4F37D1-42DB-4DDA-88D5-5A027BFFEC46}
 		{3D270069-87CE-4266-A30B-5A50BCA4C742} = {C0039889-772E-41A0-B95F-4971535F2A3C}
 		{68B2CD08-EBA3-4551-9CCE-6FFE33872993} = {8F8D287E-1C7B-416B-A3F3-80ED8B57EB9A}
+		{C3149F4D-AFD6-411E-B377-E411C53875E0} = {8F8D287E-1C7B-416B-A3F3-80ED8B57EB9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72CC4DE2-922D-4E76-98F2-8C0E816E2775}

@@ -18,7 +18,7 @@ namespace RealEstate.Domain.Entities
             HouseTypeId = houseTypeId;
         }
 
-        private House(HouseType houseType, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear, Guid houseTypeId,
+        public House(HouseType houseType, int roomCount, int floorCount, double usefulSurface, double lotArea, int buildYear, Guid houseTypeId,
             string userId, string titlePost, double price, Guid addressId, bool offerType, string description) 
             : this(userId, titlePost, price, addressId, offerType,description, roomCount, floorCount, usefulSurface, lotArea, buildYear, houseTypeId)
         {

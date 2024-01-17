@@ -181,7 +181,7 @@ namespace RealEstate.Application.Tests
             var predefinedHotelPensions = new List<HotelPension>
             {
                 HotelPension.Create(userId, "titlePost1", 1, address1.Id, true, "description1", 1, 1, 1).Value,
-                HotelPension.Create(userId, "titlePost2", 2, address2.Id, false, "description2", 2, 2, 2).Value,
+                HotelPension.Create(userId, "titlePost2", 2, address2.Id, true, "description2", 2, 2, 2).Value,
             };
 
             mockRepository.GetAllAsync().Returns(Task.FromResult(Result<IReadOnlyList<HotelPension>>.Success(predefinedHotelPensions)));

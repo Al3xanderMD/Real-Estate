@@ -19,7 +19,7 @@ namespace RealEstate.Domain.Entities
             PartitioningId = partitioningId;
         }
          
-        private Apartment(Partitioning partitioning, int roomCount, int comfort, int floor, double usefulSurface, int buildYear, Guid partitioningId, 
+        public Apartment(Partitioning partitioning, int roomCount, int comfort, int floor, double usefulSurface, int buildYear, Guid partitioningId, 
             string userId, string titlePost, double price, Guid addressId, bool offerType, string description)
             : this(userId, titlePost, price, addressId, offerType,description, roomCount, comfort, floor, usefulSurface, buildYear, partitioningId)
         {
