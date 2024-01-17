@@ -53,7 +53,7 @@ namespace RealEstate.Application.Features.Posts.Commands.UpdatePost
 				Success = true,
 				Post = new UpdatePostDto
 				{
-					PostId = updatedPost.Value.PostId,
+					PostId = updatedPost.Value.BasePostId,
 					Type = updatedPost.Value.Type
 				}
 			};

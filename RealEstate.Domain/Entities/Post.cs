@@ -10,14 +10,21 @@ namespace RealEstate.Domain.Entities
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; private set; }
-		public Guid PostId { get; private set; }
+		public Guid BasePostId { get; private set; }
+		public BasePost BasePost { get; private set; }
+
 		public string Type { get; private set; }
 
-		public Post(Guid postId,string type)
+		public Post(Guid basePostId,string type)
 		{
-			PostId = postId;
+			BasePostId = basePostId;
 			Type = type;
 		}
+
+		public Post(Guid basePostId, string type, BasePost basePost) : this(basePostId, type)
+		{
+            BasePost = basePost;
+        }
 
 		public void attachType(string type)
 		{
@@ -31,16 +38,16 @@ namespace RealEstate.Domain.Entities
 		{
 			if (postId != Guid.Empty)
 			{
-				this.PostId = postId;
+				this.BasePostId = postId;
 			}
 		}
 
-		public static Result<Post> Create(Guid postId, string type)
+		public static Result<Post> Create(Guid basePostId, string type)
 		{
 			if (string.IsNullOrWhiteSpace(type))
 				return Result<Post>.Failure("'Type' must not be empty");
 
-			return Result<Post>.Success(new Post(postId, type));
+			return Result<Post>.Success(new Post(basePostId, type));
 		}
 
 	}

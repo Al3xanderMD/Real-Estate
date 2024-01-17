@@ -22,15 +22,24 @@ namespace RealEstate.API.Controllers
 			return Ok(result);
 		}
 
-		[HttpGet]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetAll()
-		{
-			var result = await Mediator.Send(new GetAllPostsQuery());
-			return Ok(result);
-		}
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll(int start, int end)
+        {
+            var result = await Mediator.Send(new GetAllPostsQuery());
 
-		[HttpGet("{id}")]
+            if (result.Posts != null && result.Posts.Any())
+            {
+                var filteredPosts = result.Posts.Where(post => post.Id >= start && post.Id <= end).ToList();
+                return Ok(filteredPosts);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetById(int id)
 		{

@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealEstateContext))]
-    [Migration("20240109023621_init2")]
-    partial class init2
+    [Migration("20240117185000_Real1")]
+    partial class Real1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,6 +299,9 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid>("BasePostId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
@@ -311,14 +314,13 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasePostId");
 
                     b.ToTable("Posts");
                 });
@@ -452,6 +454,17 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("CommercialCategory");
+                });
+
+            modelBuilder.Entity("RealEstate.Domain.Entities.Post", b =>
+                {
+                    b.HasOne("RealEstate.Domain.Entities.BasePost", "BasePost")
+                        .WithMany()
+                        .HasForeignKey("BasePostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BasePost");
                 });
 
             modelBuilder.Entity("RealEstate.Domain.Entities.Apartment", b =>

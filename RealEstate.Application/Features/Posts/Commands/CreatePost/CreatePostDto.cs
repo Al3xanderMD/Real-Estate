@@ -1,8 +1,10 @@
-﻿namespace RealEstate.Application.Features.Posts.Commands.CreatePost
+﻿using RealEstate.Domain.Entities;
+
+namespace RealEstate.Application.Features.Posts.Commands.CreatePost
 {
 	public class CreatePostDto
 	{
-		public Guid PostId { get; set; }
-		public string Type { get; set; }
+		public Guid BasePostId { get; set; }
+		public string? Type { get; set; }
 	}
 }

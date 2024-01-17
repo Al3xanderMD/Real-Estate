@@ -19,7 +19,8 @@ namespace RealEstate.Application.Features.Posts.Queries.GetById
 			{
 				return new PostsDto
 				{
-					PostId = post.Value.PostId,
+					BasePostId = post.Value.BasePostId,
+					BasePost = post.Value.BasePost,
 					Type = post.Value.Type
 				};
 			}
