@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Forms\CreatePost\" />
+    <Folder Include="Components\" />
     <Folder Include="Operations\Create\Post\" />
     <Folder Include="Operations\Fetch\Commands\" />
     <Folder Include="Operations\Fetch\Queries\" />

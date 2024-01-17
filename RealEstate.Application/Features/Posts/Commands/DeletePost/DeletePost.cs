@@ -4,6 +4,6 @@ namespace RealEstate.Application.Features.Posts.Commands.DeletePost
 {
 	public class DeletePost : IRequest<DeletePostResponse>
 	{
-		public Guid PostId { get; set; }
+		public int Id { get; set; }
 	}
 }

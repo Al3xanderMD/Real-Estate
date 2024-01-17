@@ -32,7 +32,7 @@ namespace RealEstate.API.Controllers
 
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetById(Guid id)
+		public async Task<IActionResult> GetById(int id)
 		{
 			var result = await Mediator.Send(new GetByIdPostQuery(id));
 			return Ok(result);
@@ -41,9 +41,9 @@ namespace RealEstate.API.Controllers
 		[HttpPut("{id}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> Update(Guid id, UpdatePostCommand command)
+		public async Task<IActionResult> Update(int id, UpdatePostCommand command)
 		{
-			if (id != command.PostId)
+			if (id != command.Id)
 			{
 				return BadRequest();
 			}
@@ -54,9 +54,9 @@ namespace RealEstate.API.Controllers
 		[HttpDelete("{id}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> Delete(Guid id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var command = new DeletePost { PostId = id };
+			var command = new DeletePost { Id = id };
 			await Mediator.Send(command);
 			return NoContent();
 		}

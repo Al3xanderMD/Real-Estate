@@ -14,7 +14,7 @@ namespace RealEstate.Application.Features.Posts.Queries.GetById
 
 		public async Task<PostsDto> Handle(GetByIdPostQuery request, CancellationToken cancellationToken)
 		{
-			var post = await repository.FindByIdAsync(request.PostId);
+			var post = await repository.FindByIntIdAsync(request.Id);
 			if (post.IsSuccess) 
 			{
 				return new PostsDto

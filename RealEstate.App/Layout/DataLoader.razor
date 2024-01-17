@@ -31,7 +31,7 @@
     {
     ClientDataViewModel clientData;
 
-    if (authenticationState.User.Identity.IsAuthenticated)
+        if (authenticationState.User.Identity.IsAuthenticated)
         {
         // Make the API call
         string id = authenticationState.User.FindFirst("userId").Value;
@@ -48,7 +48,7 @@
 
             await localStorage.SetItemAsync<ClientDataViewModel>("clientData",clientData);
             Console.WriteLine("clientData stored ",clientData.email);
-        }
+    }
 
     }
     }*/
@@ -59,6 +59,7 @@
         {
             // Make the API call
             string id = authenticationState.User.FindFirst("userId").Value;
+            Console.WriteLine("Fetching data for : " + id);
             string jsonString = "";
             var result = await httpClient.GetAsync("https://localhost:7190/api/v1/Client/" + id); //make the link dynamic later
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)

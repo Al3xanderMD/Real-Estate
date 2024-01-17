@@ -15,7 +15,7 @@ namespace RealEstate.Application.Features.Posts.Commands.DeletePost
 
 		public async Task<DeletePostResponse> Handle(DeletePost request, CancellationToken cancellationToken)
 		{
-			var result = await repository.DeleteAsync(request.PostId);
+			var result = await repository.DeleteIntAsync(request.Id);
 
 			if (!result.IsSuccess)
 			{

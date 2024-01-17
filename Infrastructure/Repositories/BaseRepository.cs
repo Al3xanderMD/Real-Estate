@@ -31,7 +31,29 @@ namespace Infrastructure.Repositories
             return Result<T>.Failure($"Entity with id {id} not found");
         }
 
+        public virtual async Task<Result<T>> DeleteIntAsync(int id)
+        {
+            var result = await FindByIntIdAsync(id);
+            if (result != null)
+            {
+                context.Set<T>().Remove(result.Value);
+                await context.SaveChangesAsync();
+                return Result<T>.Success(result.Value);
+            }
+            return Result<T>.Failure($"Entity with id {id} not found");
+        }
+
         public virtual async Task<Result<T>> FindByIdAsync(Guid id)
+        {
+            var result = await context.Set<T>().FindAsync(id);
+            if (result == null)
+            {
+                return Result<T>.Failure($"Entity with id {id} not found");
+            }
+            return Result<T>.Success(result);
+        }
+
+        public virtual async Task<Result<T>> FindByIntIdAsync(int id)
         {
             var result = await context.Set<T>().FindAsync(id);
             if (result == null)

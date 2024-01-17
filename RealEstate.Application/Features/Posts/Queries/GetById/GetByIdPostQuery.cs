@@ -2,5 +2,5 @@
 
 namespace RealEstate.Application.Features.Posts.Queries.GetById
 {
-	public record GetByIdPostQuery(Guid PostId) : IRequest<PostsDto>;
+	public record GetByIdPostQuery(int Id) : IRequest<PostsDto>;
 }
