@@ -315,7 +315,7 @@
 
 	private AddressViewModel address = new AddressViewModel();
 	private bool isPropertyTypeSelected = false;
-
+	private bool isSuccessfulCreate = false;
 
 	async Task HandleValidSubmit()
 	{
@@ -328,86 +328,190 @@
 			Snackbar.Add("Please select a Property type", Severity.Error);
 			return;
 		}
+
 		var validator = new PostModelValidator();
 		var validationResult = validator.Validate(basePost);
 
 		if (!validationResult.IsValid)
 		{
-
 			foreach (var error in validationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
 			{
 				Snackbar.Add(error.ErrorMessage, Severity.Error);
 			}
-			return;
-		}
-
-
-		Console.WriteLine("Submitting!!!!!!");
-		isPropertyTypeSelected = true;
-		var addressId = await createService.CreateAddress(address);
-		Console.WriteLine("address id " + addressId);
-		basePost.addressId = addressId;
-
-		Console.WriteLine("exdtrafielvals len : " + extraFieldValues.Count);
-
-		foreach (var val in extraFieldValues)
-		{
-			Console.WriteLine("ExtraFieldValues " + val.Key + " " + val.Value);
-		}
-
-		if (extraFieldValues.Count != 0 && basePost.extraFieldValue != "")
-		{
-			if (basePost.postType == "Apartment")
-			{
-				Console.WriteLine("asd");// await CreateApartment();
-				apartment.userId = user.userId;
-				apartment = postBuilderService.BuildApartmentPost(apartment, basePost, extraFieldValues);
-
-				try
-				{
-					await createService.CreateApartment(apartment);
-
-					Console.WriteLine("apartment created!!");
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("error " + e.Message);
-				}		
-			}
-			else if (basePost.postType == "House")
-			{
-				house.userId = user.userId;
-
-				house = postBuilderService.BuildHousePost(house, basePost, extraFieldValues);
-
-				await createService.CreateHouse(house);
-
-			}
-			else if (basePost.postType == "Commercial")
-			{
-				commercial.userId = user.userId;
-				commercial = postBuilderService.BuildCommercialPost(commercial, basePost, extraFieldValues, (DateTime)date);
-				await createService.CreateCommercial(commercial);
-
-			}
-			else if (basePost.postType == "Lot")
-			{
-				lot.userId = user.userId;
-				lot = postBuilderService.BuildLotPost(lot, basePost, extraFieldValues);
-				await createService.CreateLot(lot);
-			}
-			else if (basePost.postType == "Hotel/Pension")
-			{
-				hotelPension.userId = user.userId;
-				hotelPension = postBuilderService.BuildHotelPensionPost(hotelPension, basePost);
-				await createService.CreateHotelPension(hotelPension);
-			};
 		}
 		else
 		{
-			Snackbar.Add("Please select a category and it's specifics", Severity.Error);
+
+			isPropertyTypeSelected = true;
+			var addressId = await createService.CreateAddress(address);
+			Console.WriteLine("address id " + addressId);
+			basePost.addressId = addressId;
+
+			Console.WriteLine("exdtrafielvals len : " + extraFieldValues.Count);
+
+			foreach (var val in extraFieldValues)
+			{
+				Console.WriteLine("ExtraFieldValues " + val.Key + " " + val.Value);
+			}
+
+			if (extraFieldValues.Count != 0 && basePost.extraFieldValue != "")
+			{
+				if (basePost.postType == "Apartment")
+				{
+					try
+					{
+						apartment.userId = user.userId;
+						apartment = postBuilderService.BuildApartmentPost(apartment, basePost, extraFieldValues);
+						var apartmentValidator = new ApartmentValidator();
+						var apartmentValidationResult = apartmentValidator.Validate(apartment);
+						if (!apartmentValidationResult.IsValid)
+						{
+							isSuccessfulCreate = false;
+							foreach (var error in apartmentValidationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+							{
+								Snackbar.Add(error.ErrorMessage, Severity.Error);
+							}
+						}
+						else{
+							isSuccessfulCreate = true;
+							await createService.CreateApartment(apartment);
+						}
+
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine("error " + e.Message);
+					}
+
+				}
+				else if (basePost.postType == "House")
+				{
+					try
+					{
+						house.userId = user.userId;
+						house = postBuilderService.BuildHousePost(house, basePost, extraFieldValues);
+						var houseValidator = new HouseValidator();
+						var houseValidationResult = houseValidator.Validate(house);
+						if (!houseValidationResult.IsValid)
+						{
+							isSuccessfulCreate = false;
+							foreach (var error in houseValidationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+							{
+								Snackbar.Add(error.ErrorMessage, Severity.Error);
+							}
+						}
+						else
+						{
+							isSuccessfulCreate = true;
+							await createService.CreateHouse(house);
+						}
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine("error " + e.Message);
+					}
+
+				}
+				else if (basePost.postType == "Commercial")
+				{
+					try
+					{
+						commercial.userId = user.userId;
+						commercial = postBuilderService.BuildCommercialPost(commercial, basePost, extraFieldValues, (DateTime)date);
+						var commercialValidator = new CommercialValidator();
+						var commercialValidationResult = commercialValidator.Validate(commercial);
+						if (!commercialValidationResult.IsValid)
+						{
+							isSuccessfulCreate = false;
+							foreach (var error in commercialValidationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+							{
+								Snackbar.Add(error.ErrorMessage, Severity.Error);
+							}
+						}
+						else
+						{
+							isSuccessfulCreate = true;
+							await createService.CreateCommercial(commercial);
+						}
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine("error " + e.Message);
+					}
+
+				}
+				else if (basePost.postType == "Lot")
+				{
+					try
+					{
+						lot.userId = user.userId;
+						lot = postBuilderService.BuildLotPost(lot, basePost, extraFieldValues);
+						var lotValidator = new LotValidator();
+						var lotValidationResult = lotValidator.Validate(lot);
+						if (!lotValidationResult.IsValid)
+						{
+							isSuccessfulCreate = false;
+							foreach (var error in lotValidationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+							{
+								Snackbar.Add(error.ErrorMessage, Severity.Error);
+							}
+						}
+						else
+						{
+							isSuccessfulCreate = true;
+							await createService.CreateLot(lot);
+						}
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine("error " + e.Message);
+					}
+				}
+				else if (basePost.postType == "Hotel/Pension")
+				{
+					try
+					{
+						hotelPension.userId = user.userId;
+						hotelPension = postBuilderService.BuildHotelPensionPost(hotelPension, basePost);
+						var hotelPensionValidator = new HotelPensionValidator();
+                        var hotelPensionValidationResult = hotelPensionValidator.Validate(hotelPension);
+                        if (!hotelPensionValidationResult.IsValid)
+                        {
+                            isSuccessfulCreate = false;
+                            foreach (var error in hotelPensionValidationResult.Errors.GroupBy(x => x.PropertyName).Select(x => x.First()))
+                            {
+                                Snackbar.Add(error.ErrorMessage, Severity.Error);
+                            }
+                        }
+                        else
+                        {
+                            isSuccessfulCreate = true;
+                            await createService.CreateHotelPension(hotelPension);
+                        }
+					}
+					catch (Exception e)
+                    {
+                        Console.WriteLine("error " + e.Message);
+                    }
+				};
+				if (isSuccessfulCreate)
+				{
+					navigationManager.NavigateTo("/");
+					await Task.Delay(100);
+					Snackbar.Add("Post successfully created!", Severity.Success);
+				}
+				
+			}
+			else
+			{
+				Snackbar.Add("Please select a category type.", Severity.Error);
+			}
+			
 		}
+
+		
 	}
+
 
 	public void CategoryChanged()
 	{
