@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\RealEstate.Application\RealEstate.Application.csproj" />
+    <ProjectReference Include="..\RealEstate.App\RealEstate.App.csproj" />
     <ProjectReference Include="..\RealEstate.Identity\RealEstate.Identity.csproj" />
   </ItemGroup>
 

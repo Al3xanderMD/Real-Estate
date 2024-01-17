@@ -1,6 +1,8 @@
 ﻿@page "/{PropertyType}/post/{PostId}"
+@using RealEstate.App.Operations.Fetch.Models
 
 @inject NavigationManager navigationManager
+@inject FetchService fetchService
 
 @if (propertyTypes.Contains(PropertyType)) {
     <h3>@PropertyType --> @PostId</h3>
@@ -12,10 +14,138 @@
 
 
 @code {
-    [Parameter]
-    public string PostId { get; set; }
-    [Parameter]
-    public string PropertyType { get; set; }
+	[Parameter]
+	public string PostId { get; set; }
+	[Parameter]
+	public string PropertyType { get; set; }
 
-    private string[] propertyTypes = new string[] { "apartment", "house", "commercial", "hotel", "lot" };
+	private string[] propertyTypes = new string[] { "apartment", "house", "commercial", "hotel", "lot" }; // todo: make dynamic
+
+	private ApartmentFetchViewModel apartment;
+	private HouseFetchViewModel house;
+	private CommercialFetchViewModel commercial;
+	private HotelPensionFetchViewModel hotel;
+	private LotFetchViewModel lot;
+
+	protected override async Task OnParametersSetAsync()
+	{
+		PostViewModel postData = await fetchService.FetchPostAsync(Int16.Parse(PostId));
+		switch (PropertyType) {
+			case "apartment":
+				if (postData.type == "apartment")
+				{
+					Console.WriteLine("apartment type");
+					apartment = await fetchService.FetchApartmentAsync(postData.postId);
+
+					if (apartment != null)
+					{
+						Console.WriteLine("apartment found");
+					}
+					else
+					{
+						Console.WriteLine("apartment not found");
+					}
+				}
+				else
+				{
+					Console.WriteLine("mismatched property type");
+					navigationManager.NavigateTo("/notFound");
+				}
+				break;
+			case "house":
+				if (postData.type == "house")
+				{
+					Console.WriteLine("house type");
+					house = await fetchService.FetchHouseAsync(postData.postId);
+
+					if (house != null)
+					{
+						Console.WriteLine("house found");
+					}
+					else
+					{
+						Console.WriteLine("house not found");
+					}
+				}
+				else
+				{
+					Console.WriteLine("mismatched property type");
+					navigationManager.NavigateTo("/notFound");
+				}
+				Console.WriteLine("house type");
+				break;
+			case "commercial":
+				Console.WriteLine("commercial type");
+				if (postData.type == "commercial")
+				{
+					Console.WriteLine("commercial type");
+
+					commercial = await fetchService.FetchCommercialAsync(postData.postId);
+
+					if (commercial != null)
+					{
+						Console.WriteLine("commercial found");
+					}
+					else
+					{
+						Console.WriteLine("commercial not found");
+					}
+				}
+				else
+				{
+					Console.WriteLine("mismatched property type");
+					navigationManager.NavigateTo("/notFound");
+				}
+				break;
+			case "hotel":
+				Console.WriteLine("hotel type");
+				if (postData.type == "hotel")
+				{
+					Console.WriteLine("hotel type");
+
+					hotel = await fetchService.FetchHotelPensionAsync(postData.postId);
+
+					if (hotel != null)
+					{
+						Console.WriteLine("hotel found");
+					}
+					else
+					{
+						Console.WriteLine("hotel not found");
+					}
+				}
+				else
+				{
+					Console.WriteLine("mismatched property type");
+					navigationManager.NavigateTo("/notFound");
+				}
+				break;
+			case "lot":
+				Console.WriteLine("lot type");
+				if (postData.type == "lot")
+				{
+					Console.WriteLine("lot type");
+
+					lot = await fetchService.FetchLotAsync(postData.postId);
+
+					if (lot != null)
+					{
+						Console.WriteLine("lot found");
+					}
+					else
+					{
+						Console.WriteLine("lot not found");
+					}
+				}
+				else
+				{
+					Console.WriteLine("mismatched property type");
+					navigationManager.NavigateTo("/notFound");
+				}
+				break;
+			default:
+				Console.WriteLine("invalid property type");
+				break;
+		}
+    }
 }

@@ -354,7 +354,7 @@
 				Console.WriteLine("ExtraFieldValues " + val.Key + " " + val.Value);
 			}
 
-			if (extraFieldValues.Count != 0 && basePost.extraFieldValue != "")
+			if ((extraFieldValues.Count != 0 && basePost.extraFieldValue != "") || basePost.postType == "Hotel/Pension" )
 			{
 				if (basePost.postType == "Apartment")
 				{

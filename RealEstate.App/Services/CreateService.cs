@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using RealEstate.App.Contracts;
 using RealEstate.App.Operations.Common;
 using RealEstate.App.Operations.Create.Models;
+using RealEstate.App.Operations.Fetch.Models;
 using RealEstate.App.Operations.Fetch.Response;
+using RealEstate.App.Operations.Models;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -24,7 +26,7 @@ namespace RealEstate.App.Services
 
 		public async Task<string> CreateAddress(AddressViewModel model)
 		{
-			ResponseModel response_obj;
+			CommercialResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Addresses", model);
@@ -34,20 +36,19 @@ namespace RealEstate.App.Services
 				ApiAddressResponse responseModel = JsonConvert.DeserializeObject<ApiAddressResponse>(content);
 				Console.WriteLine("Address create result: " + content+ " ID: "+responseModel.address.id);
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<CommercialResponseModel>(content);
 
 
 				if (response_obj != null && !response_obj.Success)
 				{
 					List<string> validationErrors = response_obj.ValidationErrors;
 
-					// Now you can iterate through validationErrors or perform other actions
 					foreach (string error in validationErrors)
 					{
 						Console.WriteLine($"Validation Error: {error}");
 						snackBar.Add($"{error}", Severity.Error);
 					}
-				}
+				} 
 
 				response.EnsureSuccessStatusCode();
 
@@ -64,31 +65,46 @@ namespace RealEstate.App.Services
 
 		public async Task CreateApartment(ApartmentViewModel model)
 		{
-			ResponseModel response_obj;
+			ApartmentResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Apartments", model);
 
 				var content = await response.Content.ReadAsStringAsync();
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<ApartmentResponseModel>(content);
 
-
+				Console.WriteLine("apartment : " + content);	
 				if (response_obj != null && !response_obj.Success)
 				{
 					List<string> validationErrors = response_obj.ValidationErrors;
 
-					// Now you can iterate through validationErrors or perform other actions
+				
 					foreach (string error in validationErrors)
 					{
 						Console.WriteLine($"Validation Error: {error}");
 						snackBar.Add($"{error}", Severity.Error);
 					}
 				}
+				else
+				{
+					var url = "https://localhost:7190/api/v1/Post";
 
-				Console.WriteLine("apartment : " + content);
+					Console.WriteLine("creating post with : " + response_obj.apartment.basePostId);
+
+					var post = new PostCreateViewModel
+					{
+						basePostId = response_obj.apartment.basePostId,
+						type = "apartment"
+					};
+
+					var result = await httpClient.PostAsJsonAsync(url, post);
+
+					result.EnsureSuccessStatusCode();
+				}
 
 				response.EnsureSuccessStatusCode();
+				Console.WriteLine("Apartment Success!!");
 			}
 			catch (HttpRequestException ex)
 			{
@@ -100,14 +116,16 @@ namespace RealEstate.App.Services
 		{
 
 
-			ResponseModel response_obj;
+			CommercialResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Commercials", model);
 
 				var content = await response.Content.ReadAsStringAsync();
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<CommercialResponseModel>(content);
+
+				Console.WriteLine("commercial : " + content);
 
 
 				if (response_obj != null && !response_obj.Success)
@@ -120,11 +138,27 @@ namespace RealEstate.App.Services
 						Console.WriteLine($"Validation Error: {error}");
 						snackBar.Add($"{error}", Severity.Error);
 					}
+
+				}
+				else {
+					var url = "https://localhost:7190/api/v1/Post";
+
+					Console.WriteLine("creating post with : " + response_obj.commercial.basePostId);
+
+					var post = new PostCreateViewModel
+					{
+						basePostId = response_obj.commercial.basePostId,
+						type = "commercial"
+					};
+
+					var result = await httpClient.PostAsJsonAsync(url, post);
+
+					result.EnsureSuccessStatusCode();
 				}
 
-				Console.WriteLine("commercial : " + content);
-
 				response.EnsureSuccessStatusCode();
+
+				
 			}
 			catch (HttpRequestException ex)
 			{
@@ -144,29 +178,44 @@ namespace RealEstate.App.Services
 
 		public async Task CreateHotelPension(HotelPensionViewModel model)
 		{
-			ResponseModel response_obj;
+			HotelPensionResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/HotelPensions", model);
 
 				var content = await response.Content.ReadAsStringAsync();
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<HotelPensionResponseModel>(content);
+
+				Console.WriteLine("hotel : " + content);
 
 
 				if (response_obj != null && !response_obj.Success)
 				{
 					List<string> validationErrors = response_obj.ValidationErrors;
 
-					// Now you can iterate through validationErrors or perform other actions
 					foreach (string error in validationErrors)
 					{
 						Console.WriteLine($"Validation Error: {error}");
 						snackBar.Add($"{error}", Severity.Error);
 					}
 				}
+				else
+				{
+					var url = "https://localhost:7190/api/v1/Post";
 
-				Console.WriteLine("hotelPension : "+content);
+					Console.WriteLine("creating post with : " + response_obj.hotelPension.basePostId);
+
+					var post = new PostCreateViewModel
+					{
+						basePostId = response_obj.hotelPension.basePostId,
+						type = "hotel"
+					};
+
+					var result = await httpClient.PostAsJsonAsync(url, post);
+
+					result.EnsureSuccessStatusCode();
+				}
 
 				response.EnsureSuccessStatusCode();
 			}
@@ -178,14 +227,16 @@ namespace RealEstate.App.Services
 
 		public async Task CreateHouse(HouseViewModel model)
 		{
-			ResponseModel response_obj;
+			HouseResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Houses", model);
 
 				var content = await response.Content.ReadAsStringAsync();
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<HouseResponseModel>(content);
+
+				Console.WriteLine("house : " + content);
 
 
 				if (response_obj != null && !response_obj.Success)
@@ -199,9 +250,22 @@ namespace RealEstate.App.Services
 						snackBar.Add($"{error}", Severity.Error);
 					}
 				}
+				else
+				{
+					var url = "https://localhost:7190/api/v1/Post";
 
+					Console.WriteLine("creating post with : " + response_obj.house.basePostId);
 
-				Console.WriteLine("house : " + content);
+					var post = new PostCreateViewModel
+					{
+						basePostId = response_obj.house.basePostId,
+						type = "house"
+					};
+
+					var result = await httpClient.PostAsJsonAsync(url, post);
+
+					result.EnsureSuccessStatusCode();
+				}
 
 				response.EnsureSuccessStatusCode();
 			}
@@ -218,14 +282,16 @@ namespace RealEstate.App.Services
 
 		public async Task CreateLot(LotViewModel model)
 		{
-			ResponseModel response_obj;
+			LotResponseModel response_obj;
 			try
 			{
 				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Lot", model);
 
 				var content = await response.Content.ReadAsStringAsync();
 
-				response_obj = JsonConvert.DeserializeObject<ResponseModel>(content);
+				response_obj = JsonConvert.DeserializeObject<LotResponseModel>(content);
+
+				Console.WriteLine("lot : " + content);
 
 
 				if (response_obj != null && !response_obj.Success)
@@ -239,8 +305,22 @@ namespace RealEstate.App.Services
 						snackBar.Add($"{error}", Severity.Error);
 					}
 				}
+				else
+				{
+					var url = "https://localhost:7190/api/v1/Post";
 
-				Console.WriteLine("lot : " + content);
+					Console.WriteLine("creating post with : " + response_obj.lot.basePostId);
+
+					var post = new PostCreateViewModel
+					{
+						basePostId = response_obj.lot.basePostId,
+						type = "lot"
+					};
+
+					var result = await httpClient.PostAsJsonAsync(url, post);
+
+					result.EnsureSuccessStatusCode();
+				}
 
 				response.EnsureSuccessStatusCode();
 

@@ -33,8 +33,7 @@ namespace Infrastructure
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Database=RealEstateDB; User Id=postgres; Password=postgres;");
-
+        //    optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Database=RealEstateDB; User Id=postgres; Password=root;");
         //}
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)

@@ -33,9 +33,6 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
-    <Folder Include="Operations\Create\Post\" />
-    <Folder Include="Operations\Fetch\Commands\" />
-    <Folder Include="Operations\Fetch\Queries\" />
   </ItemGroup>
 
 </Project>

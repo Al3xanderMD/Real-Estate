@@ -10,5 +10,12 @@ namespace RealEstate.App.Contracts
 		Task<List<ApartmentPartitioningViewModel>> FetchApartmentPartitionsAsync();
 		Task<List<HouseTypeViewModel>> FetchHouseTypesAsync();
 		Task<List<CommercialSpecificViewModel>> FetchCommercialSpecificsAsync();
+		Task<PostViewModel> FetchPostAsync(int id);
+		Task<ApartmentFetchViewModel> FetchApartmentAsync(Guid id);
+		Task<HouseFetchViewModel> FetchHouseAsync(Guid id);
+		Task<CommercialFetchViewModel> FetchCommercialAsync(Guid id);
+		Task<LotFetchViewModel> FetchLotAsync(Guid id);
+		Task<HotelPensionFetchViewModel> FetchHotelPensionAsync(Guid id);
+
 	}
 }

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.App.Operations.Create.Models;
+using RealEstate.App.Operations.Fetch.Models;
 using RealEstate.Application.Features.Apartments.Commands.CreateApartament;
 using RealEstate.Application.Features.Apartments.Commands.DeleteApartment;
 using RealEstate.Application.Features.Apartments.Commands.UpdateApartment;
 using RealEstate.Application.Features.Apartments.Queries.GetAll;
 using RealEstate.Application.Features.Apartments.Queries.GetById;
+using RealEstate.Application.Features.Posts.Commands.CreatePost;
 
 namespace RealEstate.API.Controllers
 {
@@ -18,6 +21,7 @@ namespace RealEstate.API.Controllers
             {
                 return BadRequest(result);
             }
+
             return Ok(result);
         }
 

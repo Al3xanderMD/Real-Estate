@@ -120,5 +120,144 @@ namespace RealEstate.App.Services
 				return null;
 			}
 		}
+
+		public async Task<PostViewModel> FetchPostAsync(int id)
+		{
+			try
+			{
+				var requestString = "https://localhost:7190/api/v1/Post/"+id.ToString();
+				Console.WriteLine("Fetching post: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Post: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<PostViewModel>(jsonString);
+
+				return apiResponse;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<ApartmentFetchViewModel> FetchApartmentAsync(Guid id)
+		{
+			try
+			{
+				var requestString = "https://localhost:7190/api/v1/Apartments/" + id.ToString();
+				Console.WriteLine("Fetching apartment: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Apartment fetch: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<ApartmentFetchViewModel>(jsonString);
+
+				return apiResponse;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<HouseFetchViewModel> FetchHouseAsync(Guid id)
+		{
+			try {
+				var requestString = "https://localhost:7190/api/v1/Houses/" + id.ToString();
+				Console.WriteLine("Fetching house: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("House fetch: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<HouseFetchViewModel>(jsonString);
+
+				return apiResponse;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<CommercialFetchViewModel> FetchCommercialAsync(Guid id)
+		{
+			try 
+			{
+				var requestString = "https://localhost:7190/api/v1/Commercials/" + id.ToString();
+				Console.WriteLine("Fetching commercial: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Commercial fetch: " + jsonString);
+
+				var apiResponse = JsonConvert.DeserializeObject<CommercialFetchViewModel>(jsonString);
+				
+				return apiResponse;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<LotFetchViewModel> FetchLotAsync(Guid id)
+		{
+			try
+			{
+				var requestString = "https://localhost:7190/api/v1/Lots/" + id.ToString();
+				Console.WriteLine("Fetching land: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Lot fetch: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<LotFetchViewModel>(jsonString);
+
+				return apiResponse;
+			} 
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<HotelPensionFetchViewModel> FetchHotelPensionAsync(Guid id)
+		{
+			try
+			{
+				var requestString = "https://localhost:7190/api/v1/HotelPensions/" + id.ToString();
+				Console.WriteLine("Fetching hotel pension: " + id.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Hotel pension fetch: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<HotelPensionFetchViewModel>(jsonString);
+
+				return apiResponse;
+
+			} 
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
 	}
 }
