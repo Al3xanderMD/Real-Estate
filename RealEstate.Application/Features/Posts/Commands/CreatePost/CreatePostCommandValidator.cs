@@ -10,7 +10,7 @@ namespace RealEstate.Application.Features.Posts.Commands.CreatePost
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull();
 
-			RuleFor(p => p.PostId)
+			RuleFor(p => p.BasePostId)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
 				.NotNull();
 		}

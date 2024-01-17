@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Real1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -270,6 +271,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BasePostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_BasePosts_BasePostId",
+                        column: x => x.BasePostId,
+                        principalTable: "BasePosts",
+                        principalColumn: "BasePostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Commercials",
                 columns: table => new
                 {
@@ -324,6 +349,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Lots_LotClassificationId",
                 table: "Lots",
                 column: "LotClassificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_BasePostId",
+                table: "Posts",
+                column: "BasePostId");
         }
 
         /// <inheritdoc />
@@ -348,6 +378,9 @@ namespace Infrastructure.Migrations
                 name: "Lots");
 
             migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
                 name: "Partitionings");
 
             migrationBuilder.DropTable(
@@ -357,10 +390,10 @@ namespace Infrastructure.Migrations
                 name: "HouseTypes");
 
             migrationBuilder.DropTable(
-                name: "BasePosts");
+                name: "LotClassifications");
 
             migrationBuilder.DropTable(
-                name: "LotClassifications");
+                name: "BasePosts");
 
             migrationBuilder.DropTable(
                 name: "CommercialCategories");

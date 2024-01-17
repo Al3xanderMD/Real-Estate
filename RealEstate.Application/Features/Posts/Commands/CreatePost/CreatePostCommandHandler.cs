@@ -26,7 +26,7 @@ namespace RealEstate.Application.Features.Posts.Commands.CreatePost
 				};
 			}
 
-			var post = Post.Create(request.PostId, request.Type);
+			var post = Post.Create(request.BasePostId, request.Type);
 
 			if (!post.IsSuccess)
 			{
@@ -44,7 +44,7 @@ namespace RealEstate.Application.Features.Posts.Commands.CreatePost
 				Success = true,
 				Post = new CreatePostDto
 				{
-					PostId = post.Value.PostId,
+					BasePostId = post.Value.BasePostId,
 					Type = post.Value.Type
 				}
 			};	
