@@ -1,17 +1,21 @@
 ﻿@page "/{PropertyType}/post/{PostId}"
+@using RealEstate.App.Models
 @using RealEstate.App.Operations.Fetch.Models
+@using RealEstate.App.Operations.Fetch.Response
 
 @inject NavigationManager navigationManager
 @inject FetchService fetchService
 
-@if (propertyTypes.Contains(PropertyType)) {
-    <h3>@PropertyType --> @PostId</h3>
-} else
-{
+@if (!propertyTypes.Contains(PropertyType)) {
     navigationManager.NavigateTo("/notFound");
 }
 
-
+@if (ready)
+{
+	<MudContainer Style="text-align:center;">
+		<MudText Typo="Typo.h1">@pageModel.title</MudText>
+	</MudContainer>
+}
 
 @code {
 	[Parameter]
@@ -20,26 +24,31 @@
 	public string PropertyType { get; set; }
 
 	private string[] propertyTypes = new string[] { "apartment", "house", "commercial", "hotel", "lot" }; // todo: make dynamic
-
+	private bool ready = false;
 	private ApartmentFetchViewModel apartment;
 	private HouseFetchViewModel house;
 	private CommercialFetchViewModel commercial;
 	private HotelPensionFetchViewModel hotel;
 	private LotFetchViewModel lot;
+	private PageBaseModel pageModel = new PageBaseModel();
 
 	protected override async Task OnParametersSetAsync()
 	{
-		PostViewModel postData = await fetchService.FetchPostAsync(Int16.Parse(PostId));
+		PostResponseViewModel postData = await fetchService.FetchPostAsync(Int16.Parse(PostId));
+		Console.WriteLine("post data fetched "+postData.basePostId);
 		switch (PropertyType) {
 			case "apartment":
 				if (postData.type == "apartment")
 				{
 					Console.WriteLine("apartment type");
-					apartment = await fetchService.FetchApartmentAsync(postData.postId);
+					apartment = await fetchService.FetchApartmentAsync(postData.basePostId);
 
 					if (apartment != null)
 					{
 						Console.WriteLine("apartment found");
+						pageModel.title = apartment.titlePost;
+						pageModel.description = apartment.description;
+						ready = true;
 					}
 					else
 					{
@@ -56,15 +65,19 @@
 				if (postData.type == "house")
 				{
 					Console.WriteLine("house type");
-					house = await fetchService.FetchHouseAsync(postData.postId);
+					house = await fetchService.FetchHouseAsync(postData.basePostId);
 
 					if (house != null)
 					{
 						Console.WriteLine("house found");
+						pageModel.title = house.titlePost;
+						pageModel.description = house.description;
+						ready = true;
 					}
 					else
 					{
 						Console.WriteLine("house not found");
+
 					}
 				}
 				else
@@ -80,11 +93,14 @@
 				{
 					Console.WriteLine("commercial type");
 
-					commercial = await fetchService.FetchCommercialAsync(postData.postId);
+					commercial = await fetchService.FetchCommercialAsync(postData.basePostId);
 
 					if (commercial != null)
 					{
 						Console.WriteLine("commercial found");
+						pageModel.title = commercial.titlePost;
+						pageModel.description = commercial.description;
+						ready = true;
 					}
 					else
 					{
@@ -103,11 +119,14 @@
 				{
 					Console.WriteLine("hotel type");
 
-					hotel = await fetchService.FetchHotelPensionAsync(postData.postId);
+					hotel = await fetchService.FetchHotelPensionAsync(postData.basePostId);
 
 					if (hotel != null)
 					{
 						Console.WriteLine("hotel found");
+						pageModel.title = hotel.titlePost;
+						pageModel.description = hotel.description;
+						ready = true;
 					}
 					else
 					{
@@ -126,11 +145,14 @@
 				{
 					Console.WriteLine("lot type");
 
-					lot = await fetchService.FetchLotAsync(postData.postId);
+					lot = await fetchService.FetchLotAsync(postData.basePostId);
 
 					if (lot != null)
 					{
 						Console.WriteLine("lot found");
+						pageModel.title = lot.titlePost;
+						pageModel.description = lot.description;
+						ready = true;
 					}
 					else
 					{

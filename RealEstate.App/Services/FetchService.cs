@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using RealEstate.App.Contracts;
+using RealEstate.App.Models;
 using RealEstate.App.Operations.Fetch.Models;
 using RealEstate.App.Operations.Fetch.Response;
 using System.Net.Http;
 
 namespace RealEstate.App.Services
-{ 
+{
 
-	public class FetchService : IFetchService
+    public class FetchService : IFetchService
     {
 		private readonly HttpClient httpClient;
 
@@ -121,7 +122,7 @@ namespace RealEstate.App.Services
 			}
 		}
 
-		public async Task<PostViewModel> FetchPostAsync(int id)
+		public async Task<PostResponseViewModel> FetchPostAsync(int id)
 		{
 			try
 			{
@@ -133,11 +134,31 @@ namespace RealEstate.App.Services
 
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Console.WriteLine("Post: " + jsonString);
-				var apiResponse = JsonConvert.DeserializeObject<PostViewModel>(jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<PostResponseViewModel>(jsonString);
 
 				return apiResponse;
 			}
 			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<List<PostResponseViewModel>> FetchPostsAsync(int start, int end) {
+			try {
+				var requestString = "https://localhost:7190/api/v1/Post?start=" + start.ToString() + "&end=" + end.ToString();
+				Console.WriteLine("Fetching posts: " + start.ToString() + " to " + end.ToString() + " from " + requestString);
+				var response = await httpClient.GetAsync(requestString);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Console.WriteLine("Posts: " + jsonString);
+				var apiResponse = JsonConvert.DeserializeObject<List<PostResponseViewModel>>(jsonString);
+
+				return apiResponse;
+			} catch (HttpRequestException ex)
 			{
 				Console.WriteLine($"Error: {ex.Message}");
 				return null;
@@ -217,8 +238,8 @@ namespace RealEstate.App.Services
 		{
 			try
 			{
-				var requestString = "https://localhost:7190/api/v1/Lots/" + id.ToString();
-				Console.WriteLine("Fetching land: " + id.ToString() + " from " + requestString);
+				var requestString = "https://localhost:7190/api/v1/Lot/" + id.ToString();
+				Console.WriteLine("Fetching lot: " + id.ToString() + " from " + requestString);
 				var response = await httpClient.GetAsync(requestString);
 
 				response.EnsureSuccessStatusCode();

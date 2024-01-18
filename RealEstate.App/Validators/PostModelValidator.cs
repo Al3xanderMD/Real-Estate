@@ -4,7 +4,7 @@ using RealEstate.App.Operations.Fetch.Models;
 
 namespace RealEstate.App.Validators
 {
-	public class PostModelValidator : AbstractValidator<BasePostViewModel>
+	public class PostModelValidator : AbstractValidator<Operations.Fetch.Models.BasePostViewModel>
 	{
 		public PostModelValidator()
 		{

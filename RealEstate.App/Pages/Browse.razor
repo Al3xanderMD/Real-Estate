@@ -1,7 +1,12 @@
 ﻿@page "/browse"
 @using RealEstate.App.Data
 @using RealEstate.App.Models
+@using RealEstate.App.Operations.Fetch.Models
+@using RealEstate.App.Operations.Fetch.Response
 @using RealEstate.App.Tools
+
+@inject FetchService fetchService
+@inject ISessionStorageService sessionStorage
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
@@ -18,30 +23,124 @@
 
     <MudGrid Justify="Justify.SpaceEvenly">
         <div class="row">
-            @foreach (var property in GetHardcodedProperties())
+            @if (loaded)
             {
-                <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudCard Class="browse-card" Elevation="1">
-						<MudCardMedia Image="@property.MainImageUrl" />
-						<MudCardContent>
-							<MudText Typo="Typo.h5">@property.Title</MudText>
-							<MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Euro" />@property.Price</MudText>
-							@* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
-						</MudCardContent>
-						<MudCardActions>
-							<MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
-							<MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
-						</MudCardActions>
-					</MudCard>
-                </MudItem>
+                foreach (var post in posts)
+                {
+                    if (post != null)
+                    {
+                        Console.WriteLine("xxxxx");
+                        <MudItem xs="12" sm="6" md="4" lg="3">
+                            <MudLink Href="@($"{post.type}/post/{post.id}")" Style="text-decoration:none;">
+                                <MudCard Class="browse-card" Elevation="1">
+                                    <MudCardMedia Image="https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" /> @*replace with dynamic when implemented*@
+                                    <MudCardContent>
+                                        <MudText Typo="Typo.h5">@post.basePost.titlePost</MudText>
+                                            <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Euro" />@post.basePost.price</MudText>
+                                            @* <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText> *@
+                                        </MudCardContent>
+                                        <MudCardActions>
+                                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+                                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                                        </MudCardActions>
+                                    </MudCard>
+                                </MudLink>
+                            </MudItem>
+                    }
+                }
             }
+            
         </div>
     </MudGrid>
+
+    <MudButton OnClick="fetchPosts" Disabled=noLoad>
+        Load more posts
+    </MudButton>
 
 
 </MudContainer>
 
 @code {
+    private int step = 2;
+    private int start_count = 7;
+    private int end_count = 8;
+    private bool noLoad = false;
+    private bool loaded = false;
+    List<PostResponseViewModel> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await sessionStorage.ContainKeyAsync("posts"))
+		{
+			posts = await sessionStorage.GetItemAsync<List<PostResponseViewModel>>("posts");
+            start_count = await sessionStorage.GetItemAsync<int>("start_count");
+			end_count = await sessionStorage.GetItemAsync<int>("end_count");
+            noLoad = await sessionStorage.GetItemAsync<bool>("noLoad");
+
+			Console.WriteLine("posts found in session storage");
+			loaded = true;
+		}
+		else
+		{
+            posts = await fetchService.FetchPostsAsync(start_count, end_count);
+
+            if (posts != null)
+            {
+                Console.WriteLine("posts found");
+                if (posts.Count != step)
+                {
+                    Console.WriteLine("NOLOAD");
+                    noLoad = true;
+                }
+                else
+                {
+                    start_count = end_count + 1;
+                    end_count = start_count + step - 1;
+                }
+            }
+            else
+            {
+                Console.WriteLine("posts not found");
+            }
+		}
+
+        loaded = true;
+    }
+
+    public async Task fetchPosts()
+    {
+        Console.WriteLine("fetching posts. . .");
+        if (!noLoad)
+        {
+            List<PostResponseViewModel> newposts = await fetchService.FetchPostsAsync(start_count, end_count);
+
+            if (newposts != null)
+            {
+                Console.WriteLine("posts found");
+                if (newposts.Count != step)
+                {
+                    Console.WriteLine("NOLOAD");
+                    noLoad = true;
+                }
+                else
+                {
+                    start_count = end_count+1;
+                    end_count = start_count + step - 1;
+                }
+
+                posts.AddRange(newposts);
+                await sessionStorage.SetItemAsync("posts", posts);
+                await sessionStorage.SetItemAsync("start_count", start_count);
+                await sessionStorage.SetItemAsync("end_count", end_count);
+                await sessionStorage.SetItemAsync("noLoad", noLoad);
+            }
+            else
+            {
+                Console.WriteLine("posts not found");
+            }
+        } 
+    }
+
     private List<PostModel> GetHardcodedProperties()
     {
         return new List<PostModel>
