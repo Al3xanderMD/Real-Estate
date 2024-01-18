@@ -27,7 +27,7 @@
 					<MudStack Spacing="6" Justify="Justify.Center">
 						<MudTextField @bind-Value="client.name" Label="Name" />
 						 @* <div class="error-msg auth-message">@nameError</div> *@
-						<MudTextField @bind-Value="client.email" Label="Email" />
+						<MudTextField @bind-Value="emailAddress" Label="Email" Disabled=true/>
 						
 						<MudTextField @bind-Value="client.phoneNumber" Label="Phone Number" />
 						@*  <div class="error-msg auth-message">@phoneNumberError</div> *@
@@ -48,6 +48,7 @@
 	string error { get; set; }
 	string nameError { get; set; }
 	string phoneNumberError { get; set; }
+	string emailAddress { get; set; }
 
 	protected override async Task OnParametersSetAsync()
 	{
@@ -87,6 +88,7 @@
 			{
 				if (client != null)
 				{
+					emailAddress = client.email;
 					Console.WriteLine(client.userId);
 					if (isLoaded)
 					{
