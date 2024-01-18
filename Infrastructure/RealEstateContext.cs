@@ -30,6 +30,7 @@ namespace Infrastructure
         public DbSet<CommercialSpecific> CommercialSpecifics { get; set; }
         public DbSet<Client> Clients { get; set; }
 		public DbSet<Post> Posts { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

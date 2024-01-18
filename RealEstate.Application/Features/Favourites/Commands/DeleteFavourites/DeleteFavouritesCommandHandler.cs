@@ -14,6 +14,7 @@ namespace RealEstate.Application.Features.Favourites.Commands.DeleteFavourites
 
         public async Task<DeleteFavouritesCommandResponse> Handle(DeleteFavouritesCommand request, CancellationToken cancellationToken)
         {
+
             var result = await repository.DeleteAsync(request.Id);
 
             if (!result.IsSuccess)
