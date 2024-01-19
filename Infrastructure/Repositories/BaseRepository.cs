@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstate.Application.Contracts;
 using RealEstate.Domain.Common;
+using RealEstate.Domain.Entities;
 
 namespace Infrastructure.Repositories
 {
@@ -61,6 +62,31 @@ namespace Infrastructure.Repositories
                 return Result<T>.Failure($"Entity with id {id} not found");
             }
             return Result<T>.Success(result);
+        }
+
+		public virtual async Task<Result<T>> FindByBasePostIdAsync(Guid basePostId)
+		{
+			
+			var result = await context.Set<T>().SingleOrDefaultAsync(e => EF.Property<Guid>(e, "BasePostId") == basePostId);
+
+			if (result == null)
+			{
+				return Result<T>.Failure($"Entity with BasePostId {basePostId} not found");
+			}
+
+			return Result<T>.Success(result);
+		}
+
+        public virtual async Task<Result<IReadOnlyList<T>>> FindByUserIdAsync(Guid userId)
+        {
+            var result = await context.Set<T>().Where(e => EF.Property<BasePost>(e, "BasePost").UserId == userId.ToString()).ToListAsync();
+
+            if (result == null || result.Count == 0)
+            {
+                return Result<IReadOnlyList<T>>.Failure($"Entities with userId {userId} not found");
+            }
+
+            return Result<IReadOnlyList<T>>.Success(result);
         }
 
         public virtual async Task<Result<IReadOnlyList<T>>> GetPagedReponseAsync(int page, int size)

@@ -18,5 +18,9 @@ namespace RealEstate.App.Contracts
 		Task CreateCommercialSpecific();
 		Task CreateHouseType();
 		Task CreateLotClassification();
+
+		/////////////////////////
+
+		Task CreateFavouriteListing(FavouriteCreateViewModel model);
 	}
 }

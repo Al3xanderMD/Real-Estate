@@ -14,8 +14,6 @@
 @inject NavigationManager navigationManager
 @inject ISnackbar Snackbar
 
-<h3>Settings</h3>
-
 <div class="content-container">
 	<h1 class="text-center">Change profile details</h1>
 
@@ -55,6 +53,16 @@
 		client = await localStorage.GetItemAsync<ClientDataViewModel>("clientData");
 		authenticationState = await authStateProvider.GetAuthenticationStateAsync();
 
+		if (client != null)
+		{
+			emailAddress = client.email;
+			StateHasChanged();
+		}
+		else
+		{
+			Console.WriteLine("user not found");
+		}
+
 		isLoaded = true;
 	}
 
@@ -88,7 +96,6 @@
 			{
 				if (client != null)
 				{
-					emailAddress = client.email;
 					Console.WriteLine(client.userId);
 					if (isLoaded)
 					{

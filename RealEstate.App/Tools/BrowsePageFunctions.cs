@@ -1,5 +1,6 @@
 ﻿using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components;
+using RealEstate.App.Operations.Create.Models;
 
 namespace RealEstate.App.Tools
 {

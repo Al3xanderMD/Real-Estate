@@ -12,5 +12,7 @@ namespace RealEstate.Application.Contracts
         Task<Result<T>> DeleteIntAsync(int id);
         Task<Result<IReadOnlyList<T>>> GetPagedReponseAsync(int page, int size);
         Task<Result<IReadOnlyList<T>>> GetAllAsync();
+        Task<Result<T>> FindByBasePostIdAsync(Guid id);
+        Task<Result<IReadOnlyList<T>>> FindByUserIdAsync(Guid userId);
     }
 }

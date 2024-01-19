@@ -42,6 +42,7 @@ builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<UpdateService>();
 builder.Services.AddScoped<FetchService>();
 builder.Services.AddScoped<CreateService>();
+builder.Services.AddScoped<DeleteService>();
 builder.Services.AddScoped<PostBuilderService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });

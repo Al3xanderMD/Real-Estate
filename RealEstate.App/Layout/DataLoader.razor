@@ -7,6 +7,9 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject CustomStateProvider authStateProvider
 @inject HttpClient httpClient
+@inject Blazored.SessionStorage.ISessionStorageService session 
+@inject ISessionStorageService sessionStorage
+@inject NavigationManager navigationManager
 
 @code {
     private AuthenticationState authenticationState;
@@ -27,37 +30,10 @@
         }
     }
 
-    /*public async Task FetchDataAndStoreInLocalStorage()
-    {
-    ClientDataViewModel clientData;
-
-        if (authenticationState.User.Identity.IsAuthenticated)
-        {
-        // Make the API call
-        string id = authenticationState.User.FindFirst("userId").Value;
-
-        var result = await httpClient.GetAsync("https://localhost:7190/api/v1/Client/" + id); //make the link dynamic later
-        if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-            throw new Exception(await result.Content.ReadAsStringAsync());
-            } else 
-            {
-            var jsonString = await result.Content.ReadAsStringAsync();
-            Console.WriteLine(jsonString);
-            clientData = JsonConvert.DeserializeObject<ClientDataViewModel>(jsonString);
-
-            await localStorage.SetItemAsync<ClientDataViewModel>("clientData",clientData);
-            Console.WriteLine("clientData stored ",clientData.email);
-    }
-
-    }
-    }*/
-
     public async Task FetchDataAndStoreInLocalStorage()
     {
         if (authenticationState.User.Identity.IsAuthenticated)
         {
-            // Make the API call
             string id = authenticationState.User.FindFirst("userId").Value;
             Console.WriteLine("Fetching data for : " + id);
             string jsonString = "";
@@ -70,6 +46,17 @@
                 jsonString = await result.Content.ReadAsStringAsync();
                 Console.WriteLine(jsonString);
                 ClientDataViewModel clientData = JsonConvert.DeserializeObject<ClientDataViewModel>(jsonString);
+
+                if (new Guid(clientData.userId) == Guid.Empty)
+                {
+                    Console.WriteLine("User not found");
+
+                    session.ClearAsync();
+		            await authStateProvider.Logout();
+		            navigationManager.NavigateTo("/login", forceLoad: true);
+
+                    return;
+                };
 
                 await localStorage.SetItemAsync<ClientDataViewModel>("clientData", clientData);
             }

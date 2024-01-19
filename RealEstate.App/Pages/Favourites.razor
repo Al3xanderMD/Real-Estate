@@ -1,0 +1,193 @@
+﻿@page "/favourites"
+@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
+@using RealEstate.App.Models
+@using RealEstate.App.Operations.Fetch.Models
+@using RealEstate.App.Operations.Fetch.Response
+@using RealEstate.App.Tools
+
+@inject CustomStateProvider authStateProvider
+@inject NavigationManager navigationManager
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject FetchService fetchService
+@inject DeleteService deleteService
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css?v=@MyTools.ver" />
+</head>
+
+<PageTitle>Favourites</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Class="featured-title" Typo="Typo.h4">Favourites</MudText>
+
+    <MudGrid Justify="Justify.SpaceEvenly">
+        <div class="row">
+            @if (loaded)
+            {
+                if (posts != null)
+                {
+                    message = "";
+                    foreach (var post in posts)
+                    {
+                        if (post != null)
+                        {
+                            
+                            <MudItem xs="12" sm="6" md="4" lg="3">
+                                <MudCard Class="browse-card" Elevation="1">
+                                    <MudLink Href="@($"{basePostToType[post.basePostId]}/post/{basePostToIntId[post.basePostId]}")" Style="text-decoration:none; color:black;">
+                                        <MudCardMedia Image="https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                                        <MudCardContent>
+                                            <MudText Typo="Typo.h5">@post.basePost.titlePost</MudText>
+                                            <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Euro" />@post.basePost.price</MudText>
+                                        </MudCardContent>
+                                    </MudLink>
+                                        <MudCardActions>
+                                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Error" OnClick="@(async () => await deleteFavourite(post.id))" />
+                                        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    }
+                }
+                else
+                {
+                    message = "No posts found";
+                }
+            }
+
+        </div>
+    </MudGrid>
+
+    <MudText Typo="Typo.body1" Color="Color.Error" Style="text-align:center;">@message</MudText>
+
+
+    </MudContainer>
+
+    @code {
+    private AuthenticationState authenticationState;
+    private List<FavouriteFetchViewModel> posts;
+    private ClientDataViewModel client = new ClientDataViewModel();
+    private bool loaded = false;
+    private string message = "";
+    private Dictionary<Guid, int> basePostToIntId = new Dictionary<Guid, int>();
+    private Dictionary<Guid, string> basePostToType = new Dictionary<Guid, string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+        if (!authenticationState.User.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+
+        client = await localStorage.GetItemAsync<ClientDataViewModel>("clientData");
+
+        if (client != null)
+        {
+            Console.WriteLine("user found!!!");
+            await fetchPosts();
+            await fetchPostIds();
+
+            loaded = true;
+        }
+        else
+        {
+            Console.WriteLine("user not found");
+        }
+
+    }
+
+    public async Task fetchPosts()
+    {
+        posts = await fetchService.FetchUserFavouritePostsAsync(new Guid(client.userId));
+
+
+        if (posts != null)
+        {
+            if (posts.Count == 0) {
+
+                message = "You have no favourite posts";
+            }
+
+            await fetchPostIds();
+        }
+        else
+        {
+            message = "No posts found";
+        }
+    }
+
+    public async Task fetchPostIds() 	{
+        Dictionary<Guid, int> dict = new Dictionary<Guid, int>();
+        Dictionary<Guid, string> dict2 = new Dictionary<Guid, string>();
+        if (posts != null)
+        {
+            int newID;
+            foreach (var post in posts)
+            {
+                PostResponseViewModel p = await fetchService.FetchPostByBasePostIdAsync(post.basePostId);
+                if (p != null)
+                {
+                    newID = p.id;
+                    dict.Add(post.basePostId, newID);
+                    dict2.Add(post.basePostId, p.type);
+                } else
+                {
+                    Console.WriteLine("Failed to retrieve post by basePostId");
+                }
+            }
+
+            basePostToIntId = dict;
+            basePostToType = dict2;
+		}
+		else
+		{
+			Console.WriteLine("favourites not found");
+		}
+	}
+
+    public async Task setFavourites()
+    {
+        Console.WriteLine("setting favourites. . .");
+        posts = await fetchService.FetchFavouritesUserAsync(new Guid(client.userId));
+        List<Guid> favouritesIdList = new List<Guid>();
+        if (posts != null)
+        {
+            Console.WriteLine("favourites found");
+        }
+        else
+        {
+            Console.WriteLine("favourites not found");
+        }
+    }
+
+    public async Task deleteFavourite(Guid favouriteId)
+    {
+        if (client != null)
+        {
+
+            Console.WriteLine("deleting from favourites " + favouriteId);
+
+            await deleteService.DeleteFavouriteAsync(favouriteId);
+
+            await setFavourites();
+
+            StateHasChanged();
+
+        }
+        else
+        {
+            Console.WriteLine("user not found");
+        }
+    }
+}

@@ -1,0 +1,128 @@
+﻿@page "/myposts"
+@using Microsoft.AspNetCore.Components.Authorization
+@using RealEstate.App.Auth
+@using RealEstate.App.Data
+@using RealEstate.App.Models
+@using RealEstate.App.Operations.Create.Models
+@using RealEstate.App.Operations.Fetch.Models
+@using RealEstate.App.Operations.Fetch.Response
+@using RealEstate.App.Tools
+
+@inject FetchService fetchService
+@inject CreateService createService
+@inject DeleteService deleteService
+@inject ISessionStorageService sessionStorage
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager navigationManager
+@inject HttpClient httpClient
+@inject CustomStateProvider authStateProvider
+
+<PageTitle>Browse Properties</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Class="featured-title" Typo="Typo.h4">Browse Properties</MudText>
+
+    <MudGrid Justify="Justify.SpaceEvenly">
+        <div class="row">
+            @if (loaded)
+            {
+                if (posts != null)
+                {
+                    message = "";
+                    foreach (var post in posts)
+                    {
+                        if (post != null)
+                        {
+
+                            <MudItem xs="12" sm="6" md="4" lg="3">
+                                <MudCard Class="browse-card" Elevation="1">
+                                    <MudLink Href="@($"{post.type}/post/{post.id}")" Style="text-decoration:none; color : black;">
+                                        <MudCardMedia Image="https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" /> @*replace with dynamic when implemented*@
+                                        <MudCardContent>
+                                            <MudText Typo="Typo.h5">@post.basePost.titlePost</MudText>
+                                                <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Euro" />@post.basePost.price</MudText>
+                                            </MudCardContent>
+                                        </MudLink>
+                                        <MudCardActions>
+
+                                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info" />
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(async () => await deletePost(post.id))" />
+                                        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    }
+                }
+                else
+                {
+                    message = "No posts found";
+                }
+            }
+
+        </div>
+    </MudGrid>
+
+    <MudText Typo="Typo.body1" Color="Color.Error" Style="text-align:center;">@message</MudText>
+
+
+    </MudContainer>
+
+    @code {
+    private AuthenticationState authenticationState;
+    private List<PostResponseViewModel> posts;
+    ClientDataViewModel client = new ClientDataViewModel();
+    private bool loaded = false;
+    private string message = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+        if (!authenticationState.User.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+
+        client = await localStorage.GetItemAsync<ClientDataViewModel>("clientData");
+
+        if (client != null)
+        {
+            Console.WriteLine("user found!!!");
+            
+            await fetchPosts();
+        }
+        else
+        {
+            Console.WriteLine("user not found");
+        }
+    }
+
+    public async Task fetchPosts()
+    {
+        Console.WriteLine("fetching posts. . .");
+
+        posts = await fetchService.FetchPostsByUserIdAsync(new Guid(client.userId));
+
+        if (posts != null)
+        {
+            Console.WriteLine("posts found");
+        }
+        else
+        {
+            Console.WriteLine("posts not found");
+        }
+        loaded = true;
+
+        StateHasChanged();
+       
+    }
+
+    public async Task deletePost(int id) {
+		Console.WriteLine("deleting post. . .");
+
+		await deleteService.DeletePostAsync(id);
+
+        await fetchPosts();
+	}
+}

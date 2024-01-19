@@ -34,7 +34,7 @@ namespace RealEstate.App.Services
 				var content = await response.Content.ReadAsStringAsync();
 
 				ApiAddressResponse responseModel = JsonConvert.DeserializeObject<ApiAddressResponse>(content);
-				Console.WriteLine("Address create result: " + content+ " ID: "+responseModel.address.id);
+				Console.WriteLine("Address create result: " + content + " ID: " + responseModel.address.id);
 
 				response_obj = JsonConvert.DeserializeObject<CommercialResponseModel>(content);
 
@@ -48,7 +48,7 @@ namespace RealEstate.App.Services
 						Console.WriteLine($"Validation Error: {error}");
 						snackBar.Add($"{error}", Severity.Error);
 					}
-				} 
+				}
 
 				response.EnsureSuccessStatusCode();
 
@@ -60,7 +60,7 @@ namespace RealEstate.App.Services
 				Console.WriteLine($"Error: {ex.Message}");
 				return null;
 			}
-				
+
 		}
 
 		public async Task CreateApartment(ApartmentViewModel model)
@@ -74,12 +74,12 @@ namespace RealEstate.App.Services
 
 				response_obj = JsonConvert.DeserializeObject<ApartmentResponseModel>(content);
 
-				Console.WriteLine("apartment : " + content);	
+				Console.WriteLine("apartment : " + content);
 				if (response_obj != null && !response_obj.Success)
 				{
 					List<string> validationErrors = response_obj.ValidationErrors;
 
-				
+
 					foreach (string error in validationErrors)
 					{
 						Console.WriteLine($"Validation Error: {error}");
@@ -140,7 +140,8 @@ namespace RealEstate.App.Services
 					}
 
 				}
-				else {
+				else
+				{
 					var url = "https://localhost:7190/api/v1/Post";
 
 					Console.WriteLine("creating post with : " + response_obj.commercial.basePostId);
@@ -158,7 +159,7 @@ namespace RealEstate.App.Services
 
 				response.EnsureSuccessStatusCode();
 
-				
+
 			}
 			catch (HttpRequestException ex)
 			{
@@ -339,6 +340,23 @@ namespace RealEstate.App.Services
 		Task ICreateService.CreatePartitioning()
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task CreateFavouriteListing(FavouriteCreateViewModel model)
+		{
+			try
+			{
+				Console.WriteLine("Creating favourite listing with: " + model.userId + " - " + model.basePostId);
+				var response = await httpClient.PostAsJsonAsync("https://localhost:7190/api/v1/Favourite", model);
+
+				response.EnsureSuccessStatusCode();
+
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+
+			}
 		}
 	}
 }

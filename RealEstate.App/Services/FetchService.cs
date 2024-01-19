@@ -280,5 +280,115 @@ namespace RealEstate.App.Services
 				return null;
 			}
 		}
-	}
+
+        public async Task<List<FavouriteFetchViewModel>> FetchFavouritesUserAsync(Guid userId)
+        {
+			FavouritesResponseViewModel response_obj;
+            try
+			{
+				var response = await httpClient.GetAsync("https://localhost:7190/api/v1/Favourite/userId/" + userId);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+
+				response_obj = JsonConvert.DeserializeObject<FavouritesResponseViewModel>(jsonString);
+
+				if (response_obj != null) {
+					return response_obj.favourites;
+				} else
+				{
+					Console.WriteLine("Favourites response is null");
+					return null;
+				}
+			} catch (HttpRequestException ex)
+			{
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<FavouriteFetchViewModel>> FetchUserFavouritePostsAsync(Guid userId)
+        {
+			FavouritesResponseViewModel response_obj;
+            try
+			{
+				var response = await httpClient.GetAsync("https://localhost:7190/api/v1/Favourite/userId/" + userId);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+
+				response_obj = JsonConvert.DeserializeObject<FavouritesResponseViewModel>(jsonString);
+
+				if (response_obj != null)
+				{
+					Console.WriteLine("Successfully fetch user posts");
+					return response_obj.favourites;
+				}
+				else 
+				{
+					Console.WriteLine("Fetching user posts error ");
+					return null;
+				}
+			} catch (HttpRequestException ex)
+			{
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
+
+		public async Task<PostResponseViewModel> FetchPostByBasePostIdAsync(Guid id)
+		{
+            PostResponseViewModel response_obj;
+			try
+			{
+				var response = await httpClient.GetAsync("https://localhost:7190/api/v1/Post/basePostId/" + id);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = response.Content.ReadAsStringAsync().Result;
+
+				Console.WriteLine("Post: " + jsonString);
+
+				response_obj = JsonConvert.DeserializeObject<PostResponseViewModel>(jsonString);
+
+				if (response_obj != null)
+				{
+					return response_obj;
+				}
+				else
+				{
+					Console.WriteLine("Fetching post error ");
+					return null;
+				}
+				
+			} catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+
+		public async Task<List<PostResponseViewModel>> FetchPostsByUserIdAsync(Guid userId)
+		{
+			try
+			{
+				var response = await httpClient.GetAsync("https://localhost:7190/api/v1/Post/userId/" + userId);
+
+				response.EnsureSuccessStatusCode();
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+
+				var apiResponse = JsonConvert.DeserializeObject<List<PostResponseViewModel>>(jsonString);
+
+				return apiResponse;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				return null;
+			}
+		}
+    }
 }

@@ -47,7 +47,33 @@ namespace RealEstate.API.Controllers
 			return Ok(result);
 		}
 
-		[HttpPut("{id}")]
+		[HttpGet("basePostId/{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> GetById(Guid id)
+		{
+
+			var result = await Mediator.Send(new GetByBasePostIdPostQuery(id));
+			return Ok(result);
+		}
+
+        [HttpGet("userId/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByUserId(Guid id)
+        {
+            var result = await Mediator.Send(new GetAllPostsQuery());
+
+			if (result.Posts != null && result.Posts.Any())
+			{
+                var filteredPosts = result.Posts.Where(post => post.BasePost.UserId == id.ToString()).ToList();
+                return Ok(filteredPosts);
+            }
+            else
+			{
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{id}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Update(int id, UpdatePostCommand command)

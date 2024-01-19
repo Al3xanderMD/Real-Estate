@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Domain.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ml", "ml", "{0B508711-6F72-4560-A5AE-66A1D7BBFE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.PricePredictions", "RealEstate.PricePredictions\RealEstate.PricePredictions.csproj", "{853B77F1-DA41-4D6B-8D03-CF895D5C44FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.PricePredictions", "RealEstate.PricePredictions\RealEstate.PricePredictions.csproj", "{853B77F1-DA41-4D6B-8D03-CF895D5C44FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousePricePredictions_WebApi1", "HousePricePredictions_WebApi1\HousePricePredictions_WebApi1.csproj", "{156629CE-5665-435D-8724-D3E43F41052C}"
 EndProject

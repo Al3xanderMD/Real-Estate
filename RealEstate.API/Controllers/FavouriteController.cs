@@ -29,7 +29,7 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("userId/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(Guid userId)
         {
@@ -37,7 +37,7 @@ namespace RealEstate.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{basePostId}")]
+        [HttpGet("postId/{basePostId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByBasePostId(Guid basePostId)
         {
