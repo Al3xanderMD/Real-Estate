@@ -5,10 +5,10 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-public partial class HousePrice
+public partial class PricePredictions
 {
     /// <summary>
-    /// model input class for HousePrice.
+    /// model input class for PricePredictions.
     /// </summary>
     #region model input class
     public class ModelInput
@@ -66,49 +66,49 @@ public partial class HousePrice
     #endregion
 
     /// <summary>
-    /// model output class for HousePrice.
+    /// model output class for PricePredictions.
     /// </summary>
     #region model output class
     public class ModelOutput
     {
-        [ColumnName(@"location")]
-        public float[] Location { get; set; }
+        //[ColumnName(@"location")]
+        //public float[] Location { get; set; }
 
-        [ColumnName(@"location_area")]
-        public float[] Location_area { get; set; }
+        //[ColumnName(@"location_area")]
+        //public float[] Location_area { get; set; }
 
-        [ColumnName(@"seller_type")]
-        public float[] Seller_type { get; set; }
+        //[ColumnName(@"seller_type")]
+        //public float[] Seller_type { get; set; }
 
-        [ColumnName(@"type")]
-        public float[] Type { get; set; }
+        //[ColumnName(@"type")]
+        //public float[] Type { get; set; }
 
-        [ColumnName(@"partitioning")]
-        public float[] Partitioning { get; set; }
+        //[ColumnName(@"partitioning")]
+        //public float[] Partitioning { get; set; }
 
-        [ColumnName(@"comfort")]
-        public float[] Comfort { get; set; }
+        //[ColumnName(@"comfort")]
+        //public float[] Comfort { get; set; }
 
-        [ColumnName(@"price")]
-        public float Price { get; set; }
+        //[ColumnName(@"price")]
+        //public float Price { get; set; }
 
-        [ColumnName(@"rooms_count")]
-        public float Rooms_count { get; set; }
+        //[ColumnName(@"rooms_count")]
+        //public float Rooms_count { get; set; }
 
-        [ColumnName(@"useful_surface")]
-        public float Useful_surface { get; set; }
+        //[ColumnName(@"useful_surface")]
+        //public float Useful_surface { get; set; }
 
-        [ColumnName(@"built_surface")]
-        public float Built_surface { get; set; }
+        //[ColumnName(@"built_surface")]
+        //public float Built_surface { get; set; }
 
-        [ColumnName(@"construction_year")]
-        public float Construction_year { get; set; }
+        //[ColumnName(@"construction_year")]
+        //public float Construction_year { get; set; }
 
-        [ColumnName(@"level")]
-        public float[] Level { get; set; }
+        //[ColumnName(@"level")]
+        //public float[] Level { get; set; }
 
-        [ColumnName(@"Features")]
-        public float[] Features { get; set; }
+        //[ColumnName(@"Features")]
+        //public float[] Features { get; set; }
 
         [ColumnName(@"Score")]
         public float Score { get; set; }
@@ -117,7 +117,7 @@ public partial class HousePrice
 
     #endregion
 
-    private static string MLNetModelPath = Path.GetFullPath("HousePrice.mlnet");
+    private static string MLNetModelPath = Path.GetFullPath("PricePredictions.mlnet");
 
     public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

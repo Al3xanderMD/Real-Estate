@@ -10,10 +10,7 @@ using Microsoft.ML.Trainers.FastTree;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Transforms;
 using Microsoft.ML;
-
-namespace RealEstate_PricePredictions
-{
-    public partial class HousePricePredictions
+    public partial class PricePredictions
     {
         public const string RetrainFilePath =  @"C:\Users\Daniel\Downloads\archive_2\house_offers.csv";
         public const char RetrainSeparatorChar = ',';
@@ -104,4 +101,4 @@ namespace RealEstate_PricePredictions
             return pipeline;
         }
     }
- }
+ 

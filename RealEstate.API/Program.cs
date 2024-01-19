@@ -8,8 +8,13 @@ using RealEstate.API.Utility;
 using RealEstate.Identity.Models;
 using RealEstate.Identity.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.ML;
+using RealEstate_API;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPredictionEnginePool<PricePredictions.ModelInput, PricePredictions.ModelOutput>()
+    .FromFile("..\\PricePredictions_WebApi1\\PricePredictions.mlnet");
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 ///////////////
@@ -25,12 +30,12 @@ builder.Services.AddInfrastrutureIdentityToDI(builder.Configuration);
 
 //Add Config for Required Email
 builder.Services.Configure<IdentityOptions>(
-	opts => opts.SignIn.RequireConfirmedEmail = true
-	);
+    opts => opts.SignIn.RequireConfirmedEmail = true
+    );
 
-builder.Services.Configure<DataProtectionTokenProviderOptions> (
-	opts =>
-	    opts.TokenLifespan = TimeSpan.FromHours(10));
+builder.Services.Configure<DataProtectionTokenProviderOptions>(
+    opts =>
+        opts.TokenLifespan = TimeSpan.FromHours(10));
 
 // Add services to the container.
 builder.Services.AddInfrastructureToDI(builder.Configuration);
@@ -59,44 +64,44 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-	{
-		Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
                       Enter 'Bearer' [space] and then your token in the text input below.
                       \r\n\r\nExample: 'Bearer 12345abcdef'",
-		Name = "Authorization",
-		In = ParameterLocation.Header,
-		Type = SecuritySchemeType.ApiKey,
-		Scheme = "Bearer"
-	});
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
 
-	c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-				  {
-					{
-					  new OpenApiSecurityScheme
-					  {
-						Reference = new OpenApiReference
-						  {
-							Type = ReferenceType.SecurityScheme,
-							Id = "Bearer"
-						  },
-						  Scheme = "oauth2",
-						  Name = "Bearer",
-						  In = ParameterLocation.Header,
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                  {
+                    {
+                      new OpenApiSecurityScheme
+                      {
+                        Reference = new OpenApiReference
+                          {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                          },
+                          Scheme = "oauth2",
+                          Name = "Bearer",
+                          In = ParameterLocation.Header,
 
-						},
-						new List<string>()
-					  }
-					});
+                        },
+                        new List<string>()
+                      }
+                    });
 
-	c.SwaggerDoc("v1", new OpenApiInfo
-	{
-		Version = "v1",
-		Title = "Real Estate Management API",
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Real Estate Management API",
 
-	});
+    });
 
-	c.OperationFilter<FileResultContentTypeOperationFilter>();
+    c.OperationFilter<FileResultContentTypeOperationFilter>();
 });
 
 
@@ -118,5 +123,10 @@ app.UseAuthorization();
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
+
+// Define prediction route & handler
+app.MapPost("/api/v1/predict",
+    async (PredictionEnginePool<PricePredictions.ModelInput, PricePredictions.ModelOutput> predictionEnginePool, PricePredictions.ModelInput input) =>
+        await Task.FromResult(predictionEnginePool.Predict(input)));
 
 app.Run();

@@ -107,7 +107,7 @@
       {
         "ColumnName": "real_estate_type",
         "ColumnPurpose": "Ignore",
-        "ColumnDataFormat": "Single",
+        "ColumnDataFormat": "String",
         "IsCategorical": false,
         "Type": "Column",
         "Version": 4
@@ -191,7 +191,7 @@
         "Type": "Trial",
         "TrainerName": "FastForestRegression",
         "Score": 0.66233276469226321,
-        "RuntimeInSeconds": 3.043,
+        "RuntimeInSeconds": 3.588,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5 * e6 * e8",
           "e0": {
@@ -301,7 +301,7 @@
         "Type": "Trial",
         "TrainerName": "LightGbmRegression",
         "Score": 0.65785173696506671,
-        "RuntimeInSeconds": 3.678,
+        "RuntimeInSeconds": 4.192,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5 * e6 * e9",
           "e0": {
@@ -405,116 +405,6 @@
             "FeatureColumnName": "Features"
           }
         }
-      },
-      {
-        "Version": 1,
-        "Type": "Trial",
-        "TrainerName": "FastTreeRegression",
-        "Score": 0.047018600474226305,
-        "RuntimeInSeconds": 1.988,
-        "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5 * e6 * e7",
-          "e0": {
-            "OutputColumnNames": [
-              "location",
-              "partitioning",
-              "comfort"
-            ],
-            "InputColumnNames": [
-              "location",
-              "partitioning",
-              "comfort"
-            ]
-          },
-          "e1": {
-            "OutputColumnNames": [
-              "rooms_count",
-              "useful_surface",
-              "built_surface",
-              "construction_year"
-            ],
-            "InputColumnNames": [
-              "rooms_count",
-              "useful_surface",
-              "built_surface",
-              "construction_year"
-            ]
-          },
-          "e2": {
-            "InputColumnName": "location_area",
-            "OutputColumnName": "location_area"
-          },
-          "e3": {
-            "InputColumnName": "seller_type",
-            "OutputColumnName": "seller_type"
-          },
-          "e4": {
-            "InputColumnName": "type",
-            "OutputColumnName": "type"
-          },
-          "e5": {
-            "InputColumnName": "level",
-            "OutputColumnName": "level"
-          },
-          "e6": {
-            "InputColumnNames": [
-              "location",
-              "partitioning",
-              "comfort",
-              "rooms_count",
-              "useful_surface",
-              "built_surface",
-              "construction_year",
-              "location_area",
-              "seller_type",
-              "type",
-              "level"
-            ],
-            "OutputColumnName": "Features"
-          },
-          "e7": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 20,
-            "NumberOfTrees": 4,
-            "MaximumBinCountPerFeature": 254,
-            "FeatureFraction": 1.0,
-            "LearningRate": 0.099999999999999978,
-            "LabelColumnName": "price",
-            "FeatureColumnName": "Features"
-          },
-          "e10": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "price",
-            "FeatureColumnName": "Features"
-          },
-          "e11": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 0.1,
-            "LabelColumnName": "price",
-            "FeatureColumnName": "Features"
-          },
-          "e8": {
-            "NumberOfTrees": 4,
-            "NumberOfLeaves": 4,
-            "FeatureFraction": 1.0,
-            "LabelColumnName": "price",
-            "FeatureColumnName": "Features"
-          },
-          "e9": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 20,
-            "LearningRate": 1.0,
-            "NumberOfTrees": 4,
-            "SubsampleFraction": 1.0,
-            "MaximumBinCountPerFeature": 255,
-            "FeatureFraction": 1.0,
-            "L1Regularization": 2E-10,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "price",
-            "FeatureColumnName": "Features"
-          }
-        }
       }
     ],
     "Estimators": {
@@ -533,14 +423,14 @@
     },
     "Schema": "e0 * e1 * e2 * e3 * e4 * e5 * e6 * (e7 + e8 + e9 + e10 + e11)",
     "MetricName": "RSquared",
-    "ModelFilePath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect NET\\Real-Estate\\RealEstate.PricePredictions\\HousePricePredictions.mlnet"
+    "ModelFilePath": "C:\\Users\\Daniel\\Desktop\\NET\\Proiect NET\\Real-Estate\\RealEstate.API\\ML\\PricePredictions.mlnet"
   },
   "Type": "TrainingConfig",
   "Version": 4,
   "TrainingOption": {
     "Version": 1,
     "Type": "RegressionTrainingOption",
-    "TrainingTime": 15,
+    "TrainingTime": 10,
     "LabelColumn": "price",
     "ValidationOption": {
       "Version": 0,

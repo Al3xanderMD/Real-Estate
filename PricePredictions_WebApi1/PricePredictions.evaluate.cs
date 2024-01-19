@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RealEstate_PricePredictions
+namespace PricePredictions_WebApi1
 {
-    public partial class HousePricePredictions
+    public partial class PricePredictions
     {
         /// <summary>
         /// Permutation feature importance (PFI) is a technique to determine the importance 

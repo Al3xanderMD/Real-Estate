@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 // Configure app
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddPredictionEnginePool<HousePrice.ModelInput, HousePrice.ModelOutput>()
-    .FromFile("HousePrice.mlnet");
+builder.Services.AddPredictionEnginePool<PricePredictions.ModelInput, PricePredictions.ModelOutput>()
+    .FromFile("PricePredictions.mlnet");
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -30,7 +30,7 @@ app.UseSwaggerUI(c =>
 
 // Define prediction route & handler
 app.MapPost("/predict",
-    async (PredictionEnginePool<HousePrice.ModelInput, HousePrice.ModelOutput> predictionEnginePool, HousePrice.ModelInput input) =>
+    async (PredictionEnginePool<PricePredictions.ModelInput, PricePredictions.ModelOutput> predictionEnginePool, PricePredictions.ModelInput input) =>
         await Task.FromResult(predictionEnginePool.Predict(input)));
 
 // Run app
